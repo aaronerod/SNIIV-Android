@@ -9,4 +9,28 @@
     <string name="title_monto">Monto: </string>
     <string name="title_vigentes">Vigentes: </string>
     <string name="title_registradas">Registradas: </string>
+
+    <string name="title_50">En proceso hasta 50%: </string>
+    <string name="title_99">En proceso hasta 99%: </string>
+    <string name="title_recientes">Terminadas Recientes: </string>
+    <string name="title_antiguas">Terminadas Antiguas: </string>
+    <string name="title_total">Total: </string>
+
+    <string name="title_u1">U1: </string>
+    <string name="title_u2">U2: </string>
+    <string name="title_u3">U3: </string>
+    <string name="title_fc">FC: </string>
+    <string name="title_nd">ND: </string>
+
+    <string name="title_horizontal">Horizontal: </string>
+    <string name="title_vertical">Vertical: </string>
+
+    <string name="title_economica">Económica: </string>
+    <string name="title_popular">Popular: </string>
+    <string name="title_tradicional">Tradicional: </string>
+    <string name="title_media_residencial">Media Residencial: </string>
+
+
+    <string name="title_avance_obra">Avance Obra</string>
+
 </resources>

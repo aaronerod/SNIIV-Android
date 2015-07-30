@@ -7,36 +7,30 @@
     android:id="@+id/Relative">
 
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_financiamiento"
-        android:id="@+id/txtTitleFinan"
+        android:id="@+id/txtTitleAvanceObra"
         android:textColor="#ffffffff"
         android:background="#ff00803b"
         android:textSize="20dp"
-        android:layout_below="@+id/spinner"
-        android:layout_toRightOf="@+id/txtRegistradas"
-        android:layout_toEndOf="@+id/txtRegistradas"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="24dp"
+        android:width="250dp"
+        android:gravity="center"
+        android:layout_alignLeft="@+id/txtProceso50"
+        android:layout_alignStart="@+id/txtProceso50" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_acciones"
-        android:id="@+id/txtAcciones1"
-        android:layout_below="@+id/txtTitleFinan"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:id="@+id/txtProceso50"
+        android:layout_below="@+id/txtTitleAvanceObra"
+        android:layout_alignLeft="@+id/txtTitleSubsidios"
+        android:layout_alignStart="@+id/txtTitleSubsidios"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,10 +38,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_monto"
         android:id="@+id/txtMonto1"
-        android:layout_below="@+id/txtAcciones1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_below="@+id/txtProceso50"
+        android:layout_alignLeft="@+id/txtTitleSubsidios"
+        android:layout_alignStart="@+id/txtTitleSubsidios"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,7 +52,10 @@
         android:background="#ff00803b"
         android:textSize="20dp"
         android:layout_below="@+id/txtMonto1"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:width="250dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,8 +64,8 @@
         android:text="@string/title_acciones"
         android:id="@+id/txtAcciones2"
         android:layout_below="@+id/txtTitleSubsidios"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignLeft="@+id/txtTitleSubsidios"
+        android:layout_alignStart="@+id/txtTitleSubsidios"
         android:layout_marginTop="5dp"/>
 
     <TextView
@@ -78,21 +75,23 @@
         android:text="@string/title_monto"
         android:id="@+id/txtMonto2"
         android:layout_below="@+id/txtAcciones2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignLeft="@+id/txtTitleOfertaVivienda"
+        android:layout_alignStart="@+id/txtTitleOfertaVivienda"
         android:layout_marginTop="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_oferta_vivienda"
-        android:id="@+id/textView3"
+        android:id="@+id/txtTitleOfertaVivienda"
         android:textColor="#ffffffff"
         android:background="#ff00803b"
         android:textSize="20dp"
         android:layout_below="@+id/txtMonto2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="10dp"
+        android:width="250dp"
+        android:gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -100,10 +99,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_registradas"
         android:id="@+id/txtRegistradas"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"/>
+        android:layout_below="@+id/txtTitleOfertaVivienda"
+        android:layout_alignLeft="@+id/txtTitleOfertaVivienda"
+        android:layout_alignStart="@+id/txtTitleOfertaVivienda" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -112,9 +110,77 @@
         android:text="@string/title_vigentes"
         android:id="@+id/txtVigentes"
         android:layout_below="@+id/txtRegistradas"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/txtAcciones2"
+        android:layout_alignEnd="@+id/txtAcciones2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-"
+        android:id="@+id/txtAccionesFinan"
+        android:layout_alignTop="@+id/txtProceso50"
+        android:layout_alignRight="@+id/txtTitleSubsidios"
+        android:layout_alignEnd="@+id/txtTitleSubsidios"
         android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-"
+        android:id="@+id/txtMontoFinan"
+        android:layout_below="@+id/txtAccionesFinan"
+        android:layout_alignRight="@+id/txtAccionesFinan"
+        android:layout_alignEnd="@+id/txtAccionesFinan"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-"
+        android:id="@+id/txtAccionesSub"
+        android:layout_below="@+id/txtTitleSubsidios"
+        android:layout_alignRight="@+id/txtMontoFinan"
+        android:layout_alignEnd="@+id/txtMontoFinan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-"
+        android:id="@+id/txtMontoSub"
+        android:layout_alignTop="@+id/txtMonto2"
+        android:layout_alignRight="@+id/txtAccionesSub"
+        android:layout_alignEnd="@+id/txtAccionesSub" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-"
+        android:id="@+id/txtregistradas"
+        android:layout_below="@+id/txtTitleOfertaVivienda"
+        android:layout_alignRight="@+id/txtTitleOfertaVivienda"
+        android:layout_alignEnd="@+id/txtTitleOfertaVivienda" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-"
+        android:id="@+id/txtVigentes"
+        android:layout_below="@+id/txtregistradas"
+        android:layout_alignRight="@+id/txtregistradas"
+        android:layout_alignEnd="@+id/txtregistradas" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pckEstados"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
