@@ -24,8 +24,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvwMenu = (ListView) findViewById(R.id.lvwMenu);
-        Utils u=new Utils();
-        listMenu=u.getListMenu();
+        listMenu= Utils.listMenu;
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listMenu);
         lvwMenu.setAdapter(arrayAdapter);
         lvwMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {

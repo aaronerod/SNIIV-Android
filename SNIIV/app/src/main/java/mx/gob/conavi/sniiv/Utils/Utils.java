@@ -2,31 +2,22 @@ package mx.gob.conavi.sniiv.Utils;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Utils {
-   private ArrayList<String> listMenu;
-   private ArrayList<String> listEstados;
-   private String[] listEdo;
+    public static ArrayList<String> listMenu = new ArrayList<>();
+    public static ArrayList<String> listEstados = new ArrayList<>();
+    public static String[] listEdo = new String[33];
 
-
-    public Utils()
-    {
-        setListMenu(new ArrayList<String>());
-        getListMenu().add("Reporte General");
-        getListMenu().add("Oferta");
-        getListMenu().add("Demanda");
-
-        setListEstados(new ArrayList<String>());
+    static {
+        listMenu.add("Reporte General");
+        listMenu.add("Oferta");
+        listMenu.add("Demanda");
         populateEstados();
-
-        setListEdo(new String[33]);
         populateEdos();
-
-
-
-
     }
-    public void populateEdos(){
+
+    private static void populateEdos(){
         listEdo[0]="Nacional";
         listEdo[1]="Aguascalientes";
         listEdo[2]="Baja California";
@@ -60,69 +51,41 @@ public class Utils {
         listEdo[30]="Veracruz";
         listEdo[31]="Yucatán";
         listEdo[32]="Zacatecas";
-
     }
 
-
-
-    public void populateEstados(){
-        getListEstados().add("Nacional");
-        getListEstados().add("Aguascalientes");
-        getListEstados().add("Baja California");
-        getListEstados().add("Baja California Sur");
-        getListEstados().add("Campeche");
-        getListEstados().add("Coahuila");
-        getListEstados().add("Colima");
-        getListEstados().add("Chiapas");
-        getListEstados().add("Chihuahua");
-        getListEstados().add("Distrito Federal");
-        getListEstados().add("Durango");
-        getListEstados().add("Guanajuato");
-        getListEstados().add("Guerrero");
-        getListEstados().add("Hidalgo");
-        getListEstados().add("Jalisco");
-        getListEstados().add("México");
-        getListEstados().add("Michoacán");
-        getListEstados().add("Morelos");
-        getListEstados().add("Nayarit");
-        getListEstados().add("Nuevo León");
-        getListEstados().add("Oaxaca");
-        getListEstados().add("Puebla");
-        getListEstados().add("Querétaro");
-        getListEstados().add("Quintana Roo");
-        getListEstados().add("San Luis Potosí");
-        getListEstados().add("Sinaloa");
-        getListEstados().add("Sonora");
-        getListEstados().add("Tabasco");
-        getListEstados().add("Tamaulipas");
-        getListEstados().add("Tlaxcala");
-        getListEstados().add("Veracruz");
-        getListEstados().add("Yucatán");
-        getListEstados().add("Zacatecas");
-
-
-    }
-    public ArrayList<String> getListMenu() {
-        return listMenu;
-    }
-
-    public void setListMenu(ArrayList<String> listMenu) {
-        this.listMenu = listMenu;
-    }
-
-    public ArrayList<String> getListEstados() {
-        return listEstados;
-    }
-
-    public void setListEstados(ArrayList<String> listEstados) {
-        this.listEstados = listEstados;
-    }
-
-    public String[] getListEdo() {
-        return listEdo;
-    }
-
-    public void setListEdo(String[] listEdo) {
-        this.listEdo = listEdo;
+    private static void populateEstados(){
+        listEstados.add("Nacional");
+        listEstados.add("Aguascalientes");
+        listEstados.add("Baja California");
+        listEstados.add("Baja California Sur");
+        listEstados.add("Campeche");
+        listEstados.add("Coahuila");
+        listEstados.add("Colima");
+        listEstados.add("Chiapas");
+        listEstados.add("Chihuahua");
+        listEstados.add("Distrito Federal");
+        listEstados.add("Durango");
+        listEstados.add("Guanajuato");
+        listEstados.add("Guerrero");
+        listEstados.add("Hidalgo");
+        listEstados.add("Jalisco");
+        listEstados.add("México");
+        listEstados.add("Michoacán");
+        listEstados.add("Morelos");
+        listEstados.add("Nayarit");
+        listEstados.add("Nuevo León");
+        listEstados.add("Oaxaca");
+        listEstados.add("Puebla");
+        listEstados.add("Querétaro");
+        listEstados.add("Quintana Roo");
+        listEstados.add("San Luis Potosí");
+        listEstados.add("Sinaloa");
+        listEstados.add("Sonora");
+        listEstados.add("Tabasco");
+        listEstados.add("Tamaulipas");
+        listEstados.add("Tlaxcala");
+        listEstados.add("Veracruz");
+        listEstados.add("Yucatán");
+        listEstados.add("Zacatecas");
     }
 }

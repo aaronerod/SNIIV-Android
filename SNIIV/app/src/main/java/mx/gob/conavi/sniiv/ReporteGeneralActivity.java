@@ -22,18 +22,16 @@ public class ReporteGeneralActivity extends Activity implements AdapterView.OnIt
 
     private Utils u;
     private NumberPicker pickerEstados;
-    private String[] edos;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reportegeneral);
-        edos=new String [33];
-        u=new Utils();
-        edos=u.getListEdo();
+
+        String[] edos = Utils.listEdo;
         pickerEstados = (NumberPicker) findViewById(R.id.pckEstados);
         pickerEstados.setMaxValue(edos.length - 1);
         pickerEstados.setMinValue(0);
         pickerEstados.setDisplayedValues(edos);
-        pickerEstados.setOnClickListener(null);
         pickerEstados.setOnClickListener(this);
 
         pickerEstados.setOnValueChangedListener(new OnValueChangeListener() {
@@ -47,19 +45,7 @@ public class ReporteGeneralActivity extends Activity implements AdapterView.OnIt
 
             }
         });
-
-
     }
-
-
-
-
-
-
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
