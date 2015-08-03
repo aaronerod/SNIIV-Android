@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReporteGeneralActivity"
-            android:label="Reporte General">
-
+            android:label="Reporte General"
+            android:parentActivityName=".MainActivity" >
         </activity>
 
         <activity android:name=".OfertaActivity"

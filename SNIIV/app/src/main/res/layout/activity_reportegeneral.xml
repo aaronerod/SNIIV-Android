@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_vigentes"
-        android:id="@+id/txtVigentes"
+        android:id="@+id/txtVigentes1"
         android:layout_below="@+id/txtRegistradas"
         android:layout_alignRight="@+id/txtAcciones2"
         android:layout_alignEnd="@+id/txtAcciones2" />

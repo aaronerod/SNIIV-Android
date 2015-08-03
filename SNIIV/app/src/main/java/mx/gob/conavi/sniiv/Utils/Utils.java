@@ -1,10 +1,20 @@
 package mx.gob.conavi.sniiv.Utils;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import org.w3c.dom.Element;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
+    private static DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
+
     public static ArrayList<String> listMenu = new ArrayList<>();
     public static ArrayList<String> listEstados = new ArrayList<>();
     public static String[] listEdo = new String[33];
@@ -15,6 +25,61 @@ public class Utils {
         listMenu.add("Demanda");
         populateEstados();
         populateEdos();
+    }
+
+    public static String toStringDivide(long numero, int divide) {
+        return decimalFormat.format((double)numero / divide);
+    }
+
+    public static String toStringDivide(long numero) {
+        return toStringDivide(numero, 1000);
+    }
+
+    public static String getTextContent(Element element, String tag) {
+        return element.getElementsByTagName(tag).item(0).getTextContent();
+    }
+
+    public static long parseLong(String string) {
+        try {
+            return Long.parseLong(string);
+        } catch(NumberFormatException nfe) {
+            return 0;
+        }
+    }
+
+    public static int parseInt(String string) {
+        try {
+            return Integer.parseInt(string);
+        } catch(NumberFormatException nfe) {
+            return 0;
+        }
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager manager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+
+        return info != null && info.isConnected();
+    }
+
+    public static void alertDialogShow(Context context, String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .create()
+                .show();
+    }
+
+    public static void alertDialogShow(Context context, String title, String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(title)
+                .create()
+                .show();
     }
 
     private static void populateEdos(){

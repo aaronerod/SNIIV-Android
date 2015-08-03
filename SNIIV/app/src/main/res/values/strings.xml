@@ -32,5 +32,7 @@
 
 
     <string name="title_avance_obra">Avance Obra</string>
+    <string name="mensaje_espera">Espere por favor</string>
+    <string name="no_conectado">No hay conexión a internet</string>
 
 </resources>
