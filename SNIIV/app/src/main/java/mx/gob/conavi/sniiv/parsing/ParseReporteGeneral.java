@@ -1,13 +1,13 @@
 package mx.gob.conavi.sniiv.parsing;
 
-import android.util.Log;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
+
+import mx.gob.conavi.sniiv.Utils.Utils;
 
 /**
  * Created by admin on 31/07/15.
@@ -29,38 +29,17 @@ public class ParseReporteGeneral extends ParseBase<ReporteGeneral[]> {
 
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nNode;
-                ReporteGeneral reporte = new ReporteGeneral(parseInt(getTextContent(element, "cve_ent")),
-                        parseLong(getTextContent(element, "acc_finan")),
-                        parseLong(getTextContent(element, "mto_finan")),
-                        parseLong(getTextContent(element, "acc_subs")),
-                        parseLong(getTextContent(element, "mto_subs")),
-                        parseLong(getTextContent(element, "vv")),
-                        parseLong(getTextContent(element, "vr")));
-                Log.v(TAG, reporte.toString());
+                ReporteGeneral reporte = new ReporteGeneral(Utils.parseInt(Utils.getTextContent(element, "cve_ent")),
+                        Utils.parseLong(Utils.getTextContent(element, "acc_finan")),
+                        Utils.parseLong(Utils.getTextContent(element, "mto_finan")),
+                        Utils.parseLong(Utils.getTextContent(element, "acc_subs")),
+                        Utils.parseLong(Utils.getTextContent(element, "mto_subs")),
+                        Utils.parseLong(Utils.getTextContent(element, "vv")),
+                        Utils.parseLong(Utils.getTextContent(element, "vr")));
                 datos.add(reporte);
             }
         }
 
         return datos.toArray(new ReporteGeneral[0]);
-    }
-
-    private String getTextContent(Element element, String tag) {
-        return element.getElementsByTagName(tag).item(0).getTextContent();
-    }
-
-    private long parseLong(String string) {
-        try {
-           return Long.parseLong(string);
-        } catch(NumberFormatException nfe) {
-            return 0;
-        }
-    }
-
-    private int parseInt(String string) {
-        try {
-            return Integer.parseInt(string);
-        } catch(NumberFormatException nfe) {
-            return 0;
-        }
     }
 }
