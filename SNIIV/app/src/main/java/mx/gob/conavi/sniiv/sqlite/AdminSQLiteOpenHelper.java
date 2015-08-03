@@ -12,7 +12,7 @@ import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
 
 public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "sniiv.db";
 
     public AdminSQLiteOpenHelper(Context context ) {
@@ -27,10 +27,10 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL(
                 "CREATE TABLE ReporteGeneral(" +
                         "cve_ent INTEGER" +
-                        ",accFinan INTEGER" +
-                        ",mtoFinan INTEGER" +
-                        ",accSubs INTEGER" +
-                        ",mtoSubs INTEGER" +
+                        ",acc_finan INTEGER" +
+                        ",mto_finan INTEGER" +
+                        ",acc_subs INTEGER" +
+                        ",mto_subs INTEGER" +
                         ",vv INTEGER" +
                         ",vr Integer" +
                         ")");

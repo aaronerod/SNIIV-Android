@@ -73,4 +73,32 @@ public class ReporteGeneralRepository implements Repository<ReporteGeneral> {
 
         return datos.toArray(new ReporteGeneral[0]);
     }
+
+    public ReporteGeneral consultaNacional() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT * FROM (SELECT SUM(acc_finan) as acc_finan, " +
+                "SUM(mto_finan) AS mto_finan, " +
+                "SUM(acc_subs) AS acc_subs, " +
+                "SUM(mto_subs) AS mto_subs, " +
+                "SUM(vv) AS vv, " +
+                "SUM(vr) AS vr " +
+                "FROM " + ReporteGeneral.TABLE + ") T";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ReporteGeneral reporte = new ReporteGeneral();
+
+        if (cursor.moveToFirst()) {
+            reporte.setAcc_finan(cursor.getInt(cursor.getColumnIndex("acc_finan")));
+            reporte.setMto_finan(cursor.getLong(cursor.getColumnIndex("mto_finan")));
+            reporte.setAcc_subs(cursor.getLong((cursor.getColumnIndex("acc_subs"))));
+            reporte.setMto_subs(cursor.getLong(cursor.getColumnIndex("mto_subs")));
+            reporte.setVv(cursor.getLong(cursor.getColumnIndex("vv")));
+            reporte.setVr(cursor.getLong(cursor.getColumnIndex("vr")));
+        }
+
+        cursor.close();
+        db.close();
+
+        return reporte;
+    }
 }
