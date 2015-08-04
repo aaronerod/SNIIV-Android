@@ -4,32 +4,18 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.Spinner;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
-import mx.gob.conavi.sniiv.datos.Entidad;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
-import android.widget.NumberPicker.OnValueChangeListener;
-import android.widget.TextView;
-
-public class ReporteGeneralActivity extends Activity implements AdapterView.OnItemSelectedListener, NumberPicker.OnClickListener {
+public class ReporteGeneralActivity extends Activity {
 
     public static final String TAG = "ReporteGeneralActivity";
     private NumberPicker pickerEstados;
@@ -55,15 +41,8 @@ public class ReporteGeneralActivity extends Activity implements AdapterView.OnIt
         pickerEstados.setMaxValue(edos.length - 1);
         pickerEstados.setMinValue(0);
         pickerEstados.setDisplayedValues(edos);
-        pickerEstados.setOnClickListener(this);
-
-        pickerEstados.setOnValueChangedListener(new OnValueChangeListener() {
-
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Log.v(TAG, oldVal + " " + newVal);
-            }
-        });
+        pickerEstados.setOnScrollListener(scrollListener);
+        pickerEstados.setEnabled(false);
     }
 
     @Override
@@ -83,6 +62,7 @@ public class ReporteGeneralActivity extends Activity implements AdapterView.OnIt
         if(datosStorage.length > 0) {
             datos = new DatosReporteGeneral(this, datosStorage);
             entidad = datos.consultaNacional();
+            pickerEstados.setEnabled(true);
         } else {
             Utils.alertDialogShow(this, getString(R.string.no_conectado));
         }
@@ -90,17 +70,21 @@ public class ReporteGeneralActivity extends Activity implements AdapterView.OnIt
         mostrarDatos();
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-    }
+    private NumberPicker.OnScrollListener scrollListener = new NumberPicker.OnScrollListener() {
+        @Override
+        public void onScrollStateChange(NumberPicker picker, int scrollState) {
+            if(scrollState != NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) { return; }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
+            int valor = picker.getValue();
+            if (valor == 0) {
+                entidad = datos.consultaNacional();
+            } else {
+                entidad = datos.consultaEntidad(valor);
+            }
 
-    @Override
-    public void onClick(View v) {
-    }
+            mostrarDatos();
+        }
+    };
 
     public void mostrarDatos() {
         if(entidad != null) {
@@ -135,6 +119,7 @@ public class ReporteGeneralActivity extends Activity implements AdapterView.OnIt
         @Override
         protected void onPostExecute(Void s) {
             mostrarDatos();
+            pickerEstados.setEnabled(true);
             progressDialog.dismiss();
         }
     }

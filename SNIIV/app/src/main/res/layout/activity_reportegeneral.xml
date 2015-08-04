@@ -180,6 +180,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/pckEstados"
         android:layout_alignParentBottom="true"
+        android:descendantFocusability="blocksDescendants"
         android:layout_centerHorizontal="true" />
 
 

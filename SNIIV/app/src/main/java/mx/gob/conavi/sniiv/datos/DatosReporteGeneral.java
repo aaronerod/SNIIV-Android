@@ -21,10 +21,10 @@ public class DatosReporteGeneral {
         return repository.consultaNacional();
     }
 
-    public ReporteGeneral consultaEntidad(Entidad entidad) {
+    public ReporteGeneral consultaEntidad(int entidad) {
         ReporteGeneral resultado = null;
         for (ReporteGeneral reporte : datos) {
-            if (reporte.getCve_ent() == entidad.ordinal()) {
+            if (reporte.getCve_ent() == entidad) {
                 resultado = reporte;
                 break;
             }
