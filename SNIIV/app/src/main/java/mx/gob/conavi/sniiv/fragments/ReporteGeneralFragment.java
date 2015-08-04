@@ -1,70 +1,88 @@
-package mx.gob.conavi.sniiv;
+package mx.gob.conavi.sniiv.fragments;
+
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
-public class ReporteGeneralActivity extends AppCompatActivity {
-
-    public static final String TAG = "ReporteGeneralActivity";
+/**
+ * Created by admin on 04/08/15.
+ */
+public class ReporteGeneralFragment extends Fragment {
+    public static final String TAG = "ReporteGeneralFragment";
     private NumberPicker pickerEstados;
     private DatosReporteGeneral datos;
     private ReporteGeneral entidad;
-    private ReporteGeneralRepository repository = new ReporteGeneralRepository(this);
+    private ReporteGeneralRepository repository;
     protected ProgressDialog progressDialog;
 
-    @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
+    @Bind(R.id.txtAccionesFinan)
+    TextView txtAccFinan;
     @Bind(R.id.txtMontoFinan) TextView txtMtoFinan;
     @Bind(R.id.txtAccionesSub) TextView txtAccSub;
     @Bind(R.id.txtMontoSub) TextView txtMtoSub;
     @Bind(R.id.txtVigentes) TextView txtVigentes;
     @Bind(R.id.txtRegistradas) TextView txtRegistradas;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reportegeneral);
-        ButterKnife.bind(this);
+        repository = new ReporteGeneralRepository(getActivity());
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_reportegeneral, container, false);
+        ButterKnife.bind(this, rootView);
 
         String[] edos = Utils.listEdo;
-        pickerEstados = (NumberPicker) findViewById(R.id.pckEstados);
+        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
         pickerEstados.setMaxValue(edos.length - 1);
         pickerEstados.setMinValue(0);
         pickerEstados.setDisplayedValues(edos);
         pickerEstados.setOnScrollListener(scrollListener);
         pickerEstados.setEnabled(false);
+
+        return rootView;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
-        /*if (Utils.isNetworkAvailable(this)) {
+        //if (Utils.isNetworkAvailable(getActivity())) {
             new AsyncTaskRunner().execute();
-            return;
-        }*/
+            //return;
+        //}
 
-        loadFromStorage();
+        //loadFromStorage();
     }
 
     private void loadFromStorage() {
         ReporteGeneral[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
-            datos = new DatosReporteGeneral(this, datosStorage);
+            datos = new DatosReporteGeneral(getActivity(), datosStorage);
             entidad = datos.consultaNacional();
             pickerEstados.setEnabled(true);
         } else {
-            Utils.alertDialogShow(this, getString(R.string.no_conectado));
+            Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
         mostrarDatos();
@@ -100,7 +118,7 @@ public class ReporteGeneralActivity extends AppCompatActivity {
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ReporteGeneralActivity.this,
+            progressDialog = ProgressDialog.show(getActivity(),
                     null, getString(R.string.mensaje_espera));
         }
 
@@ -111,7 +129,7 @@ public class ReporteGeneralActivity extends AppCompatActivity {
             repository.deleteAll();
             repository.saveAll(reportes);
 
-            datos = new DatosReporteGeneral(ReporteGeneralActivity.this, reportes);
+            datos = new DatosReporteGeneral(getActivity(), reportes);
             entidad = datos.consultaNacional();
             return null;
         }
