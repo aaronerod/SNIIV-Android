@@ -3,7 +3,7 @@ package mx.gob.conavi.sniiv;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -15,7 +15,7 @@ import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
-public class ReporteGeneralActivity extends ActionBarActivity {
+public class ReporteGeneralActivity extends AppCompatActivity {
 
     public static final String TAG = "ReporteGeneralActivity";
     private NumberPicker pickerEstados;
@@ -29,7 +29,7 @@ public class ReporteGeneralActivity extends ActionBarActivity {
     @Bind(R.id.txtAccionesSub) TextView txtAccSub;
     @Bind(R.id.txtMontoSub) TextView txtMtoSub;
     @Bind(R.id.txtVigentes) TextView txtVigentes;
-    @Bind(R.id.txtregistradas) TextView txtRegistradas;
+    @Bind(R.id.txtRegistradas) TextView txtRegistradas;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

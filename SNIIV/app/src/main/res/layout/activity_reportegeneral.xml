@@ -18,15 +18,15 @@
         android:layout_marginTop="24dp"
         android:width="250dp"
         android:gravity="center"
-        android:layout_alignLeft="@+id/txtProceso50"
-        android:layout_alignStart="@+id/txtProceso50" />
+        android:layout_alignLeft="@+id/txtAcciones"
+        android:layout_alignStart="@+id/txtAcciones" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_acciones"
-        android:id="@+id/txtProceso50"
+        android:id="@+id/txtAcciones"
         android:layout_below="@+id/txtTitleAvanceObra"
         android:layout_alignLeft="@+id/txtTitleSubsidios"
         android:layout_alignStart="@+id/txtTitleSubsidios"
@@ -37,8 +37,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_monto"
-        android:id="@+id/txtMonto1"
-        android:layout_below="@+id/txtProceso50"
+        android:id="@+id/txtMonto"
+        android:layout_below="@+id/txtAcciones"
         android:layout_alignLeft="@+id/txtTitleSubsidios"
         android:layout_alignStart="@+id/txtTitleSubsidios"
         android:layout_marginTop="5dp"/>
@@ -51,7 +51,7 @@
         android:textColor="#ffffffff"
         android:background="#ff00803b"
         android:textSize="20dp"
-        android:layout_below="@+id/txtMonto1"
+        android:layout_below="@+id/txtMonto"
         android:layout_centerHorizontal="true"
         android:width="250dp"
         android:gravity="center"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_registradas"
-        android:id="@+id/txtRegistradas"
+        android:id="@+id/txtViviendasRegistradas"
         android:layout_below="@+id/txtTitleOfertaVivienda"
         android:layout_alignLeft="@+id/txtTitleOfertaVivienda"
         android:layout_alignStart="@+id/txtTitleOfertaVivienda" />
@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_vigentes"
-        android:id="@+id/txtVigentes1"
+        android:id="@+id/txtViviendasVigentes"
         android:layout_below="@+id/txtRegistradas"
         android:layout_alignRight="@+id/txtAcciones2"
         android:layout_alignEnd="@+id/txtAcciones2" />
@@ -119,7 +119,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="-"
         android:id="@+id/txtAccionesFinan"
-        android:layout_alignTop="@+id/txtProceso50"
+        android:layout_alignTop="@+id/txtAcciones"
         android:layout_alignRight="@+id/txtTitleSubsidios"
         android:layout_alignEnd="@+id/txtTitleSubsidios"
         android:layout_marginTop="5dp"/>
@@ -160,7 +160,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="-"
-        android:id="@+id/txtregistradas"
+        android:id="@+id/txtRegistradas"
         android:layout_below="@+id/txtTitleOfertaVivienda"
         android:layout_alignRight="@+id/txtTitleOfertaVivienda"
         android:layout_alignEnd="@+id/txtTitleOfertaVivienda" />
@@ -171,9 +171,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="-"
         android:id="@+id/txtVigentes"
-        android:layout_below="@+id/txtregistradas"
-        android:layout_alignRight="@+id/txtregistradas"
-        android:layout_alignEnd="@+id/txtregistradas" />
+        android:layout_below="@+id/txtRegistradas"
+        android:layout_alignRight="@+id/txtRegistradas"
+        android:layout_alignEnd="@+id/txtRegistradas" />
 
     <NumberPicker
         android:layout_width="wrap_content"
