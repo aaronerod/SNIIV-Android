@@ -34,5 +34,10 @@
     <string name="title_avance_obra">Avance Obra</string>
     <string name="mensaje_espera">Espere por favor</string>
     <string name="no_conectado">No hay conexión a internet</string>
+    <string name="title_section1">Avance Obra</string>
+    <string name="title_section2">PCU</string>
+    <string name="title_section3">Tipo Vivienda</string>
+    <string name="title_section4">Valor Vivienda</string>
+    <string name="title_activity_oferta">Oferta</string>
 
 </resources>

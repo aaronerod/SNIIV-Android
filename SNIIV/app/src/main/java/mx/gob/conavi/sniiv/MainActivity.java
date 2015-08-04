@@ -1,8 +1,8 @@
 package mx.gob.conavi.sniiv;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
     ListView lvwMenu;
     ArrayAdapter<String> arrayAdapter;

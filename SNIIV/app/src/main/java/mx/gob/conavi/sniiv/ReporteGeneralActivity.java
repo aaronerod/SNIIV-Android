@@ -1,9 +1,9 @@
 package mx.gob.conavi.sniiv;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -15,7 +15,7 @@ import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
-public class ReporteGeneralActivity extends Activity {
+public class ReporteGeneralActivity extends ActionBarActivity {
 
     public static final String TAG = "ReporteGeneralActivity";
     private NumberPicker pickerEstados;
