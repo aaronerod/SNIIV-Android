@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,19 +27,19 @@ import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
  */
 public class ReporteGeneralFragment extends Fragment {
     public static final String TAG = "ReporteGeneralFragment";
-    private NumberPicker pickerEstados;
+
     private DatosReporteGeneral datos;
     private ReporteGeneral entidad;
     private ReporteGeneralRepository repository;
     protected ProgressDialog progressDialog;
 
-    @Bind(R.id.txtAccionesFinan)
-    TextView txtAccFinan;
+    @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
     @Bind(R.id.txtMontoFinan) TextView txtMtoFinan;
     @Bind(R.id.txtAccionesSub) TextView txtAccSub;
     @Bind(R.id.txtMontoSub) TextView txtMtoSub;
     @Bind(R.id.txtVigentes) TextView txtVigentes;
     @Bind(R.id.txtRegistradas) TextView txtRegistradas;
+    @Bind(R.id.pckEstados) NumberPicker pickerEstados;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,11 +53,9 @@ public class ReporteGeneralFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_reportegeneral, container, false);
         ButterKnife.bind(this, rootView);
 
-        String[] edos = Utils.listEdo;
-        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
-        pickerEstados.setMaxValue(edos.length - 1);
+        pickerEstados.setMaxValue(Utils.listEdo.length - 1);
         pickerEstados.setMinValue(0);
-        pickerEstados.setDisplayedValues(edos);
+        pickerEstados.setDisplayedValues(Utils.listEdo);
         pickerEstados.setOnScrollListener(scrollListener);
         pickerEstados.setEnabled(false);
 
@@ -67,12 +66,12 @@ public class ReporteGeneralFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //if (Utils.isNetworkAvailable(getActivity())) {
+        if (Utils.isNetworkAvailable(getActivity())) {
             new AsyncTaskRunner().execute();
-            //return;
-        //}
+            return;
+        }
 
-        //loadFromStorage();
+        loadFromStorage();
     }
 
     private void loadFromStorage() {
@@ -124,13 +123,18 @@ public class ReporteGeneralFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            ParseReporteGeneral parse = new ParseReporteGeneral();
-            ReporteGeneral[] reportes = parse.getDatos();
-            repository.deleteAll();
-            repository.saveAll(reportes);
+            try {
+                ParseReporteGeneral parse = new ParseReporteGeneral();
+                ReporteGeneral[] reportes = parse.getDatos();
+                repository.deleteAll();
+                repository.saveAll(reportes);
 
-            datos = new DatosReporteGeneral(getActivity(), reportes);
-            entidad = datos.consultaNacional();
+                datos = new DatosReporteGeneral(getActivity(), reportes);
+                entidad = datos.consultaNacional();
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), R.string.mensaje_error, Toast.LENGTH_LONG).show();
+            }
+
             return null;
         }
 
