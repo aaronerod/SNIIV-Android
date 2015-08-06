@@ -10,7 +10,6 @@ import org.w3c.dom.Element;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Utils {
     private static DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
@@ -25,6 +24,10 @@ public class Utils {
         listMenu.add("Demanda");
         populateEstados();
         populateEdos();
+    }
+
+    public static String toString(long numero) {
+        return decimalFormat.format(numero);
     }
 
     public static String toStringDivide(long numero, int divide) {

@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv;
+package mx.gob.conavi.sniiv.activities;
 
 import android.support.v4.app.Fragment;
 

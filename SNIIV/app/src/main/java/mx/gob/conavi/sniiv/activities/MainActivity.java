@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv;
+package mx.gob.conavi.sniiv.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 
 public class MainActivity extends AppCompatActivity {

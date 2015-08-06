@@ -6,20 +6,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
-import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
 /**
@@ -132,7 +132,7 @@ public class ReporteGeneralFragment extends Fragment {
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
             } catch (Exception e) {
-                Toast.makeText(getActivity(), R.string.mensaje_error, Toast.LENGTH_LONG).show();
+                Log.v(TAG, "Error obteniendo datos");
             }
 
             return null;

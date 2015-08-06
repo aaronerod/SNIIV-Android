@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.parsing;
+package mx.gob.conavi.sniiv.modelos;
 
 /**
  * Created by admin on 31/07/15.

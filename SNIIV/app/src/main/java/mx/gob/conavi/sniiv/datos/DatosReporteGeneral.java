@@ -2,7 +2,7 @@ package mx.gob.conavi.sniiv.datos;
 
 import android.content.Context;
 
-import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
 /**

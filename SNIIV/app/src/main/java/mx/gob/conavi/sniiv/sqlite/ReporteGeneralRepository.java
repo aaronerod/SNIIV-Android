@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 
 /**
  * Created by admin on 31/07/15.
@@ -20,25 +20,23 @@ public class ReporteGeneralRepository implements Repository<ReporteGeneral> {
         dbHelper = new AdminSQLiteOpenHelper(context);
     }
 
-    public void save(ReporteGeneral reporte) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("cve_ent", reporte.getCve_ent());
-        values.put("acc_finan", reporte.getAcc_finan());
-        values.put("mto_finan", reporte.getMto_finan());
-        values.put("acc_subs", reporte.getAcc_subs());
-        values.put("mto_subs", reporte.getMto_finan());
-        values.put("vv", reporte.getVv());
-        values.put("vr", reporte.getVr());
-
-        db.insert(ReporteGeneral.TABLE, null, values);
-        db.close();
-    }
-
     public void saveAll(ReporteGeneral[] elementos) {
-        for (ReporteGeneral r : elementos) {
-            save(r);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        for (ReporteGeneral elemento : elementos) {
+            ContentValues values = new ContentValues();
+            values.put("cve_ent", elemento.getCve_ent());
+            values.put("acc_finan", elemento.getAcc_finan());
+            values.put("mto_finan", elemento.getMto_finan());
+            values.put("acc_subs", elemento.getAcc_subs());
+            values.put("mto_subs", elemento.getMto_subs());
+            values.put("vv", elemento.getVv());
+            values.put("vr", elemento.getVr());
+
+            db.insert(ReporteGeneral.TABLE, null, values);
         }
+
+        db.close();
     }
 
     public void deleteAll() {

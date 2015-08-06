@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="Menú" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,21 +20,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReporteGeneralActivity"
+            android:name=".activities.ReporteGeneralActivity"
             android:label="Reporte General"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".activities.MainActivity" >
         </activity>
         <activity
-            android:name=".DemandaActivity"
+            android:name=".activities.DemandaActivity"
             android:label="Demanda" >
         </activity>
         <activity
-            android:name=".OfertaActivity"
+            android:name=".activities.OfertaActivity"
             android:label="@string/title_activity_oferta"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="mx.gob.conavi.sniiv.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
     </application>
 
