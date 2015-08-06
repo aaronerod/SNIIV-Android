@@ -54,15 +54,15 @@ public class AvanceObraRepository implements Repository<AvanceObra> {
         ArrayList<AvanceObra> datos = new ArrayList<>();
         if (cursor.moveToFirst()) {
             do {
-                AvanceObra reporte = new AvanceObra();
-                reporte.setCve_ent(cursor.getInt(cursor.getColumnIndex("cve_ent")));
-                reporte.setViv_proc_m50(cursor.getLong(cursor.getColumnIndex("viv_proc_m50")));
-                reporte.setViv_proc_50_99(cursor.getLong((cursor.getColumnIndex("viv_proc_50_99"))));
-                reporte.setViv_term_rec(cursor.getLong(cursor.getColumnIndex("viv_term_rec")));
-                reporte.setViv_term_ant(cursor.getLong(cursor.getColumnIndex("viv_term_ant")));
-                reporte.setTotal(cursor.getLong(cursor.getColumnIndex("total")));
+                AvanceObra dato = new AvanceObra();
+                dato.setCve_ent(cursor.getInt(cursor.getColumnIndex("cve_ent")));
+                dato.setViv_proc_m50(cursor.getLong(cursor.getColumnIndex("viv_proc_m50")));
+                dato.setViv_proc_50_99(cursor.getLong((cursor.getColumnIndex("viv_proc_50_99"))));
+                dato.setViv_term_rec(cursor.getLong(cursor.getColumnIndex("viv_term_rec")));
+                dato.setViv_term_ant(cursor.getLong(cursor.getColumnIndex("viv_term_ant")));
+                dato.setTotal(cursor.getLong(cursor.getColumnIndex("total")));
 
-                datos.add(reporte);
+                datos.add(dato);
             } while (cursor.moveToNext());
         }
 
@@ -72,6 +72,7 @@ public class AvanceObraRepository implements Repository<AvanceObra> {
         return datos.toArray(new AvanceObra[0]);
     }
 
+    @Override
     public AvanceObra consultaNacional() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT * FROM (SELECT SUM(viv_proc_m50) as viv_proc_m50, " +

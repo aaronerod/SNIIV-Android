@@ -4,13 +4,13 @@ package mx.gob.conavi.sniiv.modelos;
  * Created by admin on 31/07/15.
  */
 public class ReporteGeneral {
-    int cve_ent;
-    long acc_finan;
-    long mto_finan;
-    long acc_subs;
-    long mto_subs;
-    long vv;
-    long vr;
+    private int cve_ent;
+    private long acc_finan;
+    private long mto_finan;
+    private long acc_subs;
+    private long mto_subs;
+    private long vv;
+    private long vr;
 
     public static final String TABLE = "ReporteGeneral";
 

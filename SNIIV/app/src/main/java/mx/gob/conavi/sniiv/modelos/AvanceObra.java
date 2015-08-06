@@ -4,12 +4,12 @@ package mx.gob.conavi.sniiv.modelos;
  * Created by admin on 05/08/15.
  */
 public class AvanceObra {
-    int cve_ent;
-    long viv_proc_m50;
-    long viv_proc_50_99;
-    long viv_term_rec;
-    long viv_term_ant;
-    long total;
+    private int cve_ent;
+    private long viv_proc_m50;
+    private long viv_proc_50_99;
+    private long viv_term_rec;
+    private long viv_term_ant;
+    private long total;
 
     public static final String TABLE = "AvanceObra";
 
