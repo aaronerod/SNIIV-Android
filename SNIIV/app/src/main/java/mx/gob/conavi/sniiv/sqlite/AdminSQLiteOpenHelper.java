@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import mx.gob.conavi.sniiv.parsing.ReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 
 public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 

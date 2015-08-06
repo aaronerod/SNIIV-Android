@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv;
+package mx.gob.conavi.sniiv.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.adapters.SectionsPagerAdapter;
 
 public class OfertaActivity extends AppCompatActivity implements ActionBar.TabListener {

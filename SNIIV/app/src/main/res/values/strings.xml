@@ -39,5 +39,6 @@
     <string name="title_section3">Tipo Vivienda</string>
     <string name="title_section4">Valor Vivienda</string>
     <string name="title_activity_oferta">Oferta</string>
+    <string name="mensaje_error">Ha ocurrido un error</string>
 
 </resources>
