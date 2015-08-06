@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,37 +24,24 @@ import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 /**
  * Created by admin on 04/08/15.
  */
-public class AvanceObraFragment extends Fragment {
+public class AvanceObraFragment extends BaseFragment {
     public static final String TAG = "AvanceObraFragment";
 
     private DatosAvanceObra datos;
     private AvanceObra entidad;
     private AvanceObraRepository repository;
-    protected ProgressDialog progressDialog;
 
     @Bind(R.id.txtProceso50) TextView txtProceso50;
     @Bind(R.id.txtProceso99) TextView txtProceso99;
     @Bind(R.id.txtTerminadasRecientes) TextView txtTerminadasRecientes;
     @Bind(R.id.txtTerminadasAntiguas) TextView txtTerminadasAntiguas;
     @Bind(R.id.txtTotal) TextView txtTotal;
-    @Bind(R.id.pckEstados) NumberPicker pickerEstados;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new AvanceObraRepository(getActivity());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (Utils.isNetworkAvailable(getActivity())) {
-            new AsyncTaskRunner().execute();
-            return;
-        }
-
-        loadFromStorage();
+        scrollListener = configuraScrollListener();
     }
 
     protected void loadFromStorage() {
@@ -77,30 +63,11 @@ public class AvanceObraFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_avance_obra, container, false);
         ButterKnife.bind(this, rootView);
 
-        pickerEstados.setMaxValue(Utils.listEdo.length - 1);
-        pickerEstados.setMinValue(0);
-        pickerEstados.setDisplayedValues(Utils.listEdo);
-        pickerEstados.setOnScrollListener(scrollListener);
-        pickerEstados.setEnabled(false);
+        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
+        configuraPickerView();
 
         return rootView;
     }
-
-    protected NumberPicker.OnScrollListener scrollListener = new NumberPicker.OnScrollListener() {
-        @Override
-        public void onScrollStateChange(NumberPicker picker, int scrollState) {
-            if(scrollState != NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) { return; }
-
-            int valor = picker.getValue();
-            if (valor == 0) {
-                entidad = datos.consultaNacional();
-            } else {
-                entidad = datos.consultaEntidad(valor);
-            }
-
-            mostrarDatos();
-        }
-    };
 
     protected void mostrarDatos() {
         if(entidad != null) {
@@ -110,6 +77,30 @@ public class AvanceObraFragment extends Fragment {
             txtTerminadasAntiguas.setText(Utils.toString(entidad.getViv_term_ant()));
             txtTotal.setText(Utils.toString(entidad.getTotal()));
         }
+    }
+
+    @Override
+    protected NumberPicker.OnScrollListener configuraScrollListener() {
+         return new NumberPicker.OnScrollListener() {
+             @Override
+             public void onScrollStateChange(NumberPicker picker, int scrollState) {
+                 if(scrollState != NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) { return; }
+
+                 int valor = picker.getValue();
+                 if (valor == 0) {
+                     entidad = datos.consultaNacional();
+                 } else {
+                     entidad = datos.consultaEntidad(valor);
+                 }
+
+                 mostrarDatos();
+             }
+         };
+    }
+
+    @Override
+    protected AsyncTask<Void, Void, Void> getAsyncTask() {
+        return new AsyncTaskRunner();
     }
 
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
@@ -124,7 +115,6 @@ public class AvanceObraFragment extends Fragment {
             try {
                 ParseAvanceObra parse = new ParseAvanceObra();
                 AvanceObra[] datosParse = parse.getDatos();
-                Log.v(TAG, "Length: " + datosParse.length);
                 repository.deleteAll();
                 repository.saveAll(datosParse);
 
@@ -139,9 +129,7 @@ public class AvanceObraFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            mostrarDatos();
-            pickerEstados.setEnabled(true);
-            progressDialog.dismiss();
+            habilitaPantalla();
         }
     }
 }
