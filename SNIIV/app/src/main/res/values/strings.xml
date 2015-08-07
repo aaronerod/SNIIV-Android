@@ -40,5 +40,6 @@
     <string name="title_section4">Valor Vivienda</string>
     <string name="title_activity_oferta">Oferta</string>
     <string name="mensaje_error">Ha ocurrido un error</string>
+    <string name="empty_value">-</string>
 
 </resources>

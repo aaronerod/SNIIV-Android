@@ -14,7 +14,7 @@ import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
  */
 public class ReporteGeneralRepository implements Repository<ReporteGeneral> {
 
-    private AdminSQLiteOpenHelper dbHelper;
+    private final AdminSQLiteOpenHelper dbHelper;
 
     public ReporteGeneralRepository(Context context) {
         dbHelper = new AdminSQLiteOpenHelper(context);

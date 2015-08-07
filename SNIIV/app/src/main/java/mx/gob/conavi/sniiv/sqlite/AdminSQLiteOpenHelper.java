@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 
-public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
+class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "sniiv.db";

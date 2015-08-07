@@ -13,7 +13,7 @@ import mx.gob.conavi.sniiv.modelos.TipoVivienda;
  * Created by admin on 06/08/15.
  */
 public class TipoViviendaRepository implements Repository<TipoVivienda> {
-    private AdminSQLiteOpenHelper dbHelper;
+    private final AdminSQLiteOpenHelper dbHelper;
 
     public TipoViviendaRepository(Context context) {
         dbHelper = new AdminSQLiteOpenHelper(context);

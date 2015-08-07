@@ -23,6 +23,9 @@
             android:name=".activities.ReporteGeneralActivity"
             android:label="Reporte General"
             android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name=".activities.DemandaActivity"

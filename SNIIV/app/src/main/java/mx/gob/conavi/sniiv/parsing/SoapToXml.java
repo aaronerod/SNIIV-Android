@@ -6,9 +6,6 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 
 
 /**
@@ -17,9 +14,9 @@ import java.io.IOException;
 public class SoapToXml {
     private static final String TAG = SoapToXml.class.getSimpleName();
     private static final String SOAP_ACTION_PREFIX = "/";
-    private String namespace;
-    private String urlString;
-    private String soapAction;
+    private final String namespace;
+    private final String urlString;
+    private final String soapAction;
 
     public SoapToXml(String namespace, String url, String action) {
         this.namespace = namespace;

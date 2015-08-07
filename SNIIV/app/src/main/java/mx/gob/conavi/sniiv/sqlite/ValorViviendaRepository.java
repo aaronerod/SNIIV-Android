@@ -13,7 +13,7 @@ import mx.gob.conavi.sniiv.modelos.ValorVivienda;
  * Created by admin on 07/08/15.
  */
 public class ValorViviendaRepository implements Repository<ValorVivienda> {
-    private AdminSQLiteOpenHelper dbHelper;
+    private final AdminSQLiteOpenHelper dbHelper;
 
     public ValorViviendaRepository(Context context) {
         dbHelper = new AdminSQLiteOpenHelper(context);

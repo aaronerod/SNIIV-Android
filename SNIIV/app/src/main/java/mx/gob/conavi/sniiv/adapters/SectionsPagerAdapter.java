@@ -18,7 +18,7 @@ import mx.gob.conavi.sniiv.fragments.ValorViviendaFragment;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private Context mContext;
+    private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);

@@ -12,11 +12,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Utils {
-    private static DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
+    private static final DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
 
-    public static ArrayList<String> listMenu = new ArrayList<>();
-    public static ArrayList<String> listEstados = new ArrayList<>();
-    public static String[] listEdo = new String[33];
+    public static final ArrayList<String> listMenu = new ArrayList<>();
+    public static final ArrayList<String> listEstados = new ArrayList<>();
+    public static final String[] listEdo = new String[33];
 
     static {
         listMenu.add("Reporte General");
