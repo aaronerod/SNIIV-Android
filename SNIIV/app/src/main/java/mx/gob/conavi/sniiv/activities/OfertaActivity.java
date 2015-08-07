@@ -12,8 +12,8 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.adapters.SectionsPagerAdapter;
 
 public class OfertaActivity extends AppCompatActivity implements ActionBar.TabListener {
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    ViewPager mViewPager;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

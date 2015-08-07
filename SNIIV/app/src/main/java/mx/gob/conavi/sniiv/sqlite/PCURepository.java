@@ -13,7 +13,7 @@ import mx.gob.conavi.sniiv.modelos.PCU;
  * Created by admin on 06/08/15.
  */
 public class PCURepository implements Repository<PCU> {
-    private AdminSQLiteOpenHelper dbHelper;
+    private final AdminSQLiteOpenHelper dbHelper;
 
     public PCURepository(Context context) {
         dbHelper = new AdminSQLiteOpenHelper(context);
