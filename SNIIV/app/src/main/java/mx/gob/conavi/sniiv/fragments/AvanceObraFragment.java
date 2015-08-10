@@ -30,6 +30,7 @@ public class AvanceObraFragment extends BaseFragment {
     private DatosAvanceObra datos;
     private AvanceObra entidad;
     private AvanceObraRepository repository;
+    private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtProceso50) TextView txtProceso50;
     @Bind(R.id.txtProceso99) TextView txtProceso99;
@@ -122,6 +123,7 @@ public class AvanceObraFragment extends BaseFragment {
                 entidad = datos.consultaNacional();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
+                errorRetrievingData = true;
             }
 
             return null;
@@ -129,7 +131,12 @@ public class AvanceObraFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            habilitaPantalla();
+            if (!errorRetrievingData) {
+                habilitaPantalla();
+            } else {
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                progressDialog.dismiss();
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ public class ReporteGeneralFragment extends BaseFragment {
     private DatosReporteGeneral datos;
     private ReporteGeneral entidad;
     private ReporteGeneralRepository repository;
-    protected ProgressDialog progressDialog;
+    private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
     @Bind(R.id.txtMontoFinan) TextView txtMtoFinan;
@@ -124,7 +124,8 @@ public class ReporteGeneralFragment extends BaseFragment {
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
             } catch (Exception e) {
-                Log.v(TAG, "Error obteniendo datos");
+                Log.v(TAG, "Error obteniendo datos " + e.getMessage());
+                errorRetrievingData = true;
             }
 
             return null;
@@ -132,9 +133,12 @@ public class ReporteGeneralFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            mostrarDatos();
-            pickerEstados.setEnabled(true);
-            progressDialog.dismiss();
+            if (!errorRetrievingData) {
+                habilitaPantalla();
+            } else {
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                progressDialog.dismiss();
+            }
         }
     }
 }
