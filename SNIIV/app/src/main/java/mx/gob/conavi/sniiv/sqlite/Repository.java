@@ -8,5 +8,4 @@ public interface Repository<T> {
     void saveAll(T[] elementos);
     void deleteAll();
     T[] loadFromStorage();
-    T consultaNacional();
 }

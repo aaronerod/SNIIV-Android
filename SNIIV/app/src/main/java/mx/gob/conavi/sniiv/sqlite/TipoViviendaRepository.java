@@ -68,7 +68,6 @@ public class TipoViviendaRepository implements Repository<TipoVivienda> {
         return datos.toArray(new TipoVivienda[0]);
     }
 
-    @Override
     public TipoVivienda consultaNacional() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT * FROM (SELECT SUM(horizontal) as horizontal, " +

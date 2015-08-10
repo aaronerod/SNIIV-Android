@@ -74,7 +74,6 @@ public class PCURepository implements Repository<PCU> {
         return datos.toArray(new PCU[0]);
     }
 
-    @Override
     public PCU consultaNacional() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT * FROM (SELECT SUM(u1) as u1, " +

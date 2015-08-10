@@ -72,7 +72,6 @@ public class AvanceObraRepository implements Repository<AvanceObra> {
         return datos.toArray(new AvanceObra[0]);
     }
 
-    @Override
     public AvanceObra consultaNacional() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT * FROM (SELECT SUM(viv_proc_m50) as viv_proc_m50, " +

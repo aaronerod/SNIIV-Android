@@ -72,7 +72,6 @@ public class ValorViviendaRepository implements Repository<ValorVivienda> {
         return datos.toArray(new ValorVivienda[0]);
     }
 
-    @Override
     public ValorVivienda consultaNacional() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT * FROM (SELECT SUM(economica) as economica, " +
