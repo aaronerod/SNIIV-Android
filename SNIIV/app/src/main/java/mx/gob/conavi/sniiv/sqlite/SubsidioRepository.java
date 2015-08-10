@@ -3,6 +3,7 @@ package mx.gob.conavi.sniiv.sqlite;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import mx.gob.conavi.sniiv.modelos.Subsidio;
  * Created by admin on 07/08/15.
  */
 public class SubsidioRepository implements Repository<Subsidio> {
+    private static final String TAG = SubsidioRepository.class.getSimpleName();
     private final AdminSQLiteOpenHelper dbHelper;
     private static String queryEntidad = "SELECT id FROM TipoEntidadEjecutora WHERE descripcion = UPPER(?)";
     private static String queryModalidad = "SELECT id FROM Modalidad WHERE descripcion = ?";
@@ -31,7 +33,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
                 "VALUES(?, ?, ?, ?, ?)";
 
         for (Subsidio elemento : elementos) {
-            dbw.rawQuery(query, new String[]{
+            dbw.execSQL(query, new String[]{
                     String.valueOf(elemento.getCve_ent()),
                     obtenerEntidadEjecutora(dbr, elemento),
                     obtenerModalidad(dbr, elemento),
@@ -54,8 +56,8 @@ public class SubsidioRepository implements Repository<Subsidio> {
     @Override
     public Subsidio[] loadFromStorage() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery =  "SELECT cve_ent, TipoEntidadEjecutora.descripcion," +
-                "Modalidad.descripcion, acciones, mont FROM " + Subsidio.TABLE + " S " +
+        String selectQuery =  "SELECT cve_ent, T.descripcion tipo_ee," +
+                "M.descripcion modalidad, acciones, monto FROM " + Subsidio.TABLE + " S " +
                 " LEFT JOIN TipoEntidadEjecutora T ON S.tipo_ee_id = T.id" +
                 " LEFT JOIN Modalidad M ON S.modalidad_id = M.id";
 
@@ -90,7 +92,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
 
     private String obtenerEntidadEjecutora(SQLiteDatabase dbr, Subsidio elemento) {
         Cursor cursor = dbr.rawQuery(queryEntidad, new String[]{elemento.getTipo_ee()});
-        String resultado = "";
+        String resultado = "null";
 
         if (cursor.moveToFirst()) {
             resultado = String.valueOf(cursor.getInt(cursor.getColumnIndex("id")));
@@ -103,7 +105,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
 
     private String obtenerModalidad(SQLiteDatabase dbr, Subsidio elemento) {
         Cursor cursor = dbr.rawQuery(queryModalidad, new String[]{elemento.getModalidad()});
-        String resultado = "";
+        String resultado = "null";
 
         if (cursor.moveToFirst()) {
             resultado = String.valueOf(cursor.getInt(cursor.getColumnIndex("id")));
@@ -141,7 +143,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
                     case 1:
                         dato.setNueva(consulta); break;
                     case 2:
-                        dato.setNueva(consulta); break;
+                        dato.setUsada(consulta); break;
                     case 3:
                         dato.setAutoproduccion(consulta); break;
                     case 4:
@@ -150,6 +152,8 @@ public class SubsidioRepository implements Repository<Subsidio> {
                         dato.setLotes(consulta); break;
                     case 6:
                         dato.setOtros(consulta); break;
+                    default:
+                        Log.v(TAG, "modalidad: " + modalidadId);
                 }
             } while (cursor.moveToNext());
         }

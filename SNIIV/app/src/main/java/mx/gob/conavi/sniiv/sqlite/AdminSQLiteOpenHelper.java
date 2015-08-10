@@ -16,7 +16,7 @@ import mx.gob.conavi.sniiv.modelos.ValorVivienda;
 
 class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "sniiv.db";
 
     public AdminSQLiteOpenHelper(Context context ) {
@@ -157,7 +157,7 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + PCU.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TipoVivienda.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ValorVivienda.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS EntidadEjecutora");
+        db.execSQL("DROP TABLE IF EXISTS TipoEntidadEjecutora");
         db.execSQL("DROP TABLE IF EXISTS Modalidad");
         db.execSQL("DROP TABLE IF EXISTS Subsidio");
         db.execSQL("DROP TABLE IF EXISTS Organismo");
@@ -180,9 +180,9 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
     private void insertModalidad(SQLiteDatabase db) {
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Nueva')");
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Usada')");
-        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Autoproduccion')");
+        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Autoproducción')");
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Mejoramiento')");
-        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Lotes con Servicio')");
+        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Lotes con servicio')");
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Otros')");
     }
 

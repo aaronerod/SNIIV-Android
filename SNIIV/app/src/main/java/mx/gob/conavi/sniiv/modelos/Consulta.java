@@ -30,4 +30,12 @@ public class Consulta {
     public void setMonto(double monto) {
         this.monto = monto;
     }
+
+    @Override
+    public String toString() {
+        return "Consulta{" +
+                "acciones=" + acciones +
+                ", monto=" + monto +
+                '}';
+    }
 }
