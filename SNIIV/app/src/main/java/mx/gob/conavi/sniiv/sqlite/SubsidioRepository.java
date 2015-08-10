@@ -3,7 +3,6 @@ package mx.gob.conavi.sniiv.sqlite;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -152,8 +151,6 @@ public class SubsidioRepository implements Repository<Subsidio> {
                         dato.setLotes(consulta); break;
                     case 6:
                         dato.setOtros(consulta); break;
-                    default:
-                        Log.v(TAG, "modalidad: " + modalidadId);
                 }
             } while (cursor.moveToNext());
         }

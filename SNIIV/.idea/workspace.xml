@@ -28,13 +28,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbf6071d-ae77-474a-8e6a-c94fd853bb85" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/AdminSQLiteOpenHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/AdminSQLiteOpenHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/AvanceObraFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/AvanceObraFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/modelos/Consulta.java" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/modelos/Consulta.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/FinanciamientoRepository.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/parsing/ParseTipoVivienda.java" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/parsing/ParseTipoVivienda.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/ReporteGeneralFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/ReporteGeneralFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/SubsidioRepository.java" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/SubsidioRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/Utils/Utils.java" afterPath="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/Utils/Utils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -64,12 +60,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SubsidioRepository.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SubsidioRepository.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/SubsidioRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
-              <folding />
+            <state vertical-scroll-proportion="0.62849164">
+              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+              <folding>
+                <element signature="e#809#810#0" expanded="true" />
+                <element signature="e#870#871#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -78,18 +77,26 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/AdminSQLiteOpenHelper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+              <caret line="131" column="39" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReporteGeneralFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/ReporteGeneralFragment.java">
+      <file leaf-file-name="FinanciamientoRepository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/FinanciamientoRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45530728">
-              <caret line="124" column="51" selection-start-line="124" selection-start-column="51" selection-end-line="124" selection-end-column="51" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="64" column="5" selection-start-line="64" selection-start-column="5" selection-end-line="64" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1689#1690#0" expanded="true" />
+                <element signature="e#1733#1734#0" expanded="true" />
+                <element signature="e#1818#1819#0" expanded="true" />
+                <element signature="e#1845#1846#0" expanded="true" />
+                <element signature="e#1927#1928#0" expanded="true" />
+                <element signature="e#1954#1955#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1542,7 +1549,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/datos/DatosAvanceObra.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/modelos/AvanceObra.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/modelos/ReporteGeneral.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/modelos/PCU.java" />
@@ -1590,9 +1596,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/datos/DatosSubsidio.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/parsing/ParseSubsidio.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/modelos/Consulta.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/SubsidioRepository.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/AdminSQLiteOpenHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/ReporteGeneralFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/SubsidioRepository.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/FinanciamientoRepository.java" />
       </list>
     </option>
   </component>
@@ -2130,13 +2137,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/datos/DatosTipoVivienda.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="5" selection-start-line="11" selection-start-column="4" selection-end-line="33" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/modelos/TipoVivienda.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10474861">
@@ -2492,10 +2492,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/SubsidioRepository.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/ReporteGeneralFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+          <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -2503,16 +2503,35 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/AdminSQLiteOpenHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+          <caret line="131" column="39" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/fragments/ReporteGeneralFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/FinanciamientoRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45530728">
-          <caret line="124" column="51" selection-start-line="124" selection-start-column="51" selection-end-line="124" selection-end-column="51" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="5" selection-start-line="64" selection-start-column="5" selection-end-line="64" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1689#1690#0" expanded="true" />
+            <element signature="e#1733#1734#0" expanded="true" />
+            <element signature="e#1818#1819#0" expanded="true" />
+            <element signature="e#1845#1846#0" expanded="true" />
+            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#1954#1955#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/mx/gob/conavi/sniiv/sqlite/SubsidioRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.62849164">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding>
+            <element signature="e#809#810#0" expanded="true" />
+            <element signature="e#870#871#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
