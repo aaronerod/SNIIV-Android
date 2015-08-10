@@ -34,12 +34,17 @@
     <string name="title_avance_obra">Avance Obra</string>
     <string name="mensaje_espera">Espere por favor</string>
     <string name="no_conectado">No hay conexión a internet</string>
-    <string name="title_section1">Avance Obra</string>
-    <string name="title_section2">PCU</string>
-    <string name="title_section3">Tipo Vivienda</string>
-    <string name="title_section4">Valor Vivienda</string>
+    <string name="oferta_section1">Avance Obra</string>
+    <string name="oferta_section2">PCU</string>
+    <string name="oferta_section3">Tipo Vivienda</string>
+    <string name="oferta_section4">Valor Vivienda</string>
+    <string name="demanda_section1">Financiamientos</string>
+    <string name="demanda_section2">Subsidios</string>
     <string name="title_activity_oferta">Oferta</string>
     <string name="mensaje_error">Ha ocurrido un error</string>
     <string name="empty_value">-</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

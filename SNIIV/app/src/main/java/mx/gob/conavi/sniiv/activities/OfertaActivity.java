@@ -9,10 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.adapters.SectionsPagerAdapter;
+import mx.gob.conavi.sniiv.adapters.OfertaPagerAdapter;
 
 public class OfertaActivity extends AppCompatActivity implements ActionBar.TabListener {
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private OfertaPagerAdapter mOfertaPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -26,11 +26,11 @@ public class OfertaActivity extends AppCompatActivity implements ActionBar.TabLi
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        mOfertaPagerAdapter = new OfertaPagerAdapter(this, getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mOfertaPagerAdapter);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -43,10 +43,10 @@ public class OfertaActivity extends AppCompatActivity implements ActionBar.TabLi
         });
 
         // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+        for (int i = 0; i < mOfertaPagerAdapter.getCount(); i++) {
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setText(mOfertaPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
     }

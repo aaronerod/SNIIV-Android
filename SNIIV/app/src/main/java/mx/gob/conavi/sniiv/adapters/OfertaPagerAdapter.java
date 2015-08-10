@@ -16,11 +16,11 @@ import mx.gob.conavi.sniiv.fragments.ValorViviendaFragment;
 /**
  * Created by admin on 04/08/15.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class OfertaPagerAdapter extends FragmentPagerAdapter {
 
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public OfertaPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -47,13 +47,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Locale l = Locale.getDefault();
         switch (position) {
             case 0:
-                return mContext.getString(R.string.title_section1).toUpperCase(l);
+                return mContext.getString(R.string.oferta_section1).toUpperCase(l);
             case 1:
-                return mContext.getString(R.string.title_section2).toUpperCase(l);
+                return mContext.getString(R.string.oferta_section2).toUpperCase(l);
             case 2:
-                return mContext.getString(R.string.title_section3).toUpperCase(l);
+                return mContext.getString(R.string.oferta_section3).toUpperCase(l);
             case 3:
-                return mContext.getString(R.string.title_section4).toUpperCase(l);
+                return mContext.getString(R.string.oferta_section4).toUpperCase(l);
         }
         return null;
     }
