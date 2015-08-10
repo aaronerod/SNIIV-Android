@@ -37,12 +37,3 @@ Thumbs.db
 #.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
-SNIIV/.idea/vcs.xml
-
-SNIIV/.idea/workspace.xml
-
-SNIIV/.idea/gradle.xml
-
-SNIIV/.idea/misc.xml
-
-SNIIV/.idea/workspace.xml
