@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
 import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
@@ -53,6 +56,11 @@ public class ReporteGeneralFragment extends BaseFragment {
         repository = new ReporteGeneralRepository(getActivity());
         fechasRepository = new FechasRepository(getActivity());
         scrollListener = configuraScrollListener();
+    }
+
+    @Override
+    protected String getKey() {
+        return ReporteGeneral.TABLE;
     }
 
     @Nullable
@@ -144,6 +152,9 @@ public class ReporteGeneralFragment extends BaseFragment {
 
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
+
+                SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
+                app.setTimeLastUpdated(getKey(), new Date().getTime());
 
                 ParseFechas parseFechas = new ParseFechas();
                 Fechas[] fechasWeb = parseFechas.getDatos();

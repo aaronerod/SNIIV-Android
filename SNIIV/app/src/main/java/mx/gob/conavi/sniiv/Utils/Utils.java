@@ -9,10 +9,13 @@ import android.net.NetworkInfo;
 import org.w3c.dom.Element;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Utils {
     private static final DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
+    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
 
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();
@@ -74,8 +77,7 @@ public class Utils {
         return info != null && info.isConnected();
     }
 
-    public static void alertDialogShow(Context context, String message)
-    {
+    public static void alertDialogShow(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message)
                 .setPositiveButton(android.R.string.ok, null)
@@ -83,14 +85,17 @@ public class Utils {
                 .show();
     }
 
-    public static void alertDialogShow(Context context, String title, String message)
-    {
+    public static void alertDialogShow(Context context, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message)
                 .setPositiveButton(android.R.string.ok, null)
                 .setTitle(title)
                 .create()
                 .show();
+    }
+
+    public static boolean equalDays(Date date1, Date date2) {
+        return fmt.format(date1).equals(fmt.format(date2));
     }
 
     private static void populateEdos(){

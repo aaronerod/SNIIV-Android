@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.DatosTipoVivienda;
 import mx.gob.conavi.sniiv.modelos.TipoVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseTipoVivienda;
@@ -100,6 +103,11 @@ public class TipoViviendaFragment extends BaseFragment {
         return new AsyncTaskRunner();
     }
 
+    @Override
+    protected String getKey() {
+        return TipoVivienda.TABLE;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -117,6 +125,9 @@ public class TipoViviendaFragment extends BaseFragment {
 
                 datos = new DatosTipoVivienda(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
+
+                SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
+                app.setTimeLastUpdated(getKey(), new Date().getTime());
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;
