@@ -11,6 +11,7 @@ import mx.gob.conavi.sniiv.Utils.Utils;
  * Created by admin on 06/08/15.
  */
 public abstract class BaseFragment extends Fragment {
+    private static final String TAG = BaseFragment.class.getSimpleName();
     protected ProgressDialog progressDialog;
     protected NumberPicker pickerEstados;
     protected NumberPicker.OnScrollListener scrollListener;

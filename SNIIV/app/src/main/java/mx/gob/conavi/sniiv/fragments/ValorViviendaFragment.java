@@ -16,13 +16,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.datos.DatosValorVivienda;
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
 import mx.gob.conavi.sniiv.modelos.ValorVivienda;
-import mx.gob.conavi.sniiv.parsing.ParseAvanceObra;
 import mx.gob.conavi.sniiv.parsing.ParseValorVivienda;
-import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 import mx.gob.conavi.sniiv.sqlite.ValorViviendaRepository;
 
 /**
