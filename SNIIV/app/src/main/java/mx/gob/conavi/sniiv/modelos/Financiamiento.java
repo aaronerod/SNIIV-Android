@@ -11,6 +11,11 @@ public class Financiamiento {
     private long acciones;
     private double monto;
 
+<<<<<<< HEAD
+=======
+    public static final String TABLE = "Financiamiento";
+
+>>>>>>> origin/tabs
     public Financiamiento() {
     }
 

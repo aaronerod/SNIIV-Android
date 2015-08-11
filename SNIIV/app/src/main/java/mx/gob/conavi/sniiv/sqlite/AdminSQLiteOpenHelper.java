@@ -16,7 +16,7 @@ import mx.gob.conavi.sniiv.modelos.ValorVivienda;
 
 class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "sniiv.db";
 
     public AdminSQLiteOpenHelper(Context context ) {
@@ -180,9 +180,9 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
     private void insertModalidad(SQLiteDatabase db) {
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Nueva')");
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Usada')");
-        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Autoproduccion')");
+        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Autoproducción')");
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Mejoramiento')");
-        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Lotes con Servicio')");
+        db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Lotes con servicio')");
         db.execSQL("INSERT INTO Modalidad(descripcion) VALUES ('Otros')");
     }
 
@@ -194,7 +194,7 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('BANCA (CNBV)')");
         db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('CONAVI')");
         db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('FONHAPO')");
-        db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('Indivi')");
+        db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('INDIVI')");
         db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('COVEG')");
         db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('IMEVIS')");
         db.execSQL("INSERT INTO Organismo(descripcion) VALUES ('IVEM')");
@@ -208,7 +208,7 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO Destino(descripcion) VALUES ('Viviendas Nuevas')");
         db.execSQL("INSERT INTO Destino(descripcion) VALUES ('Viviendas Usadas')");
         db.execSQL("INSERT INTO Destino(descripcion) VALUES ('Mejoramientos')");
-        db.execSQL("INSERT INTO Destino(descripcion) VALUES ('Otros Programas')");
+        db.execSQL("INSERT INTO Destino(descripcion) VALUES ('Otros programas')");
     }
 
     private void insertAgrupacion(SQLiteDatabase db) {

@@ -17,11 +17,19 @@ import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
+<<<<<<< HEAD
 import mx.gob.conavi.sniiv.datos.DatosValorVivienda;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.modelos.ValorVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseValorVivienda;
+=======
+import mx.gob.conavi.sniiv.modelos.Fechas;
+import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
+import mx.gob.conavi.sniiv.parsing.ParseFechas;
+import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
+import mx.gob.conavi.sniiv.sqlite.FechasRepository;
+>>>>>>> origin/tabs
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 import mx.gob.conavi.sniiv.sqlite.ValorViviendaRepository;
 
@@ -33,7 +41,12 @@ public class ReporteGeneralFragment extends BaseFragment {
 
     private DatosReporteGeneral datos;
     private ReporteGeneral entidad;
+    private Fechas fechas;
     private ReporteGeneralRepository repository;
+<<<<<<< HEAD
+=======
+    private FechasRepository fechasRepository;
+>>>>>>> origin/tabs
     private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
@@ -42,11 +55,15 @@ public class ReporteGeneralFragment extends BaseFragment {
     @Bind(R.id.txtMontoSub) TextView txtMtoSub;
     @Bind(R.id.txtVigentes) TextView txtVigentes;
     @Bind(R.id.txtRegistradas) TextView txtRegistradas;
+    @Bind(R.id.txtTitleFinanciamientos) TextView txtTitleFinanciamientos;
+    @Bind(R.id.txtTitleSubsidios) TextView txtTitleSubsidios;
+    @Bind(R.id.txtTitleOfertaVivienda) TextView txtTitleOferta;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new ReporteGeneralRepository(getActivity());
+        fechasRepository = new FechasRepository(getActivity());
         scrollListener = configuraScrollListener();
     }
 
@@ -108,6 +125,18 @@ public class ReporteGeneralFragment extends BaseFragment {
             txtVigentes.setText(Utils.toStringDivide(entidad.getVv()));
             txtRegistradas.setText(Utils.toStringDivide(entidad.getVr()));
         }
+
+        if(fechas != null) {
+            String financiamientos = String.format("%s (%s)", getString(R.string.title_financiamiento),
+                    fechas.getFecha_finan());
+            String subsidios = String.format("%s (%s)", getString(R.string.title_subsidios),
+                    fechas.getFecha_subs());
+            String oferta = String.format("%s (%s)", getString(R.string.title_oferta_vivienda),
+                    fechas.getFecha_vv());
+            txtTitleFinanciamientos.setText(financiamientos);
+            txtTitleSubsidios.setText(subsidios);
+            txtTitleOferta.setText(oferta);
+        }
     }
 
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
@@ -128,6 +157,7 @@ public class ReporteGeneralFragment extends BaseFragment {
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
 
+<<<<<<< HEAD
                 ParseValorVivienda p = new ParseValorVivienda();
                 ValorVivienda[] parseDatos = p.getDatos();
                 ValorViviendaRepository repo = new ValorViviendaRepository(getActivity());
@@ -138,6 +168,19 @@ public class ReporteGeneralFragment extends BaseFragment {
                 Log.v(TAG, entidadvv.toString());
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
+=======
+                ParseFechas parseFechas = new ParseFechas();
+                Fechas[] fechasWeb = parseFechas.getDatos();
+                fechasRepository.deleteAll();
+                fechasRepository.saveAll(fechasWeb);
+
+                Fechas[] fechasStorage = fechasRepository.loadFromStorage();
+                if(fechasStorage.length > 0) {
+                    fechas = fechasStorage[0];
+                }
+            } catch (Exception e) {
+                Log.v(TAG, "Error obteniendo datos " + e.getMessage());
+>>>>>>> origin/tabs
                 errorRetrievingData = true;
             }
 

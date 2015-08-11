@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_avance_obra"
         android:id="@+id/txtTitleAvanceObra"
-        android:textColor="#ffffffff"
-        android:background="#ff00803b"
-        android:textSize="20sp"
         android:layout_marginTop="20dp"
-        android:width="250dp"
-        android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        style="@style/Title"/>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtTitleAvanceObra"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -36,14 +31,12 @@
                 android:id="@+id/txtRow1"
                 android:text="En proceso hasta 50%:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtProceso50"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
@@ -56,14 +49,12 @@
                 android:id="@+id/txtRow2"
                 android:text="En proceso hasta 99%:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtProceso99"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
@@ -76,14 +67,12 @@
                 android:id="@+id/txtRow3"
                 android:text="Terminadas recientes:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtTerminadasRecientes"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
@@ -96,14 +85,12 @@
                 android:id="@+id/txtRow4"
                 android:text="Terminadas antiguas:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtTerminadasAntiguas"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
@@ -116,14 +103,12 @@
                 android:id="@+id/txtRow5"
                 android:text="Total"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtTotal"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
     </TableLayout>
 
@@ -134,6 +119,5 @@
         android:layout_alignParentBottom="true"
         android:descendantFocusability="blocksDescendants"
         android:layout_centerHorizontal="true" />
-
 
 </RelativeLayout>

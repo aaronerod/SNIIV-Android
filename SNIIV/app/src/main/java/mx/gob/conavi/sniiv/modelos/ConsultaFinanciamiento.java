@@ -8,7 +8,11 @@ public class ConsultaFinanciamiento {
     private FinanciamientoResultado viviendasUsadas;
     private FinanciamientoResultado mejoramientos;
     private FinanciamientoResultado otrosProgramas;
+<<<<<<< HEAD
     private FinanciamientoResultado total;
+=======
+    private Consulta total;
+>>>>>>> origin/tabs
 
     public FinanciamientoResultado getViviendasNuevas() {
         return viviendasNuevas;
@@ -42,6 +46,7 @@ public class ConsultaFinanciamiento {
         this.otrosProgramas = otrosProgramas;
     }
 
+<<<<<<< HEAD
     public FinanciamientoResultado getTotal() {
         return total;
     }
@@ -69,5 +74,24 @@ public class ConsultaFinanciamiento {
         public void setCreditoIndividual(Consulta creditoIndividual) {
             this.creditoIndividual = creditoIndividual;
         }
+=======
+    public Consulta getTotal() {
+        return total;
+    }
+
+    public void setTotal(Consulta total) {
+        this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "ConsultaFinanciamiento{" +
+                "viviendasNuevas=" + viviendasNuevas +
+                ", viviendasUsadas=" + viviendasUsadas +
+                ", mejoramientos=" + mejoramientos +
+                ", otrosProgramas=" + otrosProgramas +
+                ", total=" + total +
+                '}';
+>>>>>>> origin/tabs
     }
 }

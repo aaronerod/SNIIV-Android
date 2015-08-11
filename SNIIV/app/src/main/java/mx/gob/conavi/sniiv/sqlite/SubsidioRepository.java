@@ -14,6 +14,7 @@ import mx.gob.conavi.sniiv.modelos.Subsidio;
  * Created by admin on 07/08/15.
  */
 public class SubsidioRepository implements Repository<Subsidio> {
+    private static final String TAG = SubsidioRepository.class.getSimpleName();
     private final AdminSQLiteOpenHelper dbHelper;
     private static String queryEntidad = "SELECT id FROM TipoEntidadEjecutora WHERE descripcion = UPPER(?)";
     private static String queryModalidad = "SELECT id FROM Modalidad WHERE descripcion = ?";
@@ -31,7 +32,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
                 "VALUES(?, ?, ?, ?, ?)";
 
         for (Subsidio elemento : elementos) {
-            dbw.rawQuery(query, new String[]{
+            dbw.execSQL(query, new String[]{
                     String.valueOf(elemento.getCve_ent()),
                     obtenerEntidadEjecutora(dbr, elemento),
                     obtenerModalidad(dbr, elemento),
@@ -54,8 +55,8 @@ public class SubsidioRepository implements Repository<Subsidio> {
     @Override
     public Subsidio[] loadFromStorage() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery =  "SELECT cve_ent, TipoEntidadEjecutora.descripcion," +
-                "Modalidad.descripcion, acciones, mont FROM " + Subsidio.TABLE + " S " +
+        String selectQuery =  "SELECT cve_ent, T.descripcion tipo_ee," +
+                "M.descripcion modalidad, acciones, monto FROM " + Subsidio.TABLE + " S " +
                 " LEFT JOIN TipoEntidadEjecutora T ON S.tipo_ee_id = T.id" +
                 " LEFT JOIN Modalidad M ON S.modalidad_id = M.id";
 
@@ -80,17 +81,9 @@ public class SubsidioRepository implements Repository<Subsidio> {
         return datos.toArray(new Subsidio[0]);
     }
 
-    public ConsultaSubsidio consultaNacional() {
-        return consulta();
-    }
-
-    public ConsultaSubsidio consultaEntidad(int entidad) {
-        return consulta(String.valueOf(entidad));
-    }
-
     private String obtenerEntidadEjecutora(SQLiteDatabase dbr, Subsidio elemento) {
         Cursor cursor = dbr.rawQuery(queryEntidad, new String[]{elemento.getTipo_ee()});
-        String resultado = "";
+        String resultado = "null";
 
         if (cursor.moveToFirst()) {
             resultado = String.valueOf(cursor.getInt(cursor.getColumnIndex("id")));
@@ -103,7 +96,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
 
     private String obtenerModalidad(SQLiteDatabase dbr, Subsidio elemento) {
         Cursor cursor = dbr.rawQuery(queryModalidad, new String[]{elemento.getModalidad()});
-        String resultado = "";
+        String resultado = "null";
 
         if (cursor.moveToFirst()) {
             resultado = String.valueOf(cursor.getInt(cursor.getColumnIndex("id")));
@@ -114,8 +107,12 @@ public class SubsidioRepository implements Repository<Subsidio> {
         return resultado;
     }
 
-    private ConsultaSubsidio consulta() {
+    public ConsultaSubsidio consultaNacional() {
         return consulta(null);
+    }
+
+    public ConsultaSubsidio consultaEntidad(int entidad) {
+        return consulta(String.valueOf(entidad));
     }
 
     private ConsultaSubsidio consulta(String filtroEntidad) {
@@ -132,26 +129,38 @@ public class SubsidioRepository implements Repository<Subsidio> {
         Cursor cursor = db.rawQuery(selectQuery, args);
         ConsultaSubsidio dato = new ConsultaSubsidio();
         if (cursor.moveToFirst()) {
+            long totalAcciones = 0;
+            double totalMonto = 0;
             do {
                 int modalidadId = cursor.getInt(cursor.getColumnIndex("modalidad_id"));
                 long acciones = cursor.getLong(cursor.getColumnIndex("sumAcciones"));
                 double monto = cursor.getLong(cursor.getColumnIndex("sumMonto"));
                 Consulta consulta = new Consulta(acciones, monto);
+                totalAcciones += acciones;
+                totalMonto += monto;
                 switch (modalidadId){
                     case 1:
-                        dato.setNueva(consulta); break;
+                        dato.setNueva(consulta);
+                        break;
                     case 2:
-                        dato.setNueva(consulta); break;
+                        dato.setUsada(consulta);
+                        break;
                     case 3:
-                        dato.setAutoproduccion(consulta); break;
+                        dato.setAutoproduccion(consulta);
+                        break;
                     case 4:
-                        dato.setMejoramiento(consulta); break;
+                        dato.setMejoramiento(consulta);
+                        break;
                     case 5:
-                        dato.setLotes(consulta); break;
+                        dato.setLotes(consulta);
+                        break;
                     case 6:
-                        dato.setOtros(consulta); break;
+                        dato.setOtros(consulta);
+                        break;
                 }
             } while (cursor.moveToNext());
+
+            dato.setTotal(new Consulta(totalAcciones, totalMonto));
         }
 
         cursor.close();
