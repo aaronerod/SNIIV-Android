@@ -4,18 +4,12 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/oferta_section4"
         android:id="@+id/txtTitleAvanceObra"
-        android:textColor="#ffffffff"
-        android:background="#ff00803b"
-        android:textSize="20sp"
         android:layout_marginTop="20dp"
-        android:width="250dp"
-        android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        style="@style/Title" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -27,7 +21,6 @@
         android:paddingRight="20dp">
 
         <TableRow
-            android:id="@+id/tableRow1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dip" >
@@ -36,18 +29,15 @@
                 android:id="@+id/txtRow1"
                 android:text="@string/title_economica"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtEconomica"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableRow2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dip" >
@@ -56,18 +46,15 @@
                 android:id="@+id/txtRow2"
                 android:text="@string/title_popular"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtPopular"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableRow3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dip" >
@@ -76,18 +63,15 @@
                 android:id="@+id/txtRow3"
                 android:text="@string/title_tradicional"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtTradicional"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableRow4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dip" >
@@ -96,18 +80,15 @@
                 android:id="@+id/txtRow4"
                 android:text="@string/title_media_residencial"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtMedia"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableRow5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dip" >
@@ -116,14 +97,12 @@
                 android:id="@+id/txtRow5"
                 android:text="Total"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                style="@style/Etiqueta" />
 
             <TextView
                 android:id="@+id/txtTotal"
-                android:text="-"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                style="@style/EtiquetaCantidad" />
         </TableRow>
     </TableLayout>
 
