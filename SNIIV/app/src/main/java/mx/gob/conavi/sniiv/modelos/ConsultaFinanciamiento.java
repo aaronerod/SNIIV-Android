@@ -8,11 +8,8 @@ public class ConsultaFinanciamiento {
     private FinanciamientoResultado viviendasUsadas;
     private FinanciamientoResultado mejoramientos;
     private FinanciamientoResultado otrosProgramas;
-<<<<<<< HEAD
-    private FinanciamientoResultado total;
-=======
     private Consulta total;
->>>>>>> origin/tabs
+
 
     public FinanciamientoResultado getViviendasNuevas() {
         return viviendasNuevas;
@@ -46,35 +43,6 @@ public class ConsultaFinanciamiento {
         this.otrosProgramas = otrosProgramas;
     }
 
-<<<<<<< HEAD
-    public FinanciamientoResultado getTotal() {
-        return total;
-    }
-
-    public void setTotal(FinanciamientoResultado total) {
-        this.total = total;
-    }
-
-    public class FinanciamientoResultado {
-        private Consulta cofinanciamiento;
-        private Consulta creditoIndividual;
-
-        public Consulta getCofinanciamiento() {
-            return cofinanciamiento;
-        }
-
-        public void setCofinanciamiento(Consulta cofinanciamiento) {
-            this.cofinanciamiento = cofinanciamiento;
-        }
-
-        public Consulta getCreditoIndividual() {
-            return creditoIndividual;
-        }
-
-        public void setCreditoIndividual(Consulta creditoIndividual) {
-            this.creditoIndividual = creditoIndividual;
-        }
-=======
     public Consulta getTotal() {
         return total;
     }
@@ -92,6 +60,5 @@ public class ConsultaFinanciamiento {
                 ", otrosProgramas=" + otrosProgramas +
                 ", total=" + total +
                 '}';
->>>>>>> origin/tabs
     }
 }

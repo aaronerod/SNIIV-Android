@@ -17,21 +17,12 @@ import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
-<<<<<<< HEAD
-import mx.gob.conavi.sniiv.datos.DatosValorVivienda;
-import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
-import mx.gob.conavi.sniiv.modelos.ValorVivienda;
-import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
-import mx.gob.conavi.sniiv.parsing.ParseValorVivienda;
-=======
 import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseFechas;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
->>>>>>> origin/tabs
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
-import mx.gob.conavi.sniiv.sqlite.ValorViviendaRepository;
 
 /**
  * Created by admin on 04/08/15.
@@ -43,10 +34,7 @@ public class ReporteGeneralFragment extends BaseFragment {
     private ReporteGeneral entidad;
     private Fechas fechas;
     private ReporteGeneralRepository repository;
-<<<<<<< HEAD
-=======
     private FechasRepository fechasRepository;
->>>>>>> origin/tabs
     private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
@@ -157,18 +145,6 @@ public class ReporteGeneralFragment extends BaseFragment {
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
 
-<<<<<<< HEAD
-                ParseValorVivienda p = new ParseValorVivienda();
-                ValorVivienda[] parseDatos = p.getDatos();
-                ValorViviendaRepository repo = new ValorViviendaRepository(getActivity());
-                repo.deleteAll();
-                repo.saveAll(parseDatos);
-                DatosValorVivienda dat = new DatosValorVivienda(getActivity(), parseDatos);
-                ValorVivienda entidadvv = dat.consultaNacional();
-                Log.v(TAG, entidadvv.toString());
-            } catch (Exception e) {
-                Log.v(TAG, "Error obteniendo datos");
-=======
                 ParseFechas parseFechas = new ParseFechas();
                 Fechas[] fechasWeb = parseFechas.getDatos();
                 fechasRepository.deleteAll();
@@ -180,7 +156,6 @@ public class ReporteGeneralFragment extends BaseFragment {
                 }
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos " + e.getMessage());
->>>>>>> origin/tabs
                 errorRetrievingData = true;
             }
 

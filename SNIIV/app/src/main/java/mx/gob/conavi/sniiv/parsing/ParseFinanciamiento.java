@@ -34,11 +34,7 @@ public class ParseFinanciamiento extends ParseBase<Financiamiento[]> {
                         Utils.getTextContent(element, "destino"),
                         Utils.getTextContent(element, "agrupacion"),
                         Utils.parseLong(Utils.getTextContent(element, "acciones")),
-<<<<<<< HEAD
-                        Utils.parseDouble(Utils.getTextContent(element, "total")));
-=======
                         Utils.parseDouble(Utils.getTextContent(element, "monto")));
->>>>>>> origin/tabs
                 datos.add(dato);
             }
         }
