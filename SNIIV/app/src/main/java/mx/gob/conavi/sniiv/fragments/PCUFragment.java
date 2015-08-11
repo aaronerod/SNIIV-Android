@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.DatosPCU;
 import mx.gob.conavi.sniiv.modelos.PCU;
 import mx.gob.conavi.sniiv.parsing.ParsePCU;
@@ -101,6 +104,11 @@ public class PCUFragment extends BaseFragment {
         return new AsyncTaskRunner();
     }
 
+    @Override
+    protected String getKey() {
+        return PCU.TABLE;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -118,6 +126,9 @@ public class PCUFragment extends BaseFragment {
 
                 datos = new DatosPCU(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
+
+                SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
+                app.setTimeLastUpdated(getKey(), new Date().getTime());
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
             }
