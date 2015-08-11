@@ -1,187 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:id="@+id/Relative">
-
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_financiamiento"
         android:id="@+id/txtTitleFinanciamientos"
-        android:textColor="#ffffffff"
-        android:background="#ff00803b"
-        android:textSize="20sp"
+        style="@style/Title"
         android:layout_marginTop="24dp"
-        android:width="250dp"
-        android:gravity="center"
-        android:layout_alignLeft="@+id/txtAcciones"
-        android:layout_alignStart="@+id/txtAcciones" />
+        />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/title_acciones"
-        android:id="@+id/txtAcciones"
-        android:layout_below="@+id/txtTitleFinanciamientos"
-        android:layout_alignLeft="@+id/txtTitleSubsidios"
-        android:layout_alignStart="@+id/txtTitleSubsidios"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_acciones"
+                android:id="@+id/txtAcciones"
+                android:layout_weight="1"
+                style="@style/Etiqueta"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAccionesFinan"
+                style="@style/EtiquetaCantidad" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_monto"
+                android:id="@+id/txtMonto"
+                android:layout_weight="1"
+                style="@style/Etiqueta"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtMontoFinan"
+                style="@style/EtiquetaCantidad"/>
+
+        </TableRow>
+    </TableLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/title_monto"
-        android:id="@+id/txtMonto"
-        android:layout_below="@+id/txtAcciones"
-        android:layout_alignLeft="@+id/txtTitleSubsidios"
-        android:layout_alignStart="@+id/txtTitleSubsidios"
-        android:layout_marginTop="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_subsidios"
         android:id="@+id/txtTitleSubsidios"
-        android:textColor="#ffffffff"
-        android:background="#ff00803b"
-        android:textSize="20sp"
-        android:layout_below="@+id/txtMonto"
-        android:layout_centerHorizontal="true"
-        android:width="250dp"
-        android:gravity="center"
-        android:layout_marginTop="10dp"/>
+        style="@style/Title" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/title_acciones"
-        android:id="@+id/txtAcciones2"
-        android:layout_below="@+id/txtTitleSubsidios"
-        android:layout_alignLeft="@+id/txtTitleSubsidios"
-        android:layout_alignStart="@+id/txtTitleSubsidios"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_acciones"
+                android:id="@+id/txtAcciones2"
+                android:layout_weight="1"
+                style="@style/Etiqueta"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAccionesSub"
+                style="@style/EtiquetaCantidad"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_monto"
+                android:layout_weight="1"
+                android:id="@+id/txtMonto2"
+                style="@style/Etiqueta"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtMontoSub"
+                style="@style/EtiquetaCantidad" />
+
+        </TableRow>
+
+    </TableLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/title_monto"
-        android:id="@+id/txtMonto2"
-        android:layout_below="@+id/txtAcciones2"
-        android:layout_alignLeft="@+id/txtTitleOfertaVivienda"
-        android:layout_alignStart="@+id/txtTitleOfertaVivienda"
-        android:layout_marginTop="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_oferta_vivienda"
         android:id="@+id/txtTitleOfertaVivienda"
-        android:textColor="#ffffffff"
-        android:background="#ff00803b"
-        android:textSize="20sp"
-        android:layout_below="@+id/txtMonto2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:width="250dp"
-        android:gravity="center"/>
+        style="@style/Title" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/title_registradas"
-        android:id="@+id/txtViviendasRegistradas"
-        android:layout_below="@+id/txtTitleOfertaVivienda"
-        android:layout_alignLeft="@+id/txtTitleOfertaVivienda"
-        android:layout_alignStart="@+id/txtTitleOfertaVivienda" />
+        android:layout_marginTop="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/title_vigentes"
-        android:id="@+id/txtViviendasVigentes"
-        android:layout_below="@+id/txtRegistradas"
-        android:layout_alignRight="@+id/txtAcciones2"
-        android:layout_alignEnd="@+id/txtAcciones2" />
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/empty_value"
-        android:id="@+id/txtAccionesFinan"
-        android:layout_alignTop="@+id/txtAcciones"
-        android:layout_alignRight="@+id/txtTitleSubsidios"
-        android:layout_alignEnd="@+id/txtTitleSubsidios"
-        android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_registradas"
+                android:id="@+id/txtViviendasRegistradas"
+                android:layout_weight="1"
+                style="@style/Etiqueta" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="-"
-        android:id="@+id/txtMontoFinan"
-        android:layout_below="@+id/txtAccionesFinan"
-        android:layout_alignRight="@+id/txtAccionesFinan"
-        android:layout_alignEnd="@+id/txtAccionesFinan"
-        android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtRegistradas"
+                style="@style/EtiquetaCantidad"/>
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="-"
-        android:id="@+id/txtAccionesSub"
-        android:layout_below="@+id/txtTitleSubsidios"
-        android:layout_alignRight="@+id/txtMontoFinan"
-        android:layout_alignEnd="@+id/txtMontoFinan" />
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="-"
-        android:id="@+id/txtMontoSub"
-        android:layout_alignTop="@+id/txtMonto2"
-        android:layout_alignRight="@+id/txtAccionesSub"
-        android:layout_alignEnd="@+id/txtAccionesSub" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_vigentes"
+                android:id="@+id/txtViviendasVigentes"
+                android:layout_weight="1"
+                style="@style/Etiqueta"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="-"
-        android:id="@+id/txtRegistradas"
-        android:layout_below="@+id/txtTitleOfertaVivienda"
-        android:layout_alignRight="@+id/txtTitleOfertaVivienda"
-        android:layout_alignEnd="@+id/txtTitleOfertaVivienda" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtVigentes"
+                style="@style/EtiquetaCantidad"/>
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="-"
-        android:id="@+id/txtVigentes"
-        android:layout_below="@+id/txtRegistradas"
-        android:layout_alignRight="@+id/txtRegistradas"
-        android:layout_alignEnd="@+id/txtRegistradas" />
+    </TableLayout>
 
     <NumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pckEstados"
-        android:layout_alignParentBottom="true"
         android:descendantFocusability="blocksDescendants"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal"/>
 
-
-</RelativeLayout>
+</LinearLayout>
