@@ -50,6 +50,14 @@ public class Utils {
         }
     }
 
+    public static double parseDouble(String string) {
+        try {
+            return Double.parseDouble(string);
+        } catch(NumberFormatException nfe) {
+            return 0;
+        }
+    }
+
     public static int parseInt(String string) {
         try {
             return Integer.parseInt(string);

@@ -17,9 +17,13 @@ import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
+import mx.gob.conavi.sniiv.datos.DatosValorVivienda;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.ValorVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
+import mx.gob.conavi.sniiv.parsing.ParseValorVivienda;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
+import mx.gob.conavi.sniiv.sqlite.ValorViviendaRepository;
 
 /**
  * Created by admin on 04/08/15.
@@ -30,7 +34,7 @@ public class ReporteGeneralFragment extends BaseFragment {
     private DatosReporteGeneral datos;
     private ReporteGeneral entidad;
     private ReporteGeneralRepository repository;
-    protected ProgressDialog progressDialog;
+    private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
     @Bind(R.id.txtMontoFinan) TextView txtMtoFinan;
@@ -123,8 +127,18 @@ public class ReporteGeneralFragment extends BaseFragment {
 
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
+
+                ParseValorVivienda p = new ParseValorVivienda();
+                ValorVivienda[] parseDatos = p.getDatos();
+                ValorViviendaRepository repo = new ValorViviendaRepository(getActivity());
+                repo.deleteAll();
+                repo.saveAll(parseDatos);
+                DatosValorVivienda dat = new DatosValorVivienda(getActivity(), parseDatos);
+                ValorVivienda entidadvv = dat.consultaNacional();
+                Log.v(TAG, entidadvv.toString());
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
+                errorRetrievingData = true;
             }
 
             return null;
@@ -132,9 +146,12 @@ public class ReporteGeneralFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            mostrarDatos();
-            pickerEstados.setEnabled(true);
-            progressDialog.dismiss();
+            if (!errorRetrievingData) {
+                habilitaPantalla();
+            } else {
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                progressDialog.dismiss();
+            }
         }
     }
 }

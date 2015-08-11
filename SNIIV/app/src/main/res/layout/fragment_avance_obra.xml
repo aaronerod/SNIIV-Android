@@ -93,7 +93,7 @@
             android:padding="3dip" >
 
             <TextView
-                android:id="@+id/txtRow3"
+                android:id="@+id/txtRow4"
                 android:text="Terminadas antiguas:"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge" />

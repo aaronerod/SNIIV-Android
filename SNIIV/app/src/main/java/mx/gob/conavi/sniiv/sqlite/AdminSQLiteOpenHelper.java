@@ -157,7 +157,7 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + PCU.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TipoVivienda.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ValorVivienda.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS EntidadEjecutora");
+        db.execSQL("DROP TABLE IF EXISTS TipoEntidadEjecutora");
         db.execSQL("DROP TABLE IF EXISTS Modalidad");
         db.execSQL("DROP TABLE IF EXISTS Subsidio");
         db.execSQL("DROP TABLE IF EXISTS Organismo");

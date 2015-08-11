@@ -24,7 +24,7 @@ public class ParseTipoVivienda extends ParseBase<TipoVivienda[]> {
     public TipoVivienda[] getDatos() {
         Document xml = getDocument();
 
-        NodeList nList = xml.getElementsByTagName("app_sniiv_vv_x_pcu");
+        NodeList nList = xml.getElementsByTagName("app_sniiv_vv_x_tipo");
         ArrayList<TipoVivienda> datos = new ArrayList<>();
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
@@ -33,7 +33,7 @@ public class ParseTipoVivienda extends ParseBase<TipoVivienda[]> {
                 Element element = (Element) nNode;
                 TipoVivienda dato = new TipoVivienda(Utils.parseInt(Utils.getTextContent(element, "cve_ent")),
                         Utils.parseLong(Utils.getTextContent(element, "horizontal")),
-                        Utils.parseLong(Utils.getTextContent(element, "horizontal")),
+                        Utils.parseLong(Utils.getTextContent(element, "vertical")),
                         Utils.parseLong(Utils.getTextContent(element, "total")));
                 datos.add(dato);
             }
