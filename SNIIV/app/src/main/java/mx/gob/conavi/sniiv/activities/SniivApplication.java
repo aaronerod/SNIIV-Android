@@ -31,4 +31,10 @@ public class SniivApplication extends Application {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         return settings.getLong(key, 0);
     }
+
+    public void clearAllPreferences() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear().commit();
+    }
 }

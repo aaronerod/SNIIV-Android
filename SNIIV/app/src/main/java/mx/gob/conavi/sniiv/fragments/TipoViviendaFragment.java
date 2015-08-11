@@ -43,7 +43,7 @@ public class TipoViviendaFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new TipoViviendaRepository(getActivity());
-        scrollListener = configuraScrollListener();
+        valueChangeListener = configuraValueChangeListener();
     }
 
     protected void loadFromStorage() {
@@ -80,17 +80,14 @@ public class TipoViviendaFragment extends BaseFragment {
     }
 
     @Override
-    protected NumberPicker.OnScrollListener configuraScrollListener() {
-        return new NumberPicker.OnScrollListener() {
+    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
+        return new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onScrollStateChange(NumberPicker picker, int scrollState) {
-                if(scrollState != NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) { return; }
-
-                int valor = picker.getValue();
-                if (valor == 0) {
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (newVal == 0) {
                     entidad = datos.consultaNacional();
                 } else {
-                    entidad = datos.consultaEntidad(valor);
+                    entidad = datos.consultaEntidad(newVal);
                 }
 
                 mostrarDatos();

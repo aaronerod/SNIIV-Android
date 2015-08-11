@@ -12,13 +12,10 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
 import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
@@ -55,7 +52,7 @@ public class ReporteGeneralFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         repository = new ReporteGeneralRepository(getActivity());
         fechasRepository = new FechasRepository(getActivity());
-        scrollListener = configuraScrollListener();
+        valueChangeListener = configuraValueChangeListener();
     }
 
     @Override
@@ -76,23 +73,21 @@ public class ReporteGeneralFragment extends BaseFragment {
     }
 
     @Override
-    protected NumberPicker.OnScrollListener configuraScrollListener() {
-        return new NumberPicker.OnScrollListener() {
+    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
+        return new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onScrollStateChange(NumberPicker picker, int scrollState) {
-                if(scrollState != NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) { return; }
-
-                int valor = picker.getValue();
-                if (valor == 0) {
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (newVal == 0) {
                     entidad = datos.consultaNacional();
                 } else {
-                    entidad = datos.consultaEntidad(valor);
+                    entidad = datos.consultaEntidad(newVal);
                 }
 
                 mostrarDatos();
             }
         };
     }
+
 
     @Override
     protected AsyncTask<Void, Void, Void> getAsyncTask() {
@@ -153,8 +148,7 @@ public class ReporteGeneralFragment extends BaseFragment {
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
 
-                SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
-                app.setTimeLastUpdated(getKey(), new Date().getTime());
+                saveTimeLastUpdated();
 
                 ParseFechas parseFechas = new ParseFechas();
                 Fechas[] fechasWeb = parseFechas.getDatos();

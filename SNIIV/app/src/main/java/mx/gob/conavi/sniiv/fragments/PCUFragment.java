@@ -12,13 +12,10 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.DatosPCU;
 import mx.gob.conavi.sniiv.modelos.PCU;
 import mx.gob.conavi.sniiv.parsing.ParsePCU;
@@ -42,7 +39,7 @@ public class PCUFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new PCURepository(getActivity());
-        scrollListener = configuraScrollListener();
+        valueChangeListener = configuraValueChangeListener();
     }
 
     protected void loadFromStorage() {
@@ -81,17 +78,14 @@ public class PCUFragment extends BaseFragment {
     }
 
     @Override
-    protected NumberPicker.OnScrollListener configuraScrollListener() {
-        return new NumberPicker.OnScrollListener() {
+    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
+        return new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onScrollStateChange(NumberPicker picker, int scrollState) {
-                if(scrollState != NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) { return; }
-
-                int valor = picker.getValue();
-                if (valor == 0) {
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (newVal == 0) {
                     entidad = datos.consultaNacional();
                 } else {
-                    entidad = datos.consultaEntidad(valor);
+                    entidad = datos.consultaEntidad(newVal);
                 }
 
                 mostrarDatos();
@@ -127,8 +121,7 @@ public class PCUFragment extends BaseFragment {
                 datos = new DatosPCU(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
-                app.setTimeLastUpdated(getKey(), new Date().getTime());
+                saveTimeLastUpdated();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
             }

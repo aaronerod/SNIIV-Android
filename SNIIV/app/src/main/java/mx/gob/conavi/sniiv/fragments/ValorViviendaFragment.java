@@ -12,13 +12,10 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.DatosValorVivienda;
 import mx.gob.conavi.sniiv.modelos.ValorVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseValorVivienda;
@@ -45,7 +42,7 @@ public class ValorViviendaFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new ValorViviendaRepository(getActivity());
-        scrollListener = configuraScrollListener();
+        valueChangeListener = configuraValueChangeListener();
     }
 
     protected void loadFromStorage() {
@@ -84,17 +81,14 @@ public class ValorViviendaFragment extends BaseFragment {
     }
 
     @Override
-    protected NumberPicker.OnScrollListener configuraScrollListener() {
-        return new NumberPicker.OnScrollListener() {
+    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
+        return new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onScrollStateChange(NumberPicker picker, int scrollState) {
-                if(scrollState != NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) { return; }
-
-                int valor = picker.getValue();
-                if (valor == 0) {
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (newVal == 0) {
                     entidad = datos.consultaNacional();
                 } else {
-                    entidad = datos.consultaEntidad(valor);
+                    entidad = datos.consultaEntidad(newVal);
                 }
 
                 mostrarDatos();
@@ -130,8 +124,7 @@ public class ValorViviendaFragment extends BaseFragment {
                 datos = new DatosValorVivienda(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
-                app.setTimeLastUpdated(getKey(), new Date().getTime());
+                saveTimeLastUpdated();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;
