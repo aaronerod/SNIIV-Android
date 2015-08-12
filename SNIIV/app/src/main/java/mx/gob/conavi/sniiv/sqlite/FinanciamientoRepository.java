@@ -18,8 +18,6 @@ public class FinanciamientoRepository implements Repository<Financiamiento> {
     private static final String TAG = FinanciamientoRepository.class.getSimpleName();
     private final AdminSQLiteOpenHelper dbHelper;
     private static String queryOrganismo = "SELECT id FROM Organismo WHERE descripcion = UPPER(?)";
-    private static String queryDestino = "SELECT id FROM Destino WHERE descripcion = ?";
-    private static String queryAgrupacion = "SELECT id FROM Agrupacion WHERE descripcion = ?";
 
     public FinanciamientoRepository(Context context) {
         dbHelper = new AdminSQLiteOpenHelper(context);
@@ -88,6 +86,7 @@ public class FinanciamientoRepository implements Repository<Financiamiento> {
     }
 
     private String obtenerAgrupacion(SQLiteDatabase dbr, Financiamiento elemento) {
+        String queryAgrupacion = "SELECT id FROM Agrupacion WHERE descripcion = ?";
         Cursor cursor = dbr.rawQuery(queryAgrupacion, new String[]{elemento.getAgrupacion()});
         String resultado = "null";
 
@@ -101,6 +100,7 @@ public class FinanciamientoRepository implements Repository<Financiamiento> {
     }
 
     private String obtenerDestino(SQLiteDatabase dbr, Financiamiento elemento) {
+        String queryDestino = "SELECT id FROM Destino WHERE descripcion = ?";
         Cursor cursor = dbr.rawQuery(queryDestino, new String[]{elemento.getDestino()});
         String resultado = "null";
 

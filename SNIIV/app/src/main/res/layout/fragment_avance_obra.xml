@@ -29,7 +29,7 @@
 
             <TextView
                 android:id="@+id/txtRow1"
-                android:text="En proceso hasta 50%:"
+                android:text="@string/title_50"
                 android:layout_weight="1"
                 style="@style/Etiqueta" />
 
@@ -47,7 +47,7 @@
 
             <TextView
                 android:id="@+id/txtRow2"
-                android:text="En proceso hasta 99%:"
+                android:text="@string/title_99"
                 android:layout_weight="1"
                 style="@style/Etiqueta" />
 
@@ -65,7 +65,7 @@
 
             <TextView
                 android:id="@+id/txtRow3"
-                android:text="Terminadas recientes:"
+                android:text="@string/title_recientes"
                 android:layout_weight="1"
                 style="@style/Etiqueta" />
 
@@ -83,7 +83,7 @@
 
             <TextView
                 android:id="@+id/txtRow4"
-                android:text="Terminadas antiguas:"
+                android:text="@string/title_antiguas"
                 android:layout_weight="1"
                 style="@style/Etiqueta" />
 
@@ -101,7 +101,7 @@
 
             <TextView
                 android:id="@+id/txtRow5"
-                android:text="Total"
+                android:text="@string/title_total"
                 android:layout_weight="1"
                 style="@style/Etiqueta" />
 

@@ -16,8 +16,6 @@ import mx.gob.conavi.sniiv.modelos.Subsidio;
 public class SubsidioRepository implements Repository<Subsidio> {
     private static final String TAG = SubsidioRepository.class.getSimpleName();
     private final AdminSQLiteOpenHelper dbHelper;
-    private static String queryEntidad = "SELECT id FROM TipoEntidadEjecutora WHERE descripcion = UPPER(?)";
-    private static String queryModalidad = "SELECT id FROM Modalidad WHERE descripcion = ?";
 
     public SubsidioRepository(Context context) {
         dbHelper = new AdminSQLiteOpenHelper(context);
@@ -82,6 +80,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
     }
 
     private String obtenerEntidadEjecutora(SQLiteDatabase dbr, Subsidio elemento) {
+        String queryEntidad = "SELECT id FROM TipoEntidadEjecutora WHERE descripcion = UPPER(?)";
         Cursor cursor = dbr.rawQuery(queryEntidad, new String[]{elemento.getTipo_ee()});
         String resultado = "null";
 
@@ -95,6 +94,7 @@ public class SubsidioRepository implements Repository<Subsidio> {
     }
 
     private String obtenerModalidad(SQLiteDatabase dbr, Subsidio elemento) {
+        String queryModalidad = "SELECT id FROM Modalidad WHERE descripcion = ?";
         Cursor cursor = dbr.rawQuery(queryModalidad, new String[]{elemento.getModalidad()});
         String resultado = "null";
 

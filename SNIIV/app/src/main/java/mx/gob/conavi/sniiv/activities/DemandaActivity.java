@@ -12,7 +12,6 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.adapters.DemandaPagerAdapter;
 
 public class DemandaActivity extends AppCompatActivity implements ActionBar.TabListener {
-    private DemandaPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -26,7 +25,7 @@ public class DemandaActivity extends AppCompatActivity implements ActionBar.TabL
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new DemandaPagerAdapter(this, getSupportFragmentManager());
+        DemandaPagerAdapter mSectionsPagerAdapter = new DemandaPagerAdapter(this, getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

@@ -9,8 +9,8 @@ import mx.gob.conavi.sniiv.sqlite.TipoViviendaRepository;
  * Created by admin on 06/08/15.
  */
 public class DatosTipoVivienda {
-    private TipoVivienda[] datos;
-    private TipoViviendaRepository repository;
+    private final TipoVivienda[] datos;
+    private final TipoViviendaRepository repository;
 
     public DatosTipoVivienda(Context context, TipoVivienda[] datos) {
         this.datos = datos;

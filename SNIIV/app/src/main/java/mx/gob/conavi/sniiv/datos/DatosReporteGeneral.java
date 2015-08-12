@@ -9,8 +9,8 @@ import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
  * Created by admin on 03/08/15.
  */
 public class DatosReporteGeneral {
-    private ReporteGeneral[] datos;
-    private ReporteGeneralRepository repository;
+    private final ReporteGeneral[] datos;
+    private final ReporteGeneralRepository repository;
 
     public DatosReporteGeneral(Context context, ReporteGeneral[] datos) {
         this.datos = datos;

@@ -13,7 +13,7 @@ import mx.gob.conavi.sniiv.modelos.AvanceObra;
  * Created by admin on 05/08/15.
  */
 public class AvanceObraRepository implements Repository<AvanceObra> {
-    private AdminSQLiteOpenHelper dbHelper;
+    private final AdminSQLiteOpenHelper dbHelper;
 
     public AvanceObraRepository(Context context) {
         dbHelper = new AdminSQLiteOpenHelper(context);

@@ -11,7 +11,7 @@ import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
  */
 public class DatosSubsidio {
     private Subsidio[] datos;
-    private SubsidioRepository repository;
+    private final SubsidioRepository repository;
     private ConsultaSubsidio nacional;
 
     public DatosSubsidio(Context context, Subsidio[] datos) {

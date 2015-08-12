@@ -12,7 +12,6 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.adapters.OfertaPagerAdapter;
 
 public class OfertaActivity extends AppCompatActivity implements ActionBar.TabListener {
-    private OfertaPagerAdapter mOfertaPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -26,7 +25,7 @@ public class OfertaActivity extends AppCompatActivity implements ActionBar.TabLi
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mOfertaPagerAdapter = new OfertaPagerAdapter(this, getSupportFragmentManager());
+        OfertaPagerAdapter mOfertaPagerAdapter = new OfertaPagerAdapter(this, getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

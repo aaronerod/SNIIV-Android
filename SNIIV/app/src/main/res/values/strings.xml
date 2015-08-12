@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SNIIV</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_financiamiento">Financiamientos</string>
     <string name="title_subsidios">Subsidios</string>
@@ -43,9 +42,6 @@
     <string name="title_activity_oferta">Oferta</string>
     <string name="mensaje_error">Ha ocurrido un error</string>
     <string name="empty_value">-</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mensaje_error_datos">Error obteniendo datos, intente más tarde</string>
 
 </resources>

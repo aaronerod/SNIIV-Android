@@ -11,7 +11,7 @@ import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
  */
 public class DatosFinanciamiento {
     private Financiamiento[] datos;
-    private FinanciamientoRepository repository;
+    private final FinanciamientoRepository repository;
     private ConsultaFinanciamiento nacional;
 
     public DatosFinanciamiento(Context context, Financiamiento[] datos) {

@@ -9,8 +9,8 @@ import mx.gob.conavi.sniiv.sqlite.PCURepository;
  * Created by admin on 06/08/15.
  */
 public class DatosPCU {
-    private PCU[] datos;
-    private PCURepository repository;
+    private final PCU[] datos;
+    private final PCURepository repository;
 
     public DatosPCU(Context context, PCU[] datos) {
         this.datos = datos;

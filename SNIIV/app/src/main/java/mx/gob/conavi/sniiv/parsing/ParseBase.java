@@ -12,9 +12,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * Created by admin on 31/07/15.
  */
 abstract class ParseBase<T> {
-    private String namespace;
-    private String urlString;
-    private String soapAction;
+    private final String namespace;
+    private final String urlString;
+    private final String soapAction;
 
     ParseBase(String action) {
         namespace= "http://www.conavi.gob.mx:8080/WS_App_SNIIV";
