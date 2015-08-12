@@ -19,7 +19,6 @@ import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
 import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
-import mx.gob.conavi.sniiv.parsing.ParseFechas;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
@@ -32,9 +31,7 @@ public class ReporteGeneralFragment extends BaseFragment {
 
     private DatosReporteGeneral datos;
     private ReporteGeneral entidad;
-    private Fechas fechas;
     private ReporteGeneralRepository repository;
-    private FechasRepository fechasRepository;
     private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
@@ -104,6 +101,11 @@ public class ReporteGeneralFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
+        Fechas[] fechasStorage = fechasRepository.loadFromStorage();
+        if(fechasStorage.length > 0) {
+            fechas = fechasStorage[0];
+        }
+
         mostrarDatos();
     }
 
@@ -150,15 +152,7 @@ public class ReporteGeneralFragment extends BaseFragment {
 
                 saveTimeLastUpdated();
 
-                ParseFechas parseFechas = new ParseFechas();
-                Fechas[] fechasWeb = parseFechas.getDatos();
-                fechasRepository.deleteAll();
-                fechasRepository.saveAll(fechasWeb);
-
-                Fechas[] fechasStorage = fechasRepository.loadFromStorage();
-                if(fechasStorage.length > 0) {
-                    fechas = fechasStorage[0];
-                }
+                obtenerFechas();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos " + e.getMessage());
                 errorRetrievingData = true;

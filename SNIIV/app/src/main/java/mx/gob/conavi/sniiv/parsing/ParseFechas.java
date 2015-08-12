@@ -31,7 +31,7 @@ public class ParseFechas extends ParseBase<Fechas[]> {
 
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nNode;
-                Fechas fechas = new Fechas(Utils.getTextContent(element, "fecha_finan"),
+                Fechas fechas = new Fechas(Utils.getTextContent(element, "fecha_finan").replace("Datos al ", ""),
                         Utils.getTextContent(element, "fecha_subs"),
                         Utils.getTextContent(element, "fecha_vv"));
                 datos.add(fechas);

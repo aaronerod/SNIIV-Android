@@ -9,6 +9,9 @@ import java.util.Date;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.activities.SniivApplication;
+import mx.gob.conavi.sniiv.modelos.Fechas;
+import mx.gob.conavi.sniiv.parsing.ParseFechas;
+import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 
 /**
  * Created by admin on 06/08/15.
@@ -18,6 +21,8 @@ public abstract class BaseFragment extends Fragment {
     protected ProgressDialog progressDialog;
     protected NumberPicker pickerEstados;
     protected NumberPicker.OnValueChangeListener valueChangeListener;
+    protected Fechas fechas;
+    protected FechasRepository fechasRepository;
 
     protected abstract void loadFromStorage();
     protected abstract void mostrarDatos();
@@ -61,5 +66,17 @@ public abstract class BaseFragment extends Fragment {
     protected void saveTimeLastUpdated() {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         app.setTimeLastUpdated(getKey(), new Date().getTime());
+    }
+
+    protected void obtenerFechas() {
+        ParseFechas parseFechas = new ParseFechas();
+        Fechas[] fechasWeb = parseFechas.getDatos();
+        fechasRepository.deleteAll();
+        fechasRepository.saveAll(fechasWeb);
+
+        Fechas[] fechasStorage = fechasRepository.loadFromStorage();
+        if(fechasStorage.length > 0) {
+            fechas = fechasStorage[0];
+        }
     }
 }
