@@ -29,6 +29,7 @@ public class PCUFragment extends BaseFragment {
     private PCU entidad;
     private PCURepository repository;
 
+    @Bind(R.id.txtTitlePCU) TextView txtTitlePCU;
     @Bind(R.id.txtU1) TextView txtU1;
     @Bind(R.id.txtU2) TextView txtU2;
     @Bind(R.id.txtU3) TextView txtU3;
@@ -52,6 +53,8 @@ public class PCUFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
+        asignaFechas();
+
         mostrarDatos();
     }
 
@@ -74,6 +77,12 @@ public class PCUFragment extends BaseFragment {
             txtU3.setText(Utils.toString(entidad.getU3()));
             txtND.setText(Utils.toString(entidad.getNd()));
             txtTotal.setText(Utils.toString(entidad.getTotal()));
+        }
+
+        if (fechas != null) {
+            String pcu = String.format("%s (%s)", getString(R.string.title_pcu),
+                    fechas.getFecha_vv());
+            txtTitlePCU.setText(pcu);
         }
     }
 
@@ -122,6 +131,8 @@ public class PCUFragment extends BaseFragment {
                 entidad = datos.consultaNacional();
 
                 saveTimeLastUpdated();
+
+                obtenerFechas();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
             }

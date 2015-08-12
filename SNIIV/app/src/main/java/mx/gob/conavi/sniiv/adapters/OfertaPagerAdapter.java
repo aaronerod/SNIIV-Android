@@ -47,13 +47,13 @@ public class OfertaPagerAdapter extends FragmentPagerAdapter {
         Locale l = Locale.getDefault();
         switch (position) {
             case 0:
-                return mContext.getString(R.string.oferta_section1).toUpperCase(l);
+                return mContext.getString(R.string.title_avance_obra).toUpperCase(l);
             case 1:
-                return mContext.getString(R.string.oferta_section2).toUpperCase(l);
+                return mContext.getString(R.string.title_pcu).toUpperCase(l);
             case 2:
-                return mContext.getString(R.string.oferta_section3).toUpperCase(l);
+                return mContext.getString(R.string.title_tipo_vivienda).toUpperCase(l);
             case 3:
-                return mContext.getString(R.string.oferta_section4).toUpperCase(l);
+                return mContext.getString(R.string.title_valor_vivienda).toUpperCase(l);
         }
         return null;
     }

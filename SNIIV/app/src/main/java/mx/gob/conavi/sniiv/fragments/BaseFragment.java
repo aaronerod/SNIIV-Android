@@ -2,6 +2,7 @@ package mx.gob.conavi.sniiv.fragments;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.NumberPicker;
 
@@ -26,6 +27,12 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void loadFromStorage();
     protected abstract void mostrarDatos();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fechasRepository = new FechasRepository(getActivity());
+    }
 
     @Override
     public void onResume() {
@@ -74,6 +81,10 @@ public abstract class BaseFragment extends Fragment {
         fechasRepository.deleteAll();
         fechasRepository.saveAll(fechasWeb);
 
+        asignaFechas();
+    }
+
+    protected void asignaFechas() {
         Fechas[] fechasStorage = fechasRepository.loadFromStorage();
         if(fechasStorage.length > 0) {
             fechas = fechasStorage[0];

@@ -32,6 +32,7 @@ public class ValorViviendaFragment extends BaseFragment {
     private ValorViviendaRepository repository;
     private boolean errorRetrievingData = false;
 
+    @Bind(R.id.txtTitleValorVivienda) TextView txtTitleValorVivienda;
     @Bind(R.id.txtEconomica) TextView txtEconomica;
     @Bind(R.id.txtPopular) TextView txtPopular;
     @Bind(R.id.txtTradicional) TextView txtTradicional;
@@ -55,6 +56,8 @@ public class ValorViviendaFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
+        asignaFechas();
+
         mostrarDatos();
     }
 
@@ -77,6 +80,12 @@ public class ValorViviendaFragment extends BaseFragment {
             txtTradicional.setText(Utils.toString(entidad.getTradicional()));
             txtMedia.setText(Utils.toString(entidad.getMedia_residencial()));
             txtTotal.setText(Utils.toString(entidad.getTotal()));
+        }
+
+        if (fechas != null) {
+            String valor = String.format("%s (%s)", getString(R.string.title_valor_vivienda),
+                    fechas.getFecha_vv());
+            txtTitleValorVivienda.setText(valor);
         }
     }
 
@@ -125,6 +134,8 @@ public class ValorViviendaFragment extends BaseFragment {
                 entidad = datos.consultaNacional();
 
                 saveTimeLastUpdated();
+
+                obtenerFechas();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;

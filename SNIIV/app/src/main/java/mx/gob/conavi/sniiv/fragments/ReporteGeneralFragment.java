@@ -17,10 +17,8 @@ import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
-import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
-import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
 /**
@@ -48,7 +46,6 @@ public class ReporteGeneralFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new ReporteGeneralRepository(getActivity());
-        fechasRepository = new FechasRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
     }
 
@@ -101,10 +98,7 @@ public class ReporteGeneralFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        Fechas[] fechasStorage = fechasRepository.loadFromStorage();
-        if(fechasStorage.length > 0) {
-            fechas = fechasStorage[0];
-        }
+        asignaFechas();
 
         mostrarDatos();
     }

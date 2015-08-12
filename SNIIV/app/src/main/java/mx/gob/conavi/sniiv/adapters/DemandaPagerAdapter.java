@@ -43,9 +43,9 @@ public class DemandaPagerAdapter extends FragmentPagerAdapter {
         Locale l = Locale.getDefault();
         switch (position) {
             case 0:
-                return mContext.getString(R.string.demanda_section1).toUpperCase(l);
+                return mContext.getString(R.string.title_financiamiento).toUpperCase(l);
             case 1:
-                return mContext.getString(R.string.demanda_section2).toUpperCase(l);
+                return mContext.getString(R.string.title_subsidios).toUpperCase(l);
         }
         return null;
     }

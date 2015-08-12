@@ -12,13 +12,10 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.DatosTipoVivienda;
 import mx.gob.conavi.sniiv.modelos.TipoVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseTipoVivienda;
@@ -35,6 +32,7 @@ public class TipoViviendaFragment extends BaseFragment {
     private TipoViviendaRepository repository;
     private boolean errorRetrievingData = false;
 
+    @Bind(R.id.txtTitleTipoVivienda) TextView txtTitleTipoVivienda;
     @Bind(R.id.txtHorizontal) TextView txtHorizontal;
     @Bind(R.id.txtVertical) TextView txtVertical;
     @Bind(R.id.txtTotal) TextView txtTotal;
@@ -56,6 +54,8 @@ public class TipoViviendaFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
+        asignaFechas();
+
         mostrarDatos();
     }
 
@@ -76,6 +76,12 @@ public class TipoViviendaFragment extends BaseFragment {
             txtHorizontal.setText(Utils.toString(entidad.getHorizontal()));
             txtVertical.setText(Utils.toString(entidad.getVertical()));
             txtTotal.setText(Utils.toString(entidad.getTotal()));
+        }
+
+        if (fechas != null) {
+            String tipo = String.format("%s (%s)", getString(R.string.title_tipo_vivienda),
+                    fechas.getFecha_vv());
+            txtTitleTipoVivienda.setText(tipo);
         }
     }
 
@@ -123,8 +129,9 @@ public class TipoViviendaFragment extends BaseFragment {
                 datos = new DatosTipoVivienda(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
-                app.setTimeLastUpdated(getKey(), new Date().getTime());
+                saveTimeLastUpdated();
+
+                obtenerFechas();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;

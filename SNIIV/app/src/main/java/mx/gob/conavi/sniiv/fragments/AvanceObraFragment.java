@@ -20,6 +20,7 @@ import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.modelos.AvanceObra;
 import mx.gob.conavi.sniiv.parsing.ParseAvanceObra;
 import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
+import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 
 /**
  * Created by admin on 04/08/15.
@@ -30,8 +31,10 @@ public class AvanceObraFragment extends BaseFragment {
     private DatosAvanceObra datos;
     private AvanceObra entidad;
     private AvanceObraRepository repository;
+    private FechasRepository fechasRepository;
     private boolean errorRetrievingData = false;
 
+    @Bind(R.id.txtTitleAvanceObra) TextView txtTitleAvanceObra;
     @Bind(R.id.txtProceso50) TextView txtProceso50;
     @Bind(R.id.txtProceso99) TextView txtProceso99;
     @Bind(R.id.txtTerminadasRecientes) TextView txtTerminadasRecientes;
@@ -55,6 +58,8 @@ public class AvanceObraFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
+        asignaFechas();
+
         mostrarDatos();
     }
 
@@ -77,6 +82,12 @@ public class AvanceObraFragment extends BaseFragment {
             txtTerminadasRecientes.setText(Utils.toString(entidad.getViv_term_rec()));
             txtTerminadasAntiguas.setText(Utils.toString(entidad.getViv_term_ant()));
             txtTotal.setText(Utils.toString(entidad.getTotal()));
+        }
+
+        if (fechas != null) {
+            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
+                    fechas.getFecha_vv());
+            txtTitleAvanceObra.setText(avance);
         }
     }
 
@@ -125,6 +136,8 @@ public class AvanceObraFragment extends BaseFragment {
                 entidad = datos.consultaNacional();
 
                 saveTimeLastUpdated();
+
+                obtenerFechas();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;
