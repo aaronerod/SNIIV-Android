@@ -7,13 +7,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:name=".activities.SniivApplication">
         <activity
             android:name=".activities.MainActivity"
-            android:label="Menú" >
+            android:label="SNIIV" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

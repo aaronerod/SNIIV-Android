@@ -22,6 +22,10 @@ public class DemandaActivity extends AppCompatActivity implements ActionBar.TabL
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(R.string.title_demanda);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

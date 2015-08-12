@@ -2,7 +2,18 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="actionBarStyle">@style/ActionBar.Solid.Sniiv</item>
+    </style>
 
+    <style name="ActionBar.Solid.Sniiv" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@android:color/white</item>
+        <item name="titleTextStyle">@style/ActionBar.Solid.Sniiv.TitleTextStyle</item>
+        <item name="logo">@drawable/ic_launcher</item>
+        <item name="displayOptions">useLogo|showHome</item>
+    </style>
+
+    <style name="ActionBar.Solid.Sniiv.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="Title">
