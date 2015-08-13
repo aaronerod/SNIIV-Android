@@ -1,9 +1,405 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="mx.gob.conavi.sniiv.fragments.FinanciamientosFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Finaciamientos" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_financiamiento"
+        android:id="@+id/txtTitleAvanceObra"
+        android:textColor="#ffffffff"
+        android:background="#ff00803b"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:width="250dp"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-</FrameLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitleAvanceObra"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow0"
+                android:text=""
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtRow01"
+                android:text="Acciones"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/Etiqueta"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/txtRow02"
+                android:text="Montos"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="15dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow011"
+                android:text="Viviendas Nuevas"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="13dp"
+                android:textColor="#ff00803b" />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow1"
+                android:text="Cofinanciamientos y Subsidios:"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/txtNuevasCofinAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtNuevasCofinMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow2"
+                android:text="Credito Individual:"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtNuevasCredAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtNuevasCredMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow012"
+                android:text="Viviendas Usadas"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="13dp"
+                android:textColor="#ff00803b" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow3"
+                android:text="Cofinanciamientos y Subsidios:"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/txtUsadasCofinAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtUsadasCofinMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow4"
+                android:text="Credito Individual:"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtUsadasCredAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtUsadasCredMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow013"
+                android:text="Mejoramiento"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="13dp"
+                android:textColor="#ff00803b" />
+
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow5"
+                android:text="Cofinanciamientos y Subsidios:"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/txtMejoramientoCofinAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtMejoramientoCofinMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow6"
+                android:text="Credito Individual:"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtMejoramientoCrediAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+
+            <TextView
+                android:id="@+id/txtMejoramientoCrediMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow04"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow014"
+                android:text="Otros Programas"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="13dp"
+                android:textColor="#ff00803b" />
+
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtRow7"
+                android:text="Credito Individual:"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtOtrosAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtOtrosMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
+
+            <TextView
+                android:id="@+id/txtRow8"
+                android:text="Total"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp"
+                android:textColor="#ff00803b" />
+
+            <TextView
+                android:id="@+id/txtTotalAcc"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtTotalMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+        </TableRow>
+    </TableLayout>
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pckEstados"
+        android:layout_alignParentBottom="true"
+        android:descendantFocusability="blocksDescendants"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
