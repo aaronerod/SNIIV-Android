@@ -7,6 +7,11 @@ public class FinanciamientoResultado {
     private Consulta cofinanciamiento;
     private Consulta creditoIndividual;
 
+    public FinanciamientoResultado() {
+        cofinanciamiento = new Consulta();
+        creditoIndividual = new Consulta();
+    }
+
     public Consulta getCofinanciamiento() {
         return cofinanciamiento;
     }

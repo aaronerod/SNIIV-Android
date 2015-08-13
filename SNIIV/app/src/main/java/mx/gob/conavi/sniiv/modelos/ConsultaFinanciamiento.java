@@ -10,6 +10,13 @@ public class ConsultaFinanciamiento {
     private FinanciamientoResultado otrosProgramas;
     private Consulta total;
 
+    public ConsultaFinanciamiento() {
+        viviendasNuevas = new FinanciamientoResultado();
+        viviendasUsadas = new FinanciamientoResultado();
+        mejoramientos = new FinanciamientoResultado();
+        otrosProgramas = new FinanciamientoResultado();
+        total = new Consulta();
+    }
 
     public FinanciamientoResultado getViviendasNuevas() {
         return viviendasNuevas;
