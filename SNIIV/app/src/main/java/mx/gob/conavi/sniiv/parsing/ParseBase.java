@@ -18,8 +18,7 @@ abstract class ParseBase<T> {
 
     ParseBase(String action) {
         namespace= "http://www.conavi.gob.mx:8080/WS_App_SNIIV";
-        //urlString = "http://www.conavi.gob.mx:8080/WS_App_SNIIV.asmx?WSDL";
-        urlString = "http://192.168.10.166:8005/WS_App_SNIIV.asmx?WSDL";
+        urlString = "http://www.conavi.gob.mx:8080/WS_App_SNIIV.asmx?WSDL";
         soapAction = action;
     }
 
