@@ -3,6 +3,7 @@ package mx.gob.conavi.sniiv.parsing;
 import android.util.Log;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
@@ -30,6 +31,13 @@ public class SoapToXml {
         try {
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             SoapObject request = new SoapObject(namespace, soapAction);
+            PropertyInfo p = new PropertyInfo();
+            p.setName("dat");
+            p.setValue("Sniiv Android");
+            p.setType(String.class);
+            request.addProperty(p);
+            envelope.setOutputSoapObject(request);
+
             envelope.setOutputSoapObject(request);
 
             HttpTransportSE transport = new HttpTransportSE(urlString, 5000);
