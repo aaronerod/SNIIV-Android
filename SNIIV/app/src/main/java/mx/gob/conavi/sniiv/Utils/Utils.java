@@ -33,9 +33,16 @@ public class Utils {
     public static String toString(long numero) {
         return decimalFormat.format(numero);
     }
+    public static String toString(double numero) {
+        return decimalFormat.format(numero);
+    }
 
     public static String toStringDivide(long numero, int divide) {
         return decimalFormat.format((double)numero / divide);
+    }
+
+    public static String toStringDivide(double numero, int divide) {
+        return decimalFormat.format(numero / divide);
     }
 
     public static String toStringDivide(long numero) {

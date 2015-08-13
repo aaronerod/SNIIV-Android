@@ -24,7 +24,40 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingRight="20dp"
+        >
+
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip" >
+
+            <TextView
+                android:id="@+id/txtRow0"
+                android:text=""
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtRow01"
+                android:text="Acciones"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/Etiqueta"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txtRow02"
+                android:text="Montos"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="18dp" />
+        </TableRow>
+
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -34,16 +67,29 @@
 
             <TextView
                 android:id="@+id/txtRow1"
-                android:text="@string/title_horizontal"
+                android:text="Nueva:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/txtHorizontal"
+                android:id="@+id/txtNuevaAcc"
                 android:text="-"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtNuevaMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
         </TableRow>
 
         <TableRow
@@ -54,16 +100,29 @@
 
             <TextView
                 android:id="@+id/txtRow2"
-                android:text="@string/title_vertical"
+                android:text="Usada:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/txtVertical"
+                android:id="@+id/txtUsadaAcc"
                 android:text="-"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtUsadaMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
         </TableRow>
 
         <TableRow
@@ -74,16 +133,29 @@
 
             <TextView
                 android:id="@+id/txtRow3"
-                android:text="@string/title_horizontal"
+                android:text="Autoproducción:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/txtHorizontal"
+                android:id="@+id/txtAutoproduccionAcc"
                 android:text="-"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtAutoproduccionMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow4"
@@ -93,16 +165,29 @@
 
             <TextView
                 android:id="@+id/txtRow4"
-                android:text="@string/title_horizontal"
+                android:text="Mejoramiento:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/txtHorizontal"
+                android:id="@+id/txtMejoramientoAcc"
                 android:text="-"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtMejoramientoMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow5"
@@ -112,16 +197,29 @@
 
             <TextView
                 android:id="@+id/txtRow5"
-                android:text="@string/title_horizontal"
+                android:text="Lotes c/ Servicio"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/txtHorizontal"
+                android:id="@+id/txtLotesAcc"
                 android:text="-"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtLotesMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow6"
@@ -131,38 +229,65 @@
 
             <TextView
                 android:id="@+id/txtRow6"
-                android:text="@string/title_horizontal"
+                android:text="Otros:"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/txtHorizontal"
+                android:id="@+id/txtOtrosAcc"
                 android:text="-"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+
+            <TextView
+                android:id="@+id/txtOtrosMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
         </TableRow>
 
 
 
         <TableRow
-            android:id="@+id/tableRow5"
+            android:id="@+id/tableRow7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dip" >
 
             <TextView
-                android:id="@+id/txtRow5"
+                android:id="@+id/txtRow7"
                 android:text="Total"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Etiqueta"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/txtTotal"
+                android:id="@+id/txtTotalAcc"
                 android:text="-"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="right" />
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/txtTotalMto"
+                android:text="-"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="13dp" />
         </TableRow>
     </TableLayout>
 
