@@ -13,6 +13,7 @@ public class ConsultaSubsidio {
     private Consulta total;
 
     public ConsultaSubsidio() {
+        nueva = usada = autoproduccion = mejoramiento = lotes = otros = total = new Consulta();
     }
 
     public Consulta getNueva() {
