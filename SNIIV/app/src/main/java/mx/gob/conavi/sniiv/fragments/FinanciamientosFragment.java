@@ -155,7 +155,7 @@ public class FinanciamientosFragment extends BaseFragment {
 
     @Override
     protected String getKey() {
-        return PCU.TABLE;
+        return Financiamiento.TABLE;
     }
 
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
@@ -175,6 +175,8 @@ public class FinanciamientosFragment extends BaseFragment {
 
                 datos = new DatosFinanciamiento(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
+                Log.v(TAG, "entidad" + entidad.toString());
+
 
                 saveTimeLastUpdated();
 

@@ -139,7 +139,7 @@ public class SubsidiosFragment extends BaseFragment {
 
     @Override
     protected String getKey() {
-        return PCU.TABLE;
+        return Subsidio.TABLE;
     }
 
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {

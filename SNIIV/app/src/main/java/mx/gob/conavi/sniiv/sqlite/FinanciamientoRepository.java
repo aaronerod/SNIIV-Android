@@ -167,7 +167,7 @@ public class FinanciamientoRepository implements Repository<Financiamiento> {
             } while (cursor.moveToNext());
         }
 
-        dato.setTotal(obtieneTotal());
+        dato.setTotal(obtieneTotal(filtroEntidad));
 
         cursor.close();
         db.close();
@@ -215,12 +215,18 @@ public class FinanciamientoRepository implements Repository<Financiamiento> {
         return resultado;
     }
 
-    private Consulta obtieneTotal() {
+    private Consulta obtieneTotal(String filtroEntidad) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT SUM(acciones) sumAcciones, SUM(monto) sumMonto FROM " +
                 Financiamiento.TABLE;
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        String[] args = null;
+        if (filtroEntidad != null) {
+            selectQuery += " WHERE cve_ent = ? ";
+            args = new String[] {filtroEntidad};
+        }
+
+        Cursor cursor = db.rawQuery(selectQuery, args);
         Consulta consulta = new Consulta();
         if (cursor.moveToFirst()) {
             do {
