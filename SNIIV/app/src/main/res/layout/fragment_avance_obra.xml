@@ -8,14 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_avance_obra"
-        android:id="@+id/txtTitleAvanceObra"
+        android:id="@+id/txtTitleSubsidios"
         android:layout_marginTop="20dp"
         style="@style/Title"/>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTitleAvanceObra"
+        android:layout_below="@+id/txtTitleSubsidios"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:paddingLeft="20dp"

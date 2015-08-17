@@ -34,7 +34,7 @@ public class AvanceObraFragment extends BaseFragment {
     private FechasRepository fechasRepository;
     private boolean errorRetrievingData = false;
 
-    @Bind(R.id.txtTitleAvanceObra) TextView txtTitleAvanceObra;
+    @Bind(R.id.txtTitleSubsidios) TextView txtTitleAvanceObra;
     @Bind(R.id.txtProceso50) TextView txtProceso50;
     @Bind(R.id.txtProceso99) TextView txtProceso99;
     @Bind(R.id.txtTerminadasRecientes) TextView txtTerminadasRecientes;

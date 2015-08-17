@@ -11,25 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosFinanciamiento;
-import mx.gob.conavi.sniiv.datos.DatosPCU;
-import mx.gob.conavi.sniiv.datos.DatosSubsidio;
 import mx.gob.conavi.sniiv.modelos.ConsultaFinanciamiento;
-import mx.gob.conavi.sniiv.modelos.ConsultaSubsidio;
 import mx.gob.conavi.sniiv.modelos.Financiamiento;
-import mx.gob.conavi.sniiv.modelos.PCU;
-import mx.gob.conavi.sniiv.modelos.Subsidio;
 import mx.gob.conavi.sniiv.parsing.ParseFinanciamiento;
-import mx.gob.conavi.sniiv.parsing.ParsePCU;
-import mx.gob.conavi.sniiv.parsing.ParseSubsidio;
 import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
-import mx.gob.conavi.sniiv.sqlite.PCURepository;
-import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 
 
 public class FinanciamientosFragment extends BaseFragment {
@@ -60,6 +52,8 @@ public class FinanciamientosFragment extends BaseFragment {
 
     @Bind(R.id.txtTotalAcc) TextView txtTotalAcc;
     @Bind(R.id.txtTotalMto) TextView txtTotalMto;
+
+    @Bind(R.id.txtTitleSubsidios) TextView txtTitleFinanciamientos;
 
 
 
@@ -94,31 +88,40 @@ public class FinanciamientosFragment extends BaseFragment {
 
         pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
         configuraPickerView();
-
+        showNotification();
         return rootView;
+
+
+
     }
+
+
+    public  void showNotification(){
+        Toast.makeText(getActivity(), "*Acciones en Miles\n*Montos en Millones de pesos corrientes", Toast.LENGTH_LONG).show();
+    }
+
 
     protected void mostrarDatos() {
         if(entidad != null) {
 
 
 
-            txtNuevasCofinAcc.setText(Utils.toString(entidad.getViviendasNuevas().getCofinanciamiento().getAcciones()));
-            txtNuevasCofinMto.setText(Utils.toString(entidad.getViviendasNuevas().getCofinanciamiento().getMonto()));
-            txtNuevasCredAcc.setText(Utils.toString(entidad.getViviendasNuevas().getCreditoIndividual().getAcciones()));
-            txtNuevasCredMto.setText(Utils.toString(entidad.getViviendasNuevas().getCreditoIndividual().getMonto()));
-            txtUsadasCofinAcc.setText(Utils.toString(entidad.getViviendasUsadas().getCofinanciamiento().getAcciones()));
-            txtUsadasCofinMto.setText(Utils.toString(entidad.getViviendasUsadas().getCofinanciamiento().getMonto()));
-            txtUsadasCredAcc.setText(Utils.toString(entidad.getViviendasUsadas().getCreditoIndividual().getAcciones()));
-            txtUsadasCredMto.setText(Utils.toString(entidad.getViviendasUsadas().getCreditoIndividual().getMonto()));
-            txtMejoramientoCofinAcc.setText(Utils.toString(entidad.getMejoramientos().getCofinanciamiento().getAcciones()));
-            txtMejoramientoCofinMto.setText(Utils.toString(entidad.getMejoramientos().getCofinanciamiento().getMonto()));
-            txtMejoramientoCrediAcc.setText(Utils.toString(entidad.getMejoramientos().getCreditoIndividual().getAcciones()));
-            txtMejoramientoCrediMto.setText(Utils.toString(entidad.getMejoramientos().getCreditoIndividual().getMonto()));
-            txtOtrosAcc.setText(Utils.toString(entidad.getOtrosProgramas().getCreditoIndividual().getAcciones()));
-            txtOtrosMto.setText(Utils.toString(entidad.getOtrosProgramas().getCreditoIndividual().getMonto()));
-            txtTotalAcc.setText(Utils.toString(entidad.getTotal().getAcciones()));
-            txtTotalMto.setText(Utils.toString(entidad.getTotal().getMonto()));
+            txtNuevasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getAcciones()));
+            txtNuevasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getMonto(),1000000));
+            txtNuevasCredAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCreditoIndividual().getAcciones()));
+            txtNuevasCredMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCreditoIndividual().getMonto(), 1000000));
+            txtUsadasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCofinanciamiento().getAcciones()));
+            txtUsadasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCofinanciamiento().getMonto(), 1000000));
+            txtUsadasCredAcc.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCreditoIndividual().getAcciones()));
+            txtUsadasCredMto.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCreditoIndividual().getMonto(), 1000000));
+            txtMejoramientoCofinAcc.setText(Utils.toStringDivide(entidad.getMejoramientos().getCofinanciamiento().getAcciones()));
+            txtMejoramientoCofinMto.setText(Utils.toStringDivide(entidad.getMejoramientos().getCofinanciamiento().getMonto(), 1000000));
+            txtMejoramientoCrediAcc.setText(Utils.toStringDivide(entidad.getMejoramientos().getCreditoIndividual().getAcciones()));
+            txtMejoramientoCrediMto.setText(Utils.toStringDivide(entidad.getMejoramientos().getCreditoIndividual().getMonto(), 1000000));
+            txtOtrosAcc.setText(Utils.toStringDivide(entidad.getOtrosProgramas().getCreditoIndividual().getAcciones()));
+            txtOtrosMto.setText(Utils.toStringDivide(entidad.getOtrosProgramas().getCreditoIndividual().getMonto(), 1000000));
+            txtTotalAcc.setText(Utils.toStringDivide(entidad.getTotal().getAcciones()));
+            txtTotalMto.setText(Utils.toStringDivide(entidad.getTotal().getMonto(), 1000000));
 
 
 
@@ -126,9 +129,9 @@ public class FinanciamientosFragment extends BaseFragment {
         }
 
         if (fechas != null) {
-            //String pcu = String.format("%s (%s)", getString(R.string.title_pcu),
-            //    fechas.getFecha_vv());
-            //txtTitlePCU.setText(pcu);
+            String pcu = String.format("%s (%s)", getString(R.string.title_financiamiento),
+                fechas.getFecha_finan());
+            txtTitleFinanciamientos.setText(pcu);
         }
     }
 

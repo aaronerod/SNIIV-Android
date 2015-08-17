@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,6 +50,7 @@ public class SubsidiosFragment extends BaseFragment {
     @Bind(R.id.txtOtrosMto) TextView txtOtrosMto;
     @Bind(R.id.txtTotalAcc) TextView txtTotalAcc;
     @Bind(R.id.txtTotalMto) TextView txtTotalMto;
+    @Bind(R.id.txtTitleSubsidios) TextView txtTitleSubsidios;
 
 
     @Override
@@ -81,38 +83,44 @@ public class SubsidiosFragment extends BaseFragment {
 
         pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
         configuraPickerView();
-
+        showNotification();
         return rootView;
     }
+
+
+    public  void showNotification(){
+        Toast.makeText(getActivity(), "*Acciones en Miles\n*Montos en Millones de pesos corrientes", Toast.LENGTH_LONG).show();
+    }
+
 
     protected void mostrarDatos() {
         if(entidad != null) {
 
 
 
-            txtNuevaAcc.setText(Utils.toString(entidad.getNueva().getAcciones()));
-            txtNuevaMto.setText(Utils.toString(entidad.getNueva().getMonto()));
-            txtUsadaAcc.setText(Utils.toString(entidad.getUsada().getAcciones()));
-            txtUsadaMto.setText(Utils.toString(entidad.getUsada().getMonto()));
-            txtAutoproduccionAcc.setText(Utils.toString(entidad.getAutoproduccion().getAcciones()));
-            txtAutoproduccionMto.setText(Utils.toString(entidad.getAutoproduccion().getMonto()));
-            txtMejoramientoAcc.setText(Utils.toString(entidad.getMejoramiento().getAcciones()));
-            txtMejoramientoMto.setText(Utils.toString(entidad.getMejoramiento().getMonto()));
+            txtNuevaAcc.setText(Utils.toStringDivide(entidad.getNueva().getAcciones()));
+            txtNuevaMto.setText(Utils.toStringDivide(entidad.getNueva().getMonto(),1000000));
+            txtUsadaAcc.setText(Utils.toStringDivide(entidad.getUsada().getAcciones()));
+            txtUsadaMto.setText(Utils.toStringDivide(entidad.getUsada().getMonto(),1000000));
+            txtAutoproduccionAcc.setText(Utils.toStringDivide(entidad.getAutoproduccion().getAcciones()));
+            txtAutoproduccionMto.setText(Utils.toStringDivide(entidad.getAutoproduccion().getMonto(),1000000));
+            txtMejoramientoAcc.setText(Utils.toStringDivide(entidad.getMejoramiento().getAcciones()));
+            txtMejoramientoMto.setText(Utils.toStringDivide(entidad.getMejoramiento().getMonto(),1000000));
 
-            txtLotesAcc.setText(Utils.toString(entidad.getLotes().getAcciones()));
-            txtLotesMto.setText(Utils.toString(entidad.getLotes().getMonto()));
+            txtLotesAcc.setText(Utils.toStringDivide(entidad.getLotes().getAcciones()));
+            txtLotesMto.setText(Utils.toStringDivide(entidad.getLotes().getMonto(),1000000));
 
-            txtOtrosAcc.setText(Utils.toString(entidad.getOtros().getAcciones()));
-            txtOtrosMto.setText(Utils.toString(entidad.getOtros().getMonto()));
+            txtOtrosAcc.setText(Utils.toStringDivide(entidad.getOtros().getAcciones()));
+            txtOtrosMto.setText(Utils.toStringDivide(entidad.getOtros().getMonto(),1000000));
 
-            txtTotalAcc.setText(Utils.toString(entidad.getTotal().getAcciones()));
-            txtTotalMto.setText(Utils.toString(entidad.getTotal().getMonto()));
+            txtTotalAcc.setText(Utils.toStringDivide(entidad.getTotal().getAcciones()));
+            txtTotalMto.setText(Utils.toStringDivide(entidad.getTotal().getMonto(),1000000));
         }
 
         if (fechas != null) {
-            //String pcu = String.format("%s (%s)", getString(R.string.title_pcu),
-                //    fechas.getFecha_vv());
-            //txtTitlePCU.setText(pcu);
+            String pcu = String.format("%s (%s)", getString(R.string.title_subsidios),
+                   fechas.getFecha_subs());
+            txtTitleSubsidios.setText(pcu);
         }
     }
 
