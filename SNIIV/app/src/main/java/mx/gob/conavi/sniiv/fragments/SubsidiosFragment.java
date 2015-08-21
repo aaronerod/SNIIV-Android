@@ -11,20 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.datos.DatosPCU;
 import mx.gob.conavi.sniiv.datos.DatosSubsidio;
 import mx.gob.conavi.sniiv.modelos.ConsultaSubsidio;
-import mx.gob.conavi.sniiv.modelos.PCU;
 import mx.gob.conavi.sniiv.modelos.Subsidio;
-import mx.gob.conavi.sniiv.parsing.ParsePCU;
 import mx.gob.conavi.sniiv.parsing.ParseSubsidio;
-import mx.gob.conavi.sniiv.sqlite.PCURepository;
 import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 
 
@@ -83,21 +78,11 @@ public class SubsidiosFragment extends BaseFragment {
 
         pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
         configuraPickerView();
-        showNotification();
         return rootView;
     }
 
-
-    public  void showNotification(){
-        Toast.makeText(getActivity(), "*Acciones en Miles\n*Montos en Millones de pesos corrientes", Toast.LENGTH_LONG).show();
-    }
-
-
     protected void mostrarDatos() {
         if(entidad != null) {
-
-
-
             txtNuevaAcc.setText(Utils.toStringDivide(entidad.getNueva().getAcciones()));
             txtNuevaMto.setText(Utils.toStringDivide(entidad.getNueva().getMonto(),1000000));
             txtUsadaAcc.setText(Utils.toStringDivide(entidad.getUsada().getAcciones()));

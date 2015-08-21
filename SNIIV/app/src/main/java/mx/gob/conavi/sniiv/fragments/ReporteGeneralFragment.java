@@ -2,7 +2,6 @@ package mx.gob.conavi.sniiv.fragments;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,14 +47,6 @@ public class ReporteGeneralFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         repository = new ReporteGeneralRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
-        showNotification();
-
-
-    }
-
-
-    public  void showNotification(){
-        Toast.makeText(getActivity(),"*Acciones en Miles\n*Montos en Millones de pesos corrientes",Toast.LENGTH_LONG).show();
     }
 
     @Override

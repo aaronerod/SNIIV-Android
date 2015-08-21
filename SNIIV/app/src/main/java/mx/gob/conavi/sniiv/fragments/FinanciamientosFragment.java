@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -88,24 +87,11 @@ public class FinanciamientosFragment extends BaseFragment {
 
         pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
         configuraPickerView();
-        showNotification();
         return rootView;
-
-
-
     }
-
-
-    public  void showNotification(){
-        Toast.makeText(getActivity(), "*Acciones en Miles\n*Montos en Millones de pesos corrientes", Toast.LENGTH_LONG).show();
-    }
-
 
     protected void mostrarDatos() {
         if(entidad != null) {
-
-
-
             txtNuevasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getAcciones()));
             txtNuevasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getMonto(),1000000));
             txtNuevasCredAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCreditoIndividual().getAcciones()));
@@ -122,10 +108,6 @@ public class FinanciamientosFragment extends BaseFragment {
             txtOtrosMto.setText(Utils.toStringDivide(entidad.getOtrosProgramas().getCreditoIndividual().getMonto(), 1000000));
             txtTotalAcc.setText(Utils.toStringDivide(entidad.getTotal().getAcciones()));
             txtTotalMto.setText(Utils.toStringDivide(entidad.getTotal().getMonto(), 1000000));
-
-
-
-
         }
 
         if (fechas != null) {
