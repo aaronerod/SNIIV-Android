@@ -23,35 +23,59 @@
 
 
         <TableRow
-            android:id="@+id/tableRow0"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txtRow0"
                 android:text=""
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/txtRow01"
                 android:text="Acciones"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/Etiqueta"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txtRow02"
                 android:text="Montos"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:text=""
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:text="@string/unidades_miles"
+                android:layout_marginTop="-5dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="right"
+                style="@style/Etiqueta"
+                android:textSize="12sp" />
+
+            <TextView
+                android:text="@string/unidades_mdp"
+                android:layout_marginTop="-5dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="12sp" />
+        </TableRow>
+
         <TableRow
             android:id="@+id/tableRow01"
             android:layout_width="match_parent"

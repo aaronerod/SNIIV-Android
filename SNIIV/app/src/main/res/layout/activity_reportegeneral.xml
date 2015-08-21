@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_acciones"
+                android:text="@string/unidades_acciones"
                 android:id="@+id/txtAcciones"
                 android:layout_weight="1"
                 style="@style/Etiqueta"/>
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_monto"
+                android:text="@string/unidades_monto"
                 android:id="@+id/txtMonto"
                 android:layout_weight="1"
                 style="@style/Etiqueta"/>
@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_acciones"
+                android:text="@string/unidades_acciones"
                 android:id="@+id/txtAcciones2"
                 android:layout_weight="1"
                 style="@style/Etiqueta"/>
@@ -107,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_monto"
+                android:text="@string/unidades_monto"
                 android:layout_weight="1"
                 android:id="@+id/txtMonto2"
                 style="@style/Etiqueta"/>

@@ -23,36 +23,58 @@
         >
 
         <TableRow
-            android:id="@+id/tableRow0"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txtRow0"
                 android:text=""
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/txtRow01"
                 android:text="Acciones"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/Etiqueta"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txtRow02"
                 android:text="Montos"
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text=""
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:text="@string/unidades_miles"
+                android:layout_marginTop="-5dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="right"
+                style="@style/Etiqueta"
+                android:textSize="12sp" />
+
+            <TextView
+                android:text="@string/unidades_mdp"
+                android:layout_marginTop="-5dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="right"
+                style="@style/EtiquetaCantidad"
+                android:textSize="12sp" />
+        </TableRow>
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -66,7 +88,7 @@
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Etiqueta"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtNuevaAcc"
@@ -75,7 +97,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtNuevaMto"
@@ -84,7 +106,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
         </TableRow>
 
         <TableRow
@@ -99,7 +121,7 @@
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Etiqueta"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtUsadaAcc"
@@ -108,7 +130,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtUsadaMto"
@@ -117,7 +139,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
         </TableRow>
 
         <TableRow
@@ -132,7 +154,7 @@
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Etiqueta"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtAutoproduccionAcc"
@@ -141,7 +163,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtAutoproduccionMto"
@@ -150,7 +172,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow4"
@@ -164,7 +186,7 @@
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Etiqueta"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtMejoramientoAcc"
@@ -173,7 +195,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtMejoramientoMto"
@@ -182,7 +204,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow5"
@@ -196,7 +218,7 @@
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Etiqueta"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtLotesAcc"
@@ -205,7 +227,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtLotesMto"
@@ -214,7 +236,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow6"
@@ -228,7 +250,7 @@
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Etiqueta"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtOtrosAcc"
@@ -237,7 +259,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
 
             <TextView
@@ -247,7 +269,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
         </TableRow>
 
 
@@ -264,7 +286,7 @@
                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Etiqueta"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtTotalAcc"
@@ -273,7 +295,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtTotalMto"
@@ -282,7 +304,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="right"
                 style="@style/EtiquetaCantidad"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
         </TableRow>
     </TableLayout>
 
