@@ -42,9 +42,13 @@
     <string name="title_activity_oferta">Oferta</string>
     <string name="mensaje_error">Ha ocurrido un error</string>
     <string name="empty_value">-</string>
-    <string name="mensaje_error_datos">Error obteniendo datos, intente más tarde</string>
+    <string name="mensaje_error_datos">Señal débil, vuelva a intentar</string>
     <string name="title_oferta">Oferta</string>
     <string name="title_reporte_general">Reporte General</string>
     <string name="title_demanda">Demanda</string>
+    <string name="unidades_miles">(Miles)</string>
+    <string name="unidades_mdp">(MDP)</string>
+    <string name="unidades_acciones">Acciones (miles):</string>
+    <string name="unidades_monto">Monto (mdp):</string>
 
 </resources>
