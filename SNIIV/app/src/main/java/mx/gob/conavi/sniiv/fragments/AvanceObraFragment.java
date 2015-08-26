@@ -90,7 +90,6 @@ public class AvanceObraFragment extends BaseFragment {
             dialog.show(getFragmentManager(),"error");
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 

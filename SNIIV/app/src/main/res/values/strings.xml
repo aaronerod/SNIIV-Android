@@ -53,4 +53,8 @@
 
 
     <string name="title_grafica">Gráfica</string>
+    <string name="mensaje_imagen_guardada">Imagen Guardada en Galería</string>
+    <string name="etiqueta_guardar">Guardar</string>
+    <string name="etiqueta_conavi">Comisión Nacional de Vivienda</string>
+    <string name="texto_cancelar">Cancelar</string>
 </resources>

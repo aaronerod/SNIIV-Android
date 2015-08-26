@@ -100,8 +100,6 @@ public class PCUFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     protected void mostrarDatos() {
         if(entidad != null) {
             txtU1.setText(Utils.toString(entidad.getU1()));
