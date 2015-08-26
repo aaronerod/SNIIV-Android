@@ -13,6 +13,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -52,8 +54,8 @@ public class OfertaDialogFragment extends DialogFragment implements
         pCenterText = getArguments().getString("centerText");
         pYvalLegend = getArguments().getString("yValLegend");
         pEstado = getArguments().getInt("estado");
-
         view= inflater.inflate(R.layout.dialog_grafica_1, null);
+
         mChart = (PieChart) view.findViewById(R.id.chart);
 
 
@@ -61,13 +63,7 @@ public class OfertaDialogFragment extends DialogFragment implements
                 .setPositiveButton(getString(R.string.etiqueta_guardar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mChart.saveToGallery(pCenterText + System.currentTimeMillis() + ".jpg", 100);
-                        Toast toast2 =
-                                Toast.makeText(getActivity().getApplicationContext(),
-                                        R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT);
 
-                        toast2.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
-                        toast2.show();
                     }
                 })
                 .setNegativeButton(getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
@@ -82,6 +78,39 @@ public class OfertaDialogFragment extends DialogFragment implements
 
         return builder.create();
     }
+
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();    //super.onStart() is where dialog.show() is actually called on the underlying dialog, so we have to do it after this point
+        final AlertDialog d = (AlertDialog)getDialog();
+        if(d != null)
+        {
+            Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+
+                    mChart.saveToGallery(pCenterText + System.currentTimeMillis() + ".jpg", 100);
+                    Toast toast2 =
+                            Toast.makeText(getActivity().getApplicationContext(),
+                                    R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT);
+
+
+                    toast2.show();
+                    Boolean wantToCloseDialog = false;
+                    //Do stuff, possibly set wantToCloseDialog to true then...
+                    if (wantToCloseDialog)
+                        d.dismiss();
+                    //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
+                }
+            });
+        }
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -112,7 +141,8 @@ public class OfertaDialogFragment extends DialogFragment implements
         mChart.setRotationAngle(0);
         mChart.setRotationEnabled(false);
         mChart.setOnChartValueSelectedListener(this);
-        mChart.setCenterText(centerText+"\n "+ Utils.listEdo[estado]);
+        mChart.setCenterText(centerText + "\n " + Utils.listEdo[estado]);
+        mChart.setLongClickable(true);
         mChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
