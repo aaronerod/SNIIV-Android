@@ -11,8 +11,12 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.github.mikephil.charting.data.PieData;
@@ -68,10 +72,18 @@ public class OfertaDialogFragment extends DialogFragment implements
 
         builder.setView(view)
                 // Add action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
+
+                        mChart.saveToGallery(pCenterText + System.currentTimeMillis()+".jpg", 100);
+                        Toast toast2 =
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        "Imágen Guardada en Galeria", Toast.LENGTH_SHORT);
+
+                        toast2.setGravity(Gravity.CENTER|Gravity.LEFT,0,0);
+
+                        toast2.show();
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -81,8 +93,25 @@ public class OfertaDialogFragment extends DialogFragment implements
                 });
         initChart(pCenterText, pEstado);
         setData(pYvalLegend, pValues, pParties);
+        registerForContextMenu(view);
         return builder.create();
     }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Context Menu");
+        menu.add(0, v.getId(), 0, "Guardar");
+
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle()=="Guardar"){
+            mChart.saveToPath("title" + System.currentTimeMillis(), "");
+        }
+
+        return true;
+    }
+
 
 
     public void initChart(String centerText, int estado) {

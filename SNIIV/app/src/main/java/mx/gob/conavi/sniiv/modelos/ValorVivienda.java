@@ -108,7 +108,7 @@ public class ValorVivienda implements Modelo{
         PARTIES.add("Popular");
         PARTIES.add("Tradicional");
         PARTIES.add("Media Residencial");
-        //  PARTIES.add("No disponible");
+
         return PARTIES;
     }
 }
