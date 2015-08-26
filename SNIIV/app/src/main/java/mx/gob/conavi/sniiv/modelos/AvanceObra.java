@@ -1,9 +1,11 @@
 package mx.gob.conavi.sniiv.modelos;
 
+import java.util.ArrayList;
+
 /**
  * Created by admin on 05/08/15.
  */
-public class AvanceObra {
+public class AvanceObra implements Modelo{
     private int cve_ent;
     private long viv_proc_m50;
     private long viv_proc_50_99;
@@ -12,6 +14,7 @@ public class AvanceObra {
     private long total;
 
     public static final String TABLE = "AvanceObra";
+
 
     public AvanceObra() {
     }
@@ -23,7 +26,10 @@ public class AvanceObra {
         this.viv_term_rec = viv_term_rec;
         this.viv_term_ant = viv_term_ant;
         this.total = total;
+
+
     }
+
 
     public int getCve_ent() {
         return cve_ent;
@@ -71,5 +77,26 @@ public class AvanceObra {
 
     public void setTotal(long total) {
         this.total = total;
+    }
+
+    @Override
+    public long[] getValues() {
+        long[] l=new long[]{
+        viv_proc_m50,
+        viv_proc_50_99,
+        viv_term_rec,
+        viv_term_ant
+        };
+        return l;
+    }
+
+    @Override
+    public ArrayList<String> getParties() {
+        ArrayList<String> PARTIES = new ArrayList<>();
+        PARTIES.add("Hasta 50%");
+        PARTIES.add("Hasta 99%");
+        PARTIES.add("Recientes");
+        PARTIES.add("Antiguas");
+        return PARTIES;
     }
 }

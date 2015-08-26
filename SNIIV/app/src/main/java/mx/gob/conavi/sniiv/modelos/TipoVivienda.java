@@ -1,9 +1,11 @@
 package mx.gob.conavi.sniiv.modelos;
 
+import java.util.ArrayList;
+
 /**
  * Created by admin on 06/08/15.
  */
-public class TipoVivienda {
+public class TipoVivienda implements Modelo{
     private int cve_ent;
     private long horizontal;
     private long vertical;
@@ -61,5 +63,26 @@ public class TipoVivienda {
                 ", vertical=" + vertical +
                 ", total=" + total +
                 '}';
+    }
+
+
+
+    @Override
+    public long[] getValues() {
+        long[] l=new long[]{
+                horizontal,
+                vertical,
+
+        };
+        return l;
+    }
+
+    @Override
+    public ArrayList<String> getParties() {
+        ArrayList<String> PARTIES = new ArrayList<>();
+        PARTIES.add("Horizontal");
+        PARTIES.add("Vertical");
+
+        return PARTIES;
     }
 }

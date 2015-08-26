@@ -51,4 +51,6 @@
     <string name="unidades_acciones">Acciones (miles):</string>
     <string name="unidades_monto">Monto (mdp):</string>
 
+
+    <string name="title_grafica">Gráfica</string>
 </resources>
