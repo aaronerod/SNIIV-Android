@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
@@ -31,6 +34,7 @@ public class TipoViviendaFragment extends BaseFragment {
     private TipoVivienda entidad;
     private TipoViviendaRepository repository;
     private boolean errorRetrievingData = false;
+    private OfertaDialogFragment dialog;
 
     @Bind(R.id.txtTitleTipoVivienda) TextView txtTitleTipoVivienda;
     @Bind(R.id.txtHorizontal) TextView txtHorizontal;
@@ -42,6 +46,7 @@ public class TipoViviendaFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         repository = new TipoViviendaRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
+        setHasOptionsMenu(true);
     }
 
     protected void loadFromStorage() {
@@ -57,6 +62,34 @@ public class TipoViviendaFragment extends BaseFragment {
         asignaFechas();
 
         mostrarDatos();
+    }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_oferta, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_grafica) {
+            dialog = new OfertaDialogFragment();
+            Bundle args = new Bundle();
+            args.putStringArrayList("parties", entidad.getParties());
+            args.putLongArray("values", entidad.getValues());
+            args.putString("centerText", "Tipo Vivienda");
+            args.putString("yValLegend","Porcentaje");
+            args.putInt("estado", entidad.getCve_ent());
+            dialog.setArguments(args);
+            dialog.show(getFragmentManager(), "error");
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Nullable

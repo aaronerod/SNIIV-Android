@@ -1,9 +1,13 @@
 package mx.gob.conavi.sniiv.modelos;
 
+import android.graphics.AvoidXfermode;
+
+import java.util.ArrayList;
+
 /**
  * Created by admin on 07/08/15.
  */
-public class ValorVivienda {
+public class ValorVivienda implements Modelo{
     private int cve_ent;
     private long economica;
     private long popular;
@@ -83,5 +87,28 @@ public class ValorVivienda {
                 ", media_residencial=" + media_residencial +
                 ", total=" + total +
                 '}';
+    }
+
+    @Override
+    public long[] getValues() {
+        long[] l=new long[]{
+            //    economica,
+                popular,
+                tradicional,
+                media_residencial
+
+        };
+        return l;
+    }
+
+    @Override
+    public ArrayList<String> getParties() {
+        ArrayList<String> PARTIES = new ArrayList<>();
+      //  PARTIES.add("Económica");
+        PARTIES.add("Popular");
+        PARTIES.add("Tradicional");
+        PARTIES.add("Media Residencial");
+
+        return PARTIES;
     }
 }

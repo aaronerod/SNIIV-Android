@@ -1,9 +1,11 @@
 package mx.gob.conavi.sniiv.modelos;
 
+import java.util.ArrayList;
+
 /**
  * Created by admin on 06/08/15.
  */
-public class PCU {
+public class PCU implements Modelo {
     private int cve_ent;
     private long u1;
     private long u2;
@@ -94,5 +96,28 @@ public class PCU {
                 ", nd=" + nd +
                 ", total=" + total +
                 '}';
+    }
+
+    @Override
+    public long[] getValues() {
+        long[] l=new long[]{
+                u1,
+                u2,
+                u3,
+                fc
+              //  nd
+        };
+        return l;
+    }
+
+    @Override
+    public ArrayList<String> getParties() {
+        ArrayList<String> PARTIES = new ArrayList<>();
+        PARTIES.add("Perímetro U1");
+        PARTIES.add("Perímetro U2");
+        PARTIES.add("Perímetro U3");
+        PARTIES.add("Fuera de Contorno");
+      //  PARTIES.add("No disponible");
+        return PARTIES;
     }
 }

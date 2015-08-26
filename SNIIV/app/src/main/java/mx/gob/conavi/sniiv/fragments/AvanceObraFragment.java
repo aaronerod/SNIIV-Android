@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
@@ -22,9 +24,6 @@ import mx.gob.conavi.sniiv.parsing.ParseAvanceObra;
 import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 
-/**
- * Created by admin on 04/08/15.
- */
 public class AvanceObraFragment extends BaseFragment {
     public static final String TAG = "AvanceObraFragment";
 
@@ -33,6 +32,7 @@ public class AvanceObraFragment extends BaseFragment {
     private AvanceObraRepository repository;
     private FechasRepository fechasRepository;
     private boolean errorRetrievingData = false;
+    private OfertaDialogFragment dialog;
 
     @Bind(R.id.txtTitleSubsidios) TextView txtTitleAvanceObra;
     @Bind(R.id.txtProceso50) TextView txtProceso50;
@@ -41,11 +41,15 @@ public class AvanceObraFragment extends BaseFragment {
     @Bind(R.id.txtTerminadasAntiguas) TextView txtTerminadasAntiguas;
     @Bind(R.id.txtTotal) TextView txtTotal;
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new AvanceObraRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
+        setHasOptionsMenu(true);
+
     }
 
     protected void loadFromStorage() {
@@ -61,6 +65,32 @@ public class AvanceObraFragment extends BaseFragment {
         asignaFechas();
 
         mostrarDatos();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_oferta, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_grafica) {
+            dialog = new OfertaDialogFragment();
+            Bundle args = new Bundle();
+            args.putStringArrayList("parties", entidad.getParties());
+            args.putLongArray("values", entidad.getValues());
+            args.putString("centerText", "Avance Obra");
+            args.putString("yValLegend","Porcentaje");
+            args.putInt("estado", entidad.getCve_ent());
+            dialog.setArguments(args);
+            dialog.show(getFragmentManager(),"error");
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Nullable
@@ -96,6 +126,7 @@ public class AvanceObraFragment extends BaseFragment {
         return new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
                 if (newVal == 0) {
                     entidad = datos.consultaNacional();
                 } else {
