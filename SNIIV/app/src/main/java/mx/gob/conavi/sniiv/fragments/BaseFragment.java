@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.NumberPicker;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
@@ -103,6 +104,21 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected Date getFechaActualizacion(){
-        return new Date();
+        Fechas[] fechasStorage = fechasRepository.loadFromStorage();
+        if(fechasStorage.length > 0) {
+            fechas = fechasStorage[0];
+            try {
+                return Utils.fmtDMY.parse(getFechaAsString());
+            } catch (ParseException e) {
+                return new Date(0);
+            }
+        }
+
+        return new Date(0);
+
+    }
+
+    protected String getFechaAsString(){
+        return "";
     }
 }

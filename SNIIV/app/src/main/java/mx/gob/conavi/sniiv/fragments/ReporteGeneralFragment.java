@@ -59,19 +59,8 @@ public class ReporteGeneralFragment extends BaseFragment {
     }
 
     @Override
-    protected Date getFechaActualizacion() {
-        Fechas[] fechasStorage = fechasRepository.loadFromStorage();
-        if(fechasStorage.length > 0) {
-            fechas = fechasStorage[0];
-            try {
-                return Utils.fmtDMY.parse(fechas.getFecha_finan());
-            } catch (ParseException e) {
-                return new Date(0);
-            }
-        }
-
-        return new Date(0);
-
+    protected String getFechaAsString(){
+        return fechas != null ? fechas.getFecha_finan() : null;
     }
 
     @Nullable
