@@ -12,11 +12,15 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
@@ -54,6 +58,22 @@ public class ReporteGeneralFragment extends BaseFragment {
         return ReporteGeneral.TABLE;
     }
 
+    @Override
+    protected Date getFechaActualizacion() {
+        Fechas[] fechasStorage = fechasRepository.loadFromStorage();
+        if(fechasStorage.length > 0) {
+            fechas = fechasStorage[0];
+            try {
+                return Utils.fmtDMY.parse(fechas.getFecha_finan());
+            } catch (ParseException e) {
+                return new Date(0);
+            }
+        }
+
+        return new Date(0);
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +109,7 @@ public class ReporteGeneralFragment extends BaseFragment {
     }
 
     protected void loadFromStorage() {
+        Log.v(TAG, "Load from storage");
         ReporteGeneral[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
             datos = new DatosReporteGeneral(getActivity(), datosStorage);
@@ -98,7 +119,7 @@ public class ReporteGeneralFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -138,6 +159,7 @@ public class ReporteGeneralFragment extends BaseFragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
+                Log.v(TAG, "Load from web");
                 ParseReporteGeneral parse = new ParseReporteGeneral();
                 ReporteGeneral[] reportes = parse.getDatos();
                 repository.deleteAll();
@@ -146,9 +168,10 @@ public class ReporteGeneralFragment extends BaseFragment {
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
+                Log.v(TAG, "saving new time: " + Utils.fmtDMY.format(getFechaActualizacion()));
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos " + e.getMessage());
                 errorRetrievingData = true;
