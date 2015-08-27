@@ -15,8 +15,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-    private static final DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
-    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+    public static final DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
+    public static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+    public static final SimpleDateFormat fmtDMY = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();

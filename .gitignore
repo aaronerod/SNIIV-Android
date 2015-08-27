@@ -39,3 +39,5 @@ Thumbs.db
 .gradle
 build/
 SNIIV/.idea/workspace.xml
+SNIIV/.idea/gradle.xml
+SNIIV/.idea/misc.xml
