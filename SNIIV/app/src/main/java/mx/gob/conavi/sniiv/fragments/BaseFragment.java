@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.NumberPicker;
 
 import java.util.Date;
@@ -38,6 +39,7 @@ public abstract class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        Log.v(TAG, isDataLoaded() + "");
         if (!isDataLoaded() && Utils.isNetworkAvailable(getActivity())) {
             getAsyncTask().execute();
             return;
@@ -67,27 +69,40 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isDataLoaded() {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         long time = app.getTimeLastUpdated(getKey());
-        return Utils.equalDays(new Date(time), new Date());
+        Date fechaActualizacion = getFechaActualizacion();
+        Log.v(TAG, Utils.fmtDMY.format(new Date(time)) + " - " + Utils.fmtDMY.format(fechaActualizacion));
+        return Utils.equalDays(new Date(time), fechaActualizacion);
     }
 
+    protected void saveTimeLastUpdated(long lastTime) {
+        SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
+        app.setTimeLastUpdated(getKey(), lastTime);
+    }
+
+    @Deprecated
     protected void saveTimeLastUpdated() {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         app.setTimeLastUpdated(getKey(), new Date().getTime());
     }
 
+    @Deprecated
     protected void obtenerFechas() {
         ParseFechas parseFechas = new ParseFechas();
         Fechas[] fechasWeb = parseFechas.getDatos();
         fechasRepository.deleteAll();
         fechasRepository.saveAll(fechasWeb);
 
-        asignaFechas();
+        loadFechasStorage();
     }
 
-    protected void asignaFechas() {
+    protected void loadFechasStorage() {
         Fechas[] fechasStorage = fechasRepository.loadFromStorage();
         if(fechasStorage.length > 0) {
             fechas = fechasStorage[0];
         }
+    }
+
+    protected Date getFechaActualizacion(){
+        return new Date();
     }
 }
