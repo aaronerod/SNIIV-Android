@@ -118,7 +118,5 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    protected String getFechaAsString(){
-        return "";
-    }
+    protected abstract String getFechaAsString();
 }

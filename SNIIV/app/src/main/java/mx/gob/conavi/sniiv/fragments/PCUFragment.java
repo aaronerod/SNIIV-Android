@@ -57,7 +57,7 @@ public class PCUFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -93,7 +93,7 @@ public class PCUFragment extends BaseFragment {
             args.putString("yValLegend","Porcentaje");
             args.putInt("estado", entidad.getCve_ent());
             dialog.setArguments(args);
-            dialog.show(getFragmentManager(),"error");
+            dialog.show(getFragmentManager(), "error");
         }
 
 
@@ -111,7 +111,7 @@ public class PCUFragment extends BaseFragment {
 
         if (fechas != null) {
             String pcu = String.format("%s (%s)", getString(R.string.title_pcu),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitlePCU.setText(pcu);
         }
     }
@@ -142,6 +142,11 @@ public class PCUFragment extends BaseFragment {
         return PCU.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_vv() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -160,9 +165,9 @@ public class PCUFragment extends BaseFragment {
                 datos = new DatosPCU(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
             }

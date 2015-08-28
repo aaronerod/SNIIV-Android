@@ -61,7 +61,7 @@ public class ValorViviendaFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -116,7 +116,7 @@ public class ValorViviendaFragment extends BaseFragment {
 
         if (fechas != null) {
             String valor = String.format("%s (%s)", getString(R.string.title_valor_vivienda),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitleValorVivienda.setText(valor);
         }
     }
@@ -147,6 +147,11 @@ public class ValorViviendaFragment extends BaseFragment {
         return ValorVivienda.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_vv() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -165,9 +170,9 @@ public class ValorViviendaFragment extends BaseFragment {
                 datos = new DatosValorVivienda(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;

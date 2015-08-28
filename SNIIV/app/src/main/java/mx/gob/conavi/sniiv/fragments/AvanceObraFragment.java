@@ -62,7 +62,7 @@ public class AvanceObraFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -116,7 +116,7 @@ public class AvanceObraFragment extends BaseFragment {
 
         if (fechas != null) {
             String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitleAvanceObra.setText(avance);
         }
     }
@@ -148,6 +148,11 @@ public class AvanceObraFragment extends BaseFragment {
         return AvanceObra.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_vv() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -166,9 +171,9 @@ public class AvanceObraFragment extends BaseFragment {
                 datos = new DatosAvanceObra(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;

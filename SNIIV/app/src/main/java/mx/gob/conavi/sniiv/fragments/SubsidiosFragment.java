@@ -65,7 +65,7 @@ public class SubsidiosFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -104,7 +104,7 @@ public class SubsidiosFragment extends BaseFragment {
 
         if (fechas != null) {
             String pcu = String.format("%s (%s)", getString(R.string.title_subsidios),
-                   fechas.getFecha_subs());
+                    Utils.formatoDiaMes(fechas.getFecha_subs()));
             txtTitleSubsidios.setText(pcu);
         }
     }
@@ -135,6 +135,11 @@ public class SubsidiosFragment extends BaseFragment {
         return Subsidio.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_subs() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -153,9 +158,9 @@ public class SubsidiosFragment extends BaseFragment {
                 datos = new DatosSubsidio(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
             }

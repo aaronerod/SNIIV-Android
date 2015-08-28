@@ -74,7 +74,7 @@ public class FinanciamientosFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -112,7 +112,7 @@ public class FinanciamientosFragment extends BaseFragment {
 
         if (fechas != null) {
             String pcu = String.format("%s (%s)", getString(R.string.title_financiamiento),
-                fechas.getFecha_finan());
+                    Utils.formatoDiaMes(fechas.getFecha_finan()));
             txtTitleFinanciamientos.setText(pcu);
         }
     }
@@ -143,6 +143,11 @@ public class FinanciamientosFragment extends BaseFragment {
         return Financiamiento.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_finan() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -163,9 +168,9 @@ public class FinanciamientosFragment extends BaseFragment {
                 Log.v(TAG, "entidad" + entidad.toString());
 
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
             }

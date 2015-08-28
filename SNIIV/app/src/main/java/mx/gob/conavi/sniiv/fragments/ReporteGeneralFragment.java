@@ -60,7 +60,7 @@ public class ReporteGeneralFragment extends BaseFragment {
 
     @Override
     protected String getFechaAsString(){
-        return fechas != null ? fechas.getFecha_finan() : null;
+        return fechas != null ? fechas.getFecha_subs() : null;
     }
 
     @Nullable
@@ -90,7 +90,6 @@ public class ReporteGeneralFragment extends BaseFragment {
             }
         };
     }
-
 
     @Override
     protected AsyncTask<Void, Void, Void> getAsyncTask() {
@@ -125,18 +124,16 @@ public class ReporteGeneralFragment extends BaseFragment {
 
         if(fechas != null) {
             String financiamientos = String.format("%s (%s)", getString(R.string.title_financiamiento),
-                    fechas.getFecha_finan());
+                   Utils.formatoDiaMes(fechas.getFecha_finan()));
             String subsidios = String.format("%s (%s)", getString(R.string.title_subsidios),
-                    fechas.getFecha_subs());
+                    Utils.formatoDiaMes(fechas.getFecha_subs()));
             String oferta = String.format("%s (%s)", getString(R.string.title_oferta_vivienda),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitleFinanciamientos.setText(financiamientos);
             txtTitleSubsidios.setText(subsidios);
             txtTitleOferta.setText(oferta);
         }
     }
-
-
 
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override

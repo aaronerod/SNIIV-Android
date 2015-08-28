@@ -59,12 +59,10 @@ public class TipoViviendaFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
-
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -87,7 +85,6 @@ public class TipoViviendaFragment extends BaseFragment {
             dialog.setArguments(args);
             dialog.show(getFragmentManager(), "error");
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -113,7 +110,7 @@ public class TipoViviendaFragment extends BaseFragment {
 
         if (fechas != null) {
             String tipo = String.format("%s (%s)", getString(R.string.title_tipo_vivienda),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitleTipoVivienda.setText(tipo);
         }
     }
@@ -144,6 +141,11 @@ public class TipoViviendaFragment extends BaseFragment {
         return TipoVivienda.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_vv() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -162,9 +164,9 @@ public class TipoViviendaFragment extends BaseFragment {
                 datos = new DatosTipoVivienda(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;
