@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +28,9 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.PercentFormatter;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
@@ -141,7 +144,7 @@ public class OfertaDialogFragment extends DialogFragment implements
         mChart.setRotationAngle(0);
         mChart.setRotationEnabled(false);
         mChart.setOnChartValueSelectedListener(this);
-        mChart.setCenterText(centerText + "\n " + Utils.listEdo[estado]);
+        mChart.setCenterText(centerText + "\n " + Utils.listEdo[estado]+"\n");
         mChart.setLongClickable(true);
         mChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
         Legend l = mChart.getLegend();
@@ -190,7 +193,9 @@ public class OfertaDialogFragment extends DialogFragment implements
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        // not implemented
+        
+        mChart.setCenterText(pCenterText + "\n " + Utils.listEdo[pEstado]+"\n"+ NumberFormat.getNumberInstance(Locale.US).format((int)e.getVal())+" Acciones");
+
     }
 
     @Override
