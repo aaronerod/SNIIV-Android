@@ -97,7 +97,6 @@ public class ReporteGeneralFragment extends BaseFragment {
     }
 
     protected void loadFromStorage() {
-        Log.v(TAG, "Load from storage");
         ReporteGeneral[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
             datos = new DatosReporteGeneral(getActivity(), datosStorage);
@@ -145,7 +144,6 @@ public class ReporteGeneralFragment extends BaseFragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Log.v(TAG, "Load from web");
                 ParseReporteGeneral parse = new ParseReporteGeneral();
                 ReporteGeneral[] reportes = parse.getDatos();
                 repository.deleteAll();
@@ -155,7 +153,6 @@ public class ReporteGeneralFragment extends BaseFragment {
                 entidad = datos.consultaNacional();
 
                 saveTimeLastUpdated(getFechaActualizacion().getTime());
-                Log.v(TAG, "saving new time: " + Utils.fmtDMY.format(getFechaActualizacion()));
 
                 loadFechasStorage();
             } catch (Exception e) {

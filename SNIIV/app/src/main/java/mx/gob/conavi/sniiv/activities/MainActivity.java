@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void cargarDatosFechas() {
-        Log.v(TAG, "carga fechas");
         ParseFechasWeb parseFechasWeb = new ParseFechasWeb();
         Fechas[] fechas = parseFechasWeb.getDatos();
+
         fechasRepository.deleteAll();
         fechasRepository.saveAll(fechas);
     }
