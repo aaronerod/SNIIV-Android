@@ -2,6 +2,8 @@ package mx.gob.conavi.sniiv.fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,15 +16,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.PercentFormatter;
+
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.modelos.AvanceObra;
 import mx.gob.conavi.sniiv.parsing.ParseAvanceObra;
 import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
+import mx.gob.conavi.sniiv.templates.ColorTemplate;
 
 public class AvanceObraFragment extends BaseFragment {
     public static final String TAG = "AvanceObraFragment";
@@ -30,9 +46,15 @@ public class AvanceObraFragment extends BaseFragment {
     private DatosAvanceObra datos;
     private AvanceObra entidad;
     private AvanceObraRepository repository;
-    private FechasRepository fechasRepository;
     private boolean errorRetrievingData = false;
-    private OfertaDialogFragment dialog;
+    private boolean mostrarBoton = false;
+
+    @Nullable @Bind(R.id.chart) PieChart mChart;
+    private ArrayList<String> pParties;
+    private long[] pValues;
+    private String pCenterText;
+    private String pYvalLegend;
+    private int pEstado;
 
     @Bind(R.id.txtTitleSubsidios) TextView txtTitleAvanceObra;
     @Bind(R.id.txtProceso50) TextView txtProceso50;
@@ -41,15 +63,22 @@ public class AvanceObraFragment extends BaseFragment {
     @Bind(R.id.txtTerminadasAntiguas) TextView txtTerminadasAntiguas;
     @Bind(R.id.txtTotal) TextView txtTotal;
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new AvanceObraRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
         setHasOptionsMenu(true);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (entidad != null && mChart != null) {
+            inicializaDatosChart();
+            mostrarBoton = true;
+        }
     }
 
     protected void loadFromStorage() {
@@ -67,10 +96,13 @@ public class AvanceObraFragment extends BaseFragment {
         mostrarDatos();
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_oferta, menu);
+
+        menu.findItem(R.id.action_guardar).setVisible(mostrarBoton);
+        menu.findItem(R.id.action_grafica).setVisible(!mostrarBoton);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -78,16 +110,13 @@ public class AvanceObraFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_grafica) {
-            dialog = new OfertaDialogFragment();
-            Bundle args = new Bundle();
-            args.putStringArrayList("parties", entidad.getParties());
-            args.putLongArray("values", entidad.getValues());
-            args.putString("centerText", "Avance Obra");
-            args.putString("yValLegend","Porcentaje");
-            args.putInt("estado", entidad.getCve_ent());
-            dialog.setArguments(args);
-            dialog.show(getFragmentManager(),"error");
+        switch (id) {
+            case R.id.action_grafica:
+                muestraDialogo();
+                break;
+            case R.id.action_guardar:
+                guardarChart();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -118,6 +147,10 @@ public class AvanceObraFragment extends BaseFragment {
             String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
                     Utils.formatoMes(fechas.getFecha_vv()));
             txtTitleAvanceObra.setText(avance);
+        }
+
+        if (entidad != null && mChart != null) {
+            inicializaDatosChart();
         }
     }
 
@@ -190,6 +223,36 @@ public class AvanceObraFragment extends BaseFragment {
                 Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
                 progressDialog.dismiss();
             }
+        }
+    }
+
+    protected void inicializaDatosChart() {
+        pParties =  entidad.getParties();
+        pValues = entidad.getValues();
+        pCenterText = "Avance Obra";
+        pYvalLegend = "Porcentaje";
+        pEstado = entidad.getCve_ent();
+        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
+                pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
+    }
+
+    private void muestraDialogo() {
+        OfertaDialogFragment dialog = new OfertaDialogFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList("parties", entidad.getParties());
+        args.putLongArray("values", entidad.getValues());
+        args.putString("centerText", "Avance Obra");
+        args.putString("yValLegend","Porcentaje");
+        args.putInt("estado", entidad.getCve_ent());
+        dialog.setArguments(args);
+        dialog.show(getFragmentManager(), "OfertaDialog");
+    }
+
+    private void guardarChart() {
+        if (mChart != null) {
+            mChart.saveToGallery(pCenterText + System.currentTimeMillis() + ".jpg", 100);
+            Toast.makeText(getActivity().getApplicationContext(),
+                    R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
         }
     }
 }
