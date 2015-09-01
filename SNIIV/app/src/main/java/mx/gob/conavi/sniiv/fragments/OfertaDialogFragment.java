@@ -28,6 +28,7 @@ import com.github.mikephil.charting.utils.PercentFormatter;
 import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.templates.ColorTemplate;
@@ -36,17 +37,18 @@ public class OfertaDialogFragment extends DialogFragment implements
         OnChartValueSelectedListener {
 
     private PieChart mChart;
-    private String pCenterText;
+    private String descripcion;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        ArrayList<String> pParties = getArguments().getStringArrayList("parties");
-        long[] pValues = getArguments().getLongArray("values");
-        pCenterText = getArguments().getString("centerText");
-        String pYvalLegend = getArguments().getString("yValLegend");
-        int pEstado = getArguments().getInt("estado");
+        ArrayList<String> pParties = getArguments().getStringArrayList(Constants.PARTIES);
+        long[] pValues = getArguments().getLongArray(Constants.VALUES);
+        String pCenterText = getArguments().getString(Constants.CENTER_TEXT);
+        String pYvalLegend = getArguments().getString(Constants.Y_VAL_LEGEND);
+        int pEstado = getArguments().getInt(Constants.ESTADO);
+        descripcion = getArguments().getString(Constants.DESCRIPCION);
         View view = inflater.inflate(R.layout.dialog_grafica_1, null);
 
         mChart = (PieChart) view.findViewById(R.id.chart);
@@ -77,7 +79,7 @@ public class OfertaDialogFragment extends DialogFragment implements
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mChart.saveToGallery(pCenterText + System.currentTimeMillis() + ".jpg", 100);
+                    mChart.saveToGallery(descripcion + System.currentTimeMillis() + ".jpg", 100);
                     Toast.makeText(getActivity().getApplicationContext(),
                             R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
                 }

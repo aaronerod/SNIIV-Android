@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosPCU;
@@ -31,7 +32,7 @@ import mx.gob.conavi.sniiv.parsing.ParsePCU;
 import mx.gob.conavi.sniiv.sqlite.PCURepository;
 
 
-public class PCUFragment extends BaseFragment {
+public class PCUFragment extends OfertaBaseFragment {
     public static final String TAG = "PCUFragment";
 
     private DatosPCU datos;
@@ -43,14 +44,6 @@ public class PCUFragment extends BaseFragment {
     @Bind(R.id.txtU3) TextView txtU3;
     @Bind(R.id.txtND) TextView txtND;
     @Bind(R.id.txtTotal) TextView txtTotal;
-    private boolean mostrarBoton = false;
-
-    @Nullable @Bind(R.id.chart) PieChart mChart;
-    private ArrayList<String> pParties;
-    private long[] pValues;
-    private String pCenterText;
-    private String pYvalLegend;
-    private int pEstado;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,32 +88,6 @@ public class PCUFragment extends BaseFragment {
         configuraPickerView();
 
         return rootView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_oferta, menu);
-
-        menu.findItem(R.id.action_guardar).setVisible(mostrarBoton);
-        menu.findItem(R.id.action_grafica).setVisible(!mostrarBoton);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_grafica:
-                muestraDialogo();
-                break;
-            case R.id.action_guardar:
-                guardarChart();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     protected void mostrarDatos() {
@@ -209,11 +176,11 @@ public class PCUFragment extends BaseFragment {
     }
 
     protected void inicializaDatosChart() {
-        pParties =  entidad.getParties();
-        pValues = entidad.getValues();
-        pCenterText = "Avance Obra";
-        pYvalLegend = "Porcentaje";
-        pEstado = entidad.getCve_ent();
+        ArrayList<String> pParties =  entidad.getParties();
+        long[] pValues = entidad.getValues();
+        String pCenterText = "Avance Obra";
+        String pYvalLegend = "Porcentaje";
+        int pEstado = entidad.getCve_ent();
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
     }
@@ -221,20 +188,13 @@ public class PCUFragment extends BaseFragment {
     public void muestraDialogo() {
         OfertaDialogFragment dialog = new OfertaDialogFragment();
         Bundle args = new Bundle();
-        args.putStringArrayList("parties", entidad.getParties());
-        args.putLongArray("values", entidad.getValues());
-        args.putString("centerText", "PCU");
-        args.putString("yValLegend","Porcentaje");
-        args.putInt("estado", entidad.getCve_ent());
+        args.putStringArrayList(Constants.PARTIES, entidad.getParties());
+        args.putLongArray(Constants.VALUES, entidad.getValues());
+        args.putString(Constants.CENTER_TEXT, "PCU");
+        args.putString(Constants.Y_VAL_LEGEND,"Porcentaje");
+        args.putInt(Constants.ESTADO, entidad.getCve_ent());
+        args.putString(Constants.DESCRIPCION, getKey());
         dialog.setArguments(args);
         dialog.show(getFragmentManager(), "OfertaDialog");
-    }
-
-    private void guardarChart() {
-        if (mChart != null) {
-            mChart.saveToGallery(pCenterText + System.currentTimeMillis() + ".jpg", 100);
-            Toast.makeText(getActivity().getApplicationContext(),
-                    R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
-        }
     }
 }
