@@ -6,17 +6,22 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.w3c.dom.Element;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-    private static final DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
-    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+    public static final DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
+    public static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+    public static final SimpleDateFormat fmtDMY = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    public static final SimpleDateFormat fmtDiaMes = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
+    public static final SimpleDateFormat fmtMes = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
 
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();
@@ -104,6 +109,23 @@ public class Utils {
 
     public static boolean equalDays(Date date1, Date date2) {
         return fmt.format(date1).equals(fmt.format(date2));
+    }
+
+    public static String formatoDiaMes(String fecha) {
+        try {
+
+            return WordUtils.capitalize(fmtDiaMes.format(fmtDMY.parseObject(fecha)));
+        } catch (ParseException e) {
+            return "";
+        }
+    }
+
+    public static String formatoMes(String fecha) {
+        try {
+            return WordUtils.capitalize(fmtMes.format(fmtDMY.parseObject(fecha)));
+        } catch (ParseException e) {
+            return "";
+        }
     }
 
     private static void populateEdos(){

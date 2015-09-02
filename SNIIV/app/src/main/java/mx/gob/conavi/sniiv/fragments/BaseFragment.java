@@ -4,8 +4,10 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.NumberPicker;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
@@ -67,27 +69,53 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isDataLoaded() {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         long time = app.getTimeLastUpdated(getKey());
-        return Utils.equalDays(new Date(time), new Date());
+        Date fechaActualizacion = getFechaActualizacion();
+        Log.v(TAG, Utils.fmtDMY.format(new Date(time)) + " - " + Utils.fmtDMY.format(fechaActualizacion));
+        return Utils.equalDays(new Date(time), fechaActualizacion);
     }
 
+    protected void saveTimeLastUpdated(long lastTime) {
+        SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
+        app.setTimeLastUpdated(getKey(), lastTime);
+    }
+
+    @Deprecated
     protected void saveTimeLastUpdated() {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         app.setTimeLastUpdated(getKey(), new Date().getTime());
     }
 
+    @Deprecated
     protected void obtenerFechas() {
         ParseFechas parseFechas = new ParseFechas();
         Fechas[] fechasWeb = parseFechas.getDatos();
         fechasRepository.deleteAll();
         fechasRepository.saveAll(fechasWeb);
 
-        asignaFechas();
+        loadFechasStorage();
     }
 
-    protected void asignaFechas() {
+    protected void loadFechasStorage() {
         Fechas[] fechasStorage = fechasRepository.loadFromStorage();
         if(fechasStorage.length > 0) {
             fechas = fechasStorage[0];
         }
     }
+
+    protected Date getFechaActualizacion(){
+        Fechas[] fechasStorage = fechasRepository.loadFromStorage();
+        if(fechasStorage.length > 0) {
+            fechas = fechasStorage[0];
+            try {
+                return Utils.fmtDMY.parse(getFechaAsString());
+            } catch (ParseException e) {
+                return new Date(0);
+            }
+        }
+
+        return new Date(0);
+
+    }
+
+    protected abstract String getFechaAsString();
 }

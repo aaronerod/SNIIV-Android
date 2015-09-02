@@ -12,11 +12,15 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
@@ -54,6 +58,11 @@ public class ReporteGeneralFragment extends BaseFragment {
         return ReporteGeneral.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString(){
+        return fechas != null ? fechas.getFecha_subs() : null;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,7 +91,6 @@ public class ReporteGeneralFragment extends BaseFragment {
         };
     }
 
-
     @Override
     protected AsyncTask<Void, Void, Void> getAsyncTask() {
         return new AsyncTaskRunner();
@@ -98,7 +106,7 @@ public class ReporteGeneralFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -115,18 +123,16 @@ public class ReporteGeneralFragment extends BaseFragment {
 
         if(fechas != null) {
             String financiamientos = String.format("%s (%s)", getString(R.string.title_financiamiento),
-                    fechas.getFecha_finan());
+                   Utils.formatoDiaMes(fechas.getFecha_finan()));
             String subsidios = String.format("%s (%s)", getString(R.string.title_subsidios),
-                    fechas.getFecha_subs());
+                    Utils.formatoDiaMes(fechas.getFecha_subs()));
             String oferta = String.format("%s (%s)", getString(R.string.title_oferta_vivienda),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitleFinanciamientos.setText(financiamientos);
             txtTitleSubsidios.setText(subsidios);
             txtTitleOferta.setText(oferta);
         }
     }
-
-
 
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
@@ -146,9 +152,9 @@ public class ReporteGeneralFragment extends BaseFragment {
                 datos = new DatosReporteGeneral(getActivity(), reportes);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos " + e.getMessage());
                 errorRetrievingData = true;

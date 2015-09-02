@@ -48,7 +48,7 @@ public class SoapToXml {
                 response = transport.responseDump;
             }
         } catch (Exception e) {
-            Log.v(TAG, e.getMessage());
+            Log.v(TAG, "Error SoapToXml");
         }
 
         return response;

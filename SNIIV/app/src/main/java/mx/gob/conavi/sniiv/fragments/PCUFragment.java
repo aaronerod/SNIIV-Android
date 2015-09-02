@@ -14,24 +14,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.mikephil.charting.charts.PieChart;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosPCU;
+import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.modelos.PCU;
 import mx.gob.conavi.sniiv.parsing.ParsePCU;
 import mx.gob.conavi.sniiv.sqlite.PCURepository;
 
 
-public class PCUFragment extends BaseFragment {
+public class PCUFragment extends OfertaBaseFragment {
     public static final String TAG = "PCUFragment";
 
     private DatosPCU datos;
     private PCU entidad;
     private PCURepository repository;
-    private OfertaDialogFragment dialog;
+    private boolean errorRetrievingData = false;
+
     @Bind(R.id.txtTitlePCU) TextView txtTitlePCU;
     @Bind(R.id.txtU1) TextView txtU1;
     @Bind(R.id.txtU2) TextView txtU2;
@@ -57,7 +66,7 @@ public class PCUFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
     }
@@ -74,32 +83,6 @@ public class PCUFragment extends BaseFragment {
         return rootView;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_oferta, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_grafica) {
-            dialog = new OfertaDialogFragment();
-            Bundle args = new Bundle();
-            args.putStringArrayList("parties", entidad.getParties());
-            args.putLongArray("values", entidad.getValues());
-            args.putString("centerText", "PCU");
-            args.putString("yValLegend","Porcentaje");
-            args.putInt("estado", entidad.getCve_ent());
-            dialog.setArguments(args);
-            dialog.show(getFragmentManager(),"error");
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
     protected void mostrarDatos() {
         if(entidad != null) {
             txtU1.setText(Utils.toString(entidad.getU1()));
@@ -111,8 +94,12 @@ public class PCUFragment extends BaseFragment {
 
         if (fechas != null) {
             String pcu = String.format("%s (%s)", getString(R.string.title_pcu),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitlePCU.setText(pcu);
+        }
+
+        if (entidad != null && mChart != null) {
+            inicializaDatosChart();
         }
     }
 
@@ -142,6 +129,11 @@ public class PCUFragment extends BaseFragment {
         return PCU.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_vv() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -160,11 +152,12 @@ public class PCUFragment extends BaseFragment {
                 datos = new DatosPCU(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
+                errorRetrievingData = true;
             }
 
             return null;
@@ -172,7 +165,51 @@ public class PCUFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            habilitaPantalla();
+            if (!errorRetrievingData) {
+                habilitaPantalla();
+                intentaInicializarGrafica();
+                getActivity().invalidateOptionsMenu();
+            } else {
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                progressDialog.dismiss();
+            }
         }
+    }
+
+    protected void intentaInicializarGrafica() {
+        if (entidad == null) {
+            estado = EstadoMenuOferta.NINGUNO;
+            return;
+        }
+
+        if (mChart != null) {
+            inicializaDatosChart();
+            estado = EstadoMenuOferta.GUARDAR;
+        } else {
+            estado = EstadoMenuOferta.GRAFICA;
+        }
+    }
+
+    protected void inicializaDatosChart() {
+        ArrayList<String> pParties =  entidad.getParties();
+        long[] pValues = entidad.getValues();
+        String pCenterText = "PCU";
+        String pYvalLegend = "Porcentaje";
+        int pEstado = entidad.getCve_ent();
+        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
+                pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
+    }
+
+    public void muestraDialogo() {
+        OfertaDialogFragment dialog = new OfertaDialogFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList(Constants.PARTIES, entidad.getParties());
+        args.putLongArray(Constants.VALUES, entidad.getValues());
+        args.putString(Constants.CENTER_TEXT, "PCU");
+        args.putString(Constants.Y_VAL_LEGEND,"Porcentaje");
+        args.putInt(Constants.ESTADO, entidad.getCve_ent());
+        args.putString(Constants.DESCRIPCION, getKey());
+        dialog.setArguments(args);
+        dialog.show(getFragmentManager(), "OfertaDialog");
     }
 }

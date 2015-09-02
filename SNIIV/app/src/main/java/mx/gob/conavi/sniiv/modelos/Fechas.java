@@ -1,5 +1,8 @@
 package mx.gob.conavi.sniiv.modelos;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by admin on 11/08/15.
  */
@@ -16,8 +19,35 @@ public class Fechas {
     }
 
     public Fechas() {
+    }
 
+    public Fechas(JSONObject jsonFechas) throws JSONException {
+        this.fecha_finan = jsonFechas.getString("fecha_finan");
+        this.fecha_subs = jsonFechas.getString("fecha_subs");
+        this.fecha_vv = jsonFechas.getString("fecha_vv");
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Fechas fechas = (Fechas) o;
+
+        if (fecha_finan != null ? !fecha_finan.equals(fechas.fecha_finan) : fechas.fecha_finan != null)
+            return false;
+        if (fecha_subs != null ? !fecha_subs.equals(fechas.fecha_subs) : fechas.fecha_subs != null)
+            return false;
+        return !(fecha_vv != null ? !fecha_vv.equals(fechas.fecha_vv) : fechas.fecha_vv != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fecha_finan != null ? fecha_finan.hashCode() : 0;
+        result = 31 * result + (fecha_subs != null ? fecha_subs.hashCode() : 0);
+        result = 31 * result + (fecha_vv != null ? fecha_vv.hashCode() : 0);
+        return result;
     }
 
     public String getFecha_finan() {

@@ -57,4 +57,5 @@
     <string name="etiqueta_guardar">Guardar</string>
     <string name="etiqueta_conavi">Comisión Nacional de Vivienda</string>
     <string name="texto_cancelar">Cancelar</string>
+    <string name="title_guardar">Guardar</string>
 </resources>

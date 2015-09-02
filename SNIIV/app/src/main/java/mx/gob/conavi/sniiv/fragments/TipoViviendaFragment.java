@@ -15,11 +15,16 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosTipoVivienda;
+import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.modelos.TipoVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseTipoVivienda;
 import mx.gob.conavi.sniiv.sqlite.TipoViviendaRepository;
@@ -27,14 +32,13 @@ import mx.gob.conavi.sniiv.sqlite.TipoViviendaRepository;
 /**
  * Created by admin on 04/08/15.
  */
-public class TipoViviendaFragment extends BaseFragment {
+public class TipoViviendaFragment extends OfertaBaseFragment {
     public static final String TAG = "TipoViviendaFragment";
 
     private DatosTipoVivienda datos;
     private TipoVivienda entidad;
     private TipoViviendaRepository repository;
     private boolean errorRetrievingData = false;
-    private OfertaDialogFragment dialog;
 
     @Bind(R.id.txtTitleTipoVivienda) TextView txtTitleTipoVivienda;
     @Bind(R.id.txtHorizontal) TextView txtHorizontal;
@@ -59,37 +63,9 @@ public class TipoViviendaFragment extends BaseFragment {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
         }
 
-        asignaFechas();
+        loadFechasStorage();
 
         mostrarDatos();
-    }
-
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_oferta, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_grafica) {
-            dialog = new OfertaDialogFragment();
-            Bundle args = new Bundle();
-            args.putStringArrayList("parties", entidad.getParties());
-            args.putLongArray("values", entidad.getValues());
-            args.putString("centerText", "Tipo Vivienda");
-            args.putString("yValLegend","Porcentaje");
-            args.putInt("estado", entidad.getCve_ent());
-            dialog.setArguments(args);
-            dialog.show(getFragmentManager(), "error");
-        }
-
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Nullable
@@ -113,8 +89,12 @@ public class TipoViviendaFragment extends BaseFragment {
 
         if (fechas != null) {
             String tipo = String.format("%s (%s)", getString(R.string.title_tipo_vivienda),
-                    fechas.getFecha_vv());
+                    Utils.formatoMes(fechas.getFecha_vv()));
             txtTitleTipoVivienda.setText(tipo);
+        }
+
+        if (entidad != null && mChart != null) {
+            inicializaDatosChart();
         }
     }
 
@@ -144,6 +124,11 @@ public class TipoViviendaFragment extends BaseFragment {
         return TipoVivienda.TABLE;
     }
 
+    @Override
+    protected String getFechaAsString() {
+        return fechas != null ? fechas.getFecha_vv() : null;
+    }
+
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -162,9 +147,9 @@ public class TipoViviendaFragment extends BaseFragment {
                 datos = new DatosTipoVivienda(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                saveTimeLastUpdated();
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
-                obtenerFechas();
+                loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
                 errorRetrievingData = true;
@@ -177,10 +162,49 @@ public class TipoViviendaFragment extends BaseFragment {
         protected void onPostExecute(Void s) {
             if (!errorRetrievingData) {
                 habilitaPantalla();
+                intentaInicializarGrafica();
+                getActivity().invalidateOptionsMenu();
             } else {
                 Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
                 progressDialog.dismiss();
             }
         }
+    }
+
+    protected void intentaInicializarGrafica() {
+        if (entidad == null) {
+            estado = EstadoMenuOferta.NINGUNO;
+            return;
+        }
+
+        if (mChart != null) {
+            inicializaDatosChart();
+            estado = EstadoMenuOferta.GUARDAR;
+        } else {
+            estado = EstadoMenuOferta.GRAFICA;
+        }
+    }
+
+    protected void inicializaDatosChart() {
+        ArrayList<String> pParties =  entidad.getParties();
+        long[] pValues = entidad.getValues();
+        String pCenterText = "Tipo de Vivienda";
+        String pYvalLegend = "Porcentaje";
+        int pEstado = entidad.getCve_ent();
+        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
+                pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
+    }
+
+    public void muestraDialogo() {
+        OfertaDialogFragment dialog = new OfertaDialogFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList(Constants.PARTIES, entidad.getParties());
+        args.putLongArray(Constants.VALUES, entidad.getValues());
+        args.putString(Constants.CENTER_TEXT, "Tipo de Vivienda");
+        args.putString(Constants.Y_VAL_LEGEND,"Porcentaje");
+        args.putInt(Constants.ESTADO, entidad.getCve_ent());
+        args.putString(Constants.DESCRIPCION, getKey());
+        dialog.setArguments(args);
+        dialog.show(getFragmentManager(), "OfertaDialog");
     }
 }
