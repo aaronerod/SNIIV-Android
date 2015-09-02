@@ -27,6 +27,7 @@ import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosPCU;
+import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.modelos.PCU;
 import mx.gob.conavi.sniiv.parsing.ParsePCU;
 import mx.gob.conavi.sniiv.sqlite.PCURepository;
@@ -38,6 +39,8 @@ public class PCUFragment extends OfertaBaseFragment {
     private DatosPCU datos;
     private PCU entidad;
     private PCURepository repository;
+    private boolean errorRetrievingData = false;
+
     @Bind(R.id.txtTitlePCU) TextView txtTitlePCU;
     @Bind(R.id.txtU1) TextView txtU1;
     @Bind(R.id.txtU2) TextView txtU2;
@@ -51,16 +54,6 @@ public class PCUFragment extends OfertaBaseFragment {
         repository = new PCURepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (entidad != null && mChart != null) {
-            inicializaDatosChart();
-            mostrarBoton = true;
-        }
     }
 
     protected void loadFromStorage() {
@@ -164,6 +157,7 @@ public class PCUFragment extends OfertaBaseFragment {
                 loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
+                errorRetrievingData = true;
             }
 
             return null;
@@ -171,14 +165,35 @@ public class PCUFragment extends OfertaBaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            habilitaPantalla();
+            if (!errorRetrievingData) {
+                habilitaPantalla();
+                intentaInicializarGrafica();
+                getActivity().invalidateOptionsMenu();
+            } else {
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    protected void intentaInicializarGrafica() {
+        if (entidad == null) {
+            estado = EstadoMenuOferta.NINGUNO;
+            return;
+        }
+
+        if (mChart != null) {
+            inicializaDatosChart();
+            estado = EstadoMenuOferta.GUARDAR;
+        } else {
+            estado = EstadoMenuOferta.GRAFICA;
         }
     }
 
     protected void inicializaDatosChart() {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
-        String pCenterText = "Avance Obra";
+        String pCenterText = "PCU";
         String pYvalLegend = "Porcentaje";
         int pEstado = entidad.getCve_ent();
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,

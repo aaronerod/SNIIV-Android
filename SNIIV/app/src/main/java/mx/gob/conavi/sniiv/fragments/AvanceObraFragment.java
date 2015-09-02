@@ -36,6 +36,7 @@ import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.modelos.AvanceObra;
+import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.parsing.ParseAvanceObra;
 import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
@@ -62,16 +63,6 @@ public class AvanceObraFragment extends OfertaBaseFragment {
         repository = new AvanceObraRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (entidad != null && mChart != null) {
-            inicializaDatosChart();
-            mostrarBoton = true;
-        }
     }
 
     protected void loadFromStorage() {
@@ -186,10 +177,26 @@ public class AvanceObraFragment extends OfertaBaseFragment {
         protected void onPostExecute(Void s) {
             if (!errorRetrievingData) {
                 habilitaPantalla();
+                intentaInicializarGrafica();
+                getActivity().invalidateOptionsMenu();
             } else {
                 Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
                 progressDialog.dismiss();
             }
+        }
+    }
+
+    protected void intentaInicializarGrafica() {
+        if (entidad == null) {
+            estado = EstadoMenuOferta.NINGUNO;
+            return;
+        }
+
+        if (mChart != null) {
+            inicializaDatosChart();
+            estado = EstadoMenuOferta.GUARDAR;
+        } else {
+            estado = EstadoMenuOferta.GRAFICA;
         }
     }
 
