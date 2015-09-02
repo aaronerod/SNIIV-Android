@@ -1,6 +1,7 @@
 package mx.gob.conavi.sniiv.fragments;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -8,24 +9,46 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 
 /**
  * Created by octavio.munguia on 01/09/2015.
  */
 public abstract class OfertaBaseFragment extends BaseFragment {
+    private static final String TAG = OfertaBaseFragment.class.getSimpleName();
     @Nullable @Bind(R.id.chart) PieChart mChart;
-    protected boolean mostrarBoton = false;
+    protected EstadoMenuOferta estado = EstadoMenuOferta.NINGUNO;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        intentaInicializarGrafica();
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_oferta, menu);
 
-        menu.findItem(R.id.action_guardar).setVisible(mostrarBoton);
-        menu.findItem(R.id.action_grafica).setVisible(!mostrarBoton);
+        MenuItem guardar = menu.findItem(R.id.action_guardar);
+        MenuItem grafica = menu.findItem(R.id.action_grafica);
+
+        switch (estado) {
+            case NINGUNO:
+                guardar.setVisible(false);
+                grafica.setVisible(false);
+                break;
+            case GUARDAR:
+                guardar.setVisible(true);
+                grafica.setVisible(false);
+                break;
+            case GRAFICA:
+                guardar.setVisible(false);
+                grafica.setVisible(true);
+                break;
+        }
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -46,6 +69,7 @@ public abstract class OfertaBaseFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    protected abstract void intentaInicializarGrafica();
     protected abstract void inicializaDatosChart();
     protected abstract void muestraDialogo();
 

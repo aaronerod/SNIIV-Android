@@ -40,7 +40,6 @@ public abstract class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.v(TAG, isDataLoaded() + "");
         if (!isDataLoaded() && Utils.isNetworkAvailable(getActivity())) {
             getAsyncTask().execute();
             return;

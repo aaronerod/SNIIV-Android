@@ -105,7 +105,6 @@ public class PCU implements Modelo {
                 u2,
                 u3,
                 fc
-              //  nd
         };
         return l;
     }
