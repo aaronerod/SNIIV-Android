@@ -41,16 +41,15 @@ public class OfertaDialogFragment extends DialogFragment implements
 
     private PieChart mChart;
     private String descripcion;
-
+    private int pEstado;
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         ArrayList<String> pParties = getArguments().getStringArrayList(Constants.PARTIES);
         long[] pValues = getArguments().getLongArray(Constants.VALUES);
         String pCenterText = getArguments().getString(Constants.CENTER_TEXT);
         String pYvalLegend = getArguments().getString(Constants.Y_VAL_LEGEND);
-        int pEstado = getArguments().getInt(Constants.ESTADO);
+        pEstado = getArguments().getInt(Constants.ESTADO);
         descripcion = getArguments().getString(Constants.DESCRIPCION);
         View view = inflater.inflate(R.layout.dialog_grafica_1, null);
 
@@ -58,7 +57,7 @@ public class OfertaDialogFragment extends DialogFragment implements
 
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText, pYvalLegend,
                 pEstado, getString(R.string.etiqueta_conavi));
-
+        mChart.setOnChartValueSelectedListener(this);
         builder.setView(view)
                 .setPositiveButton(getString(R.string.etiqueta_guardar), null)
                 .setNegativeButton(getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
@@ -68,7 +67,7 @@ public class OfertaDialogFragment extends DialogFragment implements
                 });
 
         registerForContextMenu(view);
-
+        Log.v("---",""+pEstado);
         return builder.create();
     }
 
@@ -90,16 +89,16 @@ public class OfertaDialogFragment extends DialogFragment implements
         }
     }
 
-
+    @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        
-        mChart.setCenterText(pCenterText + "\n " + Utils.listEdo[pEstado]+"\n"+ NumberFormat.getNumberInstance(Locale.US).format((int)e.getVal())+" Acciones");
+        Log.v("---","onselectedValues");
+        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado]+"\n"+ NumberFormat.getNumberInstance(Locale.US).format((int)e.getVal())+" Acciones");
 
     }
 
     @Override
     public void onNothingSelected() {
-        // not implemented
+        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado]);
     }
 }
 
