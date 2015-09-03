@@ -58,4 +58,5 @@
     <string name="etiqueta_conavi">FUENTE: Comisión Nacional de Vivienda</string>
     <string name="texto_cancelar">Cerrar</string>
     <string name="title_guardar">Guardar</string>
+    <string name="etiqueta_porcentaje">Porcentaje</string>
 </resources>

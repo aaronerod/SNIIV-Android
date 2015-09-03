@@ -194,7 +194,7 @@ public class ValorViviendaFragment extends OfertaBaseFragment {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
         String pCenterText = "Valor de Vivienda";
-        String pYvalLegend = "Porcentaje";
+        String pYvalLegend = getString(R.string.etiqueta_porcentaje);
         int pEstado = entidad.getCve_ent();
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
@@ -208,7 +208,7 @@ public class ValorViviendaFragment extends OfertaBaseFragment {
         args.putStringArrayList(Constants.PARTIES, entidad.getParties());
         args.putLongArray(Constants.VALUES, entidad.getValues());
         args.putString(Constants.CENTER_TEXT, "Valor de Vivienda");
-        args.putString(Constants.Y_VAL_LEGEND,"Porcentaje");
+        args.putString(Constants.Y_VAL_LEGEND,getString(R.string.etiqueta_porcentaje));
         args.putInt(Constants.ESTADO, entidad.getCve_ent());
         args.putString(Constants.DESCRIPCION, getKey());
         dialog.setArguments(args);
