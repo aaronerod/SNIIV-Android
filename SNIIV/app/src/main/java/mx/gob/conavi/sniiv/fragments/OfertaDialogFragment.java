@@ -42,10 +42,11 @@ public class OfertaDialogFragment extends DialogFragment implements
     private PieChart mChart;
     private String descripcion;
     private int pEstado;
+    private ArrayList<String> pParties;
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        ArrayList<String> pParties = getArguments().getStringArrayList(Constants.PARTIES);
+        pParties = getArguments().getStringArrayList(Constants.PARTIES);
         long[] pValues = getArguments().getLongArray(Constants.VALUES);
         String pCenterText = getArguments().getString(Constants.CENTER_TEXT);
         String pYvalLegend = getArguments().getString(Constants.Y_VAL_LEGEND);
@@ -67,7 +68,6 @@ public class OfertaDialogFragment extends DialogFragment implements
                 });
 
         registerForContextMenu(view);
-        Log.v("---",""+pEstado);
         return builder.create();
     }
 
@@ -91,8 +91,7 @@ public class OfertaDialogFragment extends DialogFragment implements
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        Log.v("---","onselectedValues");
-        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado]+"\n"+ NumberFormat.getNumberInstance(Locale.US).format((int)e.getVal())+" Acciones");
+        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado] + "\n" + NumberFormat.getNumberInstance(Locale.US).format((int) e.getVal()) +" " + pParties.get(e.getXIndex())+")");
 
     }
 
