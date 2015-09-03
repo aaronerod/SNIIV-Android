@@ -34,15 +34,16 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
+import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
 import mx.gob.conavi.sniiv.templates.ColorTemplate;
 
-public class OfertaDialogFragment extends DialogFragment implements
-        OnChartValueSelectedListener {
+public class OfertaDialogFragment extends DialogFragment {
 
     private PieChart mChart;
     private String descripcion;
     private int pEstado;
     private ArrayList<String> pParties;
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -58,7 +59,8 @@ public class OfertaDialogFragment extends DialogFragment implements
 
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText, pYvalLegend,
                 pEstado, getString(R.string.etiqueta_conavi));
-        mChart.setOnChartValueSelectedListener(this);
+        OnChartValueSelected listener = new OnChartValueSelected(mChart, descripcion, pEstado, pParties);
+        mChart.setOnChartValueSelectedListener(listener);
         builder.setView(view)
                 .setPositiveButton(getString(R.string.etiqueta_guardar), null)
                 .setNegativeButton(getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
@@ -87,17 +89,6 @@ public class OfertaDialogFragment extends DialogFragment implements
                 }
             });
         }
-    }
-
-    @Override
-    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado] + "\n" + NumberFormat.getNumberInstance(Locale.US).format((int) e.getVal()) +" " + pParties.get(e.getXIndex())+")");
-
-    }
-
-    @Override
-    public void onNothingSelected() {
-        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado]);
     }
 }
 

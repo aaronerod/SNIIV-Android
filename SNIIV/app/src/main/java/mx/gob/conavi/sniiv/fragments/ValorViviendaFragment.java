@@ -24,6 +24,7 @@ import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosValorVivienda;
+import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
 import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.modelos.ValorVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseValorVivienda;
@@ -197,6 +198,8 @@ public class ValorViviendaFragment extends OfertaBaseFragment {
         int pEstado = entidad.getCve_ent();
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
+        OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), pEstado, pParties);
+        mChart.setOnChartValueSelectedListener(listener);
     }
 
     public void muestraDialogo() {
