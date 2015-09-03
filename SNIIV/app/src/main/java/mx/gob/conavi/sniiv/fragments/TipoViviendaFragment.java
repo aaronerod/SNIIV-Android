@@ -60,9 +60,9 @@ public class TipoViviendaFragment extends OfertaBaseFragment {
             datos = new DatosTipoVivienda(getActivity(), datosStorage);
             entidad = datos.consultaNacional();
             pickerEstados.setEnabled(true);
-        } else {
+        }/* else {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        }
+        }*/
 
         loadFechasStorage();
 

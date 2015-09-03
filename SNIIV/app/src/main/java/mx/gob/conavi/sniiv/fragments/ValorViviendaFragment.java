@@ -62,9 +62,9 @@ public class ValorViviendaFragment extends OfertaBaseFragment {
             datos = new DatosValorVivienda(getActivity(), datosStorage);
             entidad = datos.consultaNacional();
             pickerEstados.setEnabled(true);
-        } else {
+        }/* else {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        }
+        }*/
 
         loadFechasStorage();
 
