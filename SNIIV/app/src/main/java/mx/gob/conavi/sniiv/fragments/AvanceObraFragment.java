@@ -46,17 +46,17 @@ import mx.gob.conavi.sniiv.templates.ColorTemplate;
 public class AvanceObraFragment extends OfertaBaseFragment {
     public static final String TAG = "AvanceObraFragment";
 
+    @Nullable @Bind(R.id.txtTitleSubsidios) TextView txtTitleAvanceObra;
+    @Nullable @Bind(R.id.txtProceso50) TextView txtProceso50;
+    @Nullable @Bind(R.id.txtProceso99) TextView txtProceso99;
+    @Nullable @Bind(R.id.txtTerminadasRecientes) TextView txtTerminadasRecientes;
+    @Nullable @Bind(R.id.txtTerminadasAntiguas) TextView txtTerminadasAntiguas;
+    @Nullable @Bind(R.id.txtTotal) TextView txtTotal;
+
     private DatosAvanceObra datos;
     private AvanceObra entidad;
     private AvanceObraRepository repository;
     private boolean errorRetrievingData = false;
-
-    @Bind(R.id.txtTitleSubsidios) TextView txtTitleAvanceObra;
-    @Bind(R.id.txtProceso50) TextView txtProceso50;
-    @Bind(R.id.txtProceso99) TextView txtProceso99;
-    @Bind(R.id.txtTerminadasRecientes) TextView txtTerminadasRecientes;
-    @Bind(R.id.txtTerminadasAntiguas) TextView txtTerminadasAntiguas;
-    @Bind(R.id.txtTotal) TextView txtTotal;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,18 +94,18 @@ public class AvanceObraFragment extends OfertaBaseFragment {
     }
 
     protected void mostrarDatos() {
-        if(entidad != null) {
+        if(getString(R.string.selected_configuration).equals("sw600dp") && entidad != null) {
             txtProceso50.setText(Utils.toString(entidad.getViv_proc_m50()));
             txtProceso99.setText(Utils.toString(entidad.getViv_proc_50_99()));
             txtTerminadasRecientes.setText(Utils.toString(entidad.getViv_term_rec()));
             txtTerminadasAntiguas.setText(Utils.toString(entidad.getViv_term_ant()));
             txtTotal.setText(Utils.toString(entidad.getTotal()));
-        }
 
-        if (fechas != null) {
-            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
-                    Utils.formatoMes(fechas.getFecha_vv()));
-            txtTitleAvanceObra.setText(avance);
+            if (fechas != null) {
+                String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
+                        Utils.formatoMes(fechas.getFecha_vv()));
+                txtTitleAvanceObra.setText(avance);
+            }
         }
 
         if (entidad != null && mChart != null) {
@@ -118,14 +118,13 @@ public class AvanceObraFragment extends OfertaBaseFragment {
         return new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+            if (newVal == 0) {
+                entidad = datos.consultaNacional();
+            } else {
+                entidad = datos.consultaEntidad(newVal);
+            }
 
-                if (newVal == 0) {
-                    entidad = datos.consultaNacional();
-                } else {
-                    entidad = datos.consultaEntidad(newVal);
-                }
-
-                mostrarDatos();
+            mostrarDatos();
             }
         };
     }
@@ -193,7 +192,7 @@ public class AvanceObraFragment extends OfertaBaseFragment {
             return;
         }
 
-        if (mChart != null) {
+        if (getString(R.string.selected_configuration).equals("sw600dp")) {
             inicializaDatosChart();
             estado = EstadoMenuOferta.GUARDAR;
         } else {
@@ -214,15 +213,28 @@ public class AvanceObraFragment extends OfertaBaseFragment {
     }
 
     protected void muestraDialogo() {
-        OfertaDialogFragment dialog = new OfertaDialogFragment();
+        DatosOfertaDialogFragment dialog = new DatosOfertaDialogFragment();
         Bundle args = new Bundle();
-        args.putStringArrayList(Constants.PARTIES, entidad.getParties());
-        args.putLongArray(Constants.VALUES, entidad.getValues());
-        args.putString(Constants.CENTER_TEXT, "Avance Obra");
-        args.putString(Constants.Y_VAL_LEGEND, getString(R.string.etiqueta_porcentaje));
-        args.putInt(Constants.ESTADO, entidad.getCve_ent());
-        args.putString(Constants.DESCRIPCION, getKey());
+
+        args.putStringArray("Etiquetas", new String[]{
+                getString(R.string.title_50), getString(R.string.title_99),
+                getString(R.string.title_recientes), getString(R.string.title_antiguas),
+                getString(R.string.title_total)});
+        args.putStringArray("Valores", new String[]{Utils.toString(entidad.getViv_proc_m50()),
+                Utils.toString(entidad.getViv_proc_50_99()),
+                Utils.toString(entidad.getViv_term_rec()),
+                Utils.toString(entidad.getViv_term_ant()),
+                Utils.toString(entidad.getTotal())});
+
+        if (fechas != null) {
+            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
+                    Utils.formatoMes(fechas.getFecha_vv()));
+            args.putString("Titulo", avance);
+        } else {
+            args.putString("Titulo", getString(R.string.title_avance_obra));
+        }
+
         dialog.setArguments(args);
-        dialog.show(getFragmentManager(), "OfertaDialog");
+        dialog.show(getFragmentManager(), "DatosOfertaDialog");
     }
 }
