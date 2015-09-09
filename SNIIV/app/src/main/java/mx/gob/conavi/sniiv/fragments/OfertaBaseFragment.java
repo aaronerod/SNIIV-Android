@@ -1,5 +1,6 @@
 package mx.gob.conavi.sniiv.fragments;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,16 @@ public abstract class OfertaBaseFragment extends BaseFragment {
     private static final String TAG = OfertaBaseFragment.class.getSimpleName();
     @Nullable @Bind(R.id.chart) PieChart mChart;
     protected EstadoMenuOferta estado = EstadoMenuOferta.NINGUNO;
+    protected String configuracion;
+    protected String[] etiquetas;
+    protected String[] valores;
+    protected String titulo;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        configuracion = getString(R.string.selected_configuration);
+    }
 
     @Override
     public void onResume() {

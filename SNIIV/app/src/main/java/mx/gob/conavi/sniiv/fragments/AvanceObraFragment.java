@@ -50,9 +50,6 @@ public class AvanceObraFragment extends OfertaBaseFragment {
 
     @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
     @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
-    private String[] etiquetas;
-    private String[] valores;
-    private String titulo;
 
     private DatosAvanceObra datos;
     private AvanceObra entidad;
@@ -122,7 +119,7 @@ public class AvanceObraFragment extends OfertaBaseFragment {
 
         inicializaDatos();
 
-        if (getString(R.string.selected_configuration).equals("sw600dp") && tableLayout.getChildCount() == 0) {
+        if (configuracion.equals("sw600dp") && tableLayout.getChildCount() == 0) {
             creaTableLayout();
         }
 
@@ -224,7 +221,7 @@ public class AvanceObraFragment extends OfertaBaseFragment {
             return;
         }
 
-        if (getString(R.string.selected_configuration).equals("sw600dp")) {
+        if (configuracion.equals("sw600dp")) {
             inicializaDatosChart();
             estado = EstadoMenuOferta.GUARDAR;
         } else {
