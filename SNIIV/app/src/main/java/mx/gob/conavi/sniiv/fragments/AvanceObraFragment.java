@@ -48,9 +48,6 @@ import mx.gob.conavi.sniiv.templates.ColorTemplate;
 public class AvanceObraFragment extends OfertaBaseFragment {
     public static final String TAG = "AvanceObraFragment";
 
-    @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
-    @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
-
     private DatosAvanceObra datos;
     private AvanceObra entidad;
     private AvanceObraRepository repository;
@@ -60,8 +57,6 @@ public class AvanceObraFragment extends OfertaBaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new AvanceObraRepository(getActivity());
-        valueChangeListener = configuraValueChangeListener();
-        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -142,20 +137,6 @@ public class AvanceObraFragment extends OfertaBaseFragment {
         } else {
             titulo = getString(R.string.title_avance_obra);
         }
-    }
-
-    private void creaTableLayout() {
-        for (int i = 0; i< etiquetas.length; i++) {
-            TableRow row = (TableRow) LayoutInflater.from(getActivity()).inflate(R.layout.table_row, null);
-            TextView etiqueta = (TextView) row.findViewById(R.id.txtEtiqueta);
-            TextView valor = (TextView) row.findViewById(R.id.txtValor);
-            etiqueta.setText(etiquetas[i]);
-            valor.setText(valores[i]);
-
-            tableLayout.addView(row);
-        }
-
-        txtTitle.setText(titulo);
     }
 
     @Override
@@ -239,15 +220,5 @@ public class AvanceObraFragment extends OfertaBaseFragment {
                 pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
         OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), pEstado, pParties);
         mChart.setOnChartValueSelectedListener(listener);
-    }
-
-    protected void muestraDialogo() {
-        DatosOfertaDialogFragment dialog = new DatosOfertaDialogFragment();
-        Bundle args = new Bundle();
-        args.putStringArray("Etiquetas", etiquetas);
-        args.putStringArray("Valores", valores);
-        args.putString("Titulo", titulo);
-        dialog.setArguments(args);
-        dialog.show(getFragmentManager(), "DatosOfertaDialog");
     }
 }

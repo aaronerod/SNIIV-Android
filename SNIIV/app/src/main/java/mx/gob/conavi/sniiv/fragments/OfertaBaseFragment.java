@@ -2,9 +2,13 @@ package mx.gob.conavi.sniiv.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -19,6 +23,9 @@ import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 public abstract class OfertaBaseFragment extends BaseFragment {
     private static final String TAG = OfertaBaseFragment.class.getSimpleName();
     @Nullable @Bind(R.id.chart) PieChart mChart;
+    @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
+    @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
+
     protected EstadoMenuOferta estado = EstadoMenuOferta.NINGUNO;
     protected String configuracion;
     protected String[] etiquetas;
@@ -29,6 +36,8 @@ public abstract class OfertaBaseFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configuracion = getString(R.string.selected_configuration);
+        valueChangeListener = configuraValueChangeListener();
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -81,7 +90,6 @@ public abstract class OfertaBaseFragment extends BaseFragment {
 
     protected abstract void intentaInicializarGrafica();
     protected abstract void inicializaDatosChart();
-    protected abstract void muestraDialogo();
 
     protected void guardarChart() {
         if (mChart != null) {
@@ -89,5 +97,29 @@ public abstract class OfertaBaseFragment extends BaseFragment {
             Toast.makeText(getActivity().getApplicationContext(),
                     R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    protected void creaTableLayout() {
+        for (int i = 0; i< etiquetas.length; i++) {
+            TableRow row = (TableRow) LayoutInflater.from(getActivity()).inflate(R.layout.table_row, null);
+            TextView etiqueta = (TextView) row.findViewById(R.id.txtEtiqueta);
+            TextView valor = (TextView) row.findViewById(R.id.txtValor);
+            etiqueta.setText(etiquetas[i]);
+            valor.setText(valores[i]);
+
+            tableLayout.addView(row);
+        }
+
+        txtTitle.setText(titulo);
+    }
+
+    protected void muestraDialogo() {
+        DatosOfertaDialogFragment dialog = new DatosOfertaDialogFragment();
+        Bundle args = new Bundle();
+        args.putStringArray("Etiquetas", etiquetas);
+        args.putStringArray("Valores", valores);
+        args.putString("Titulo", titulo);
+        dialog.setArguments(args);
+        dialog.show(getFragmentManager(), "DatosOfertaDialog");
     }
 }
