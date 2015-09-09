@@ -1,7 +1,6 @@
 package mx.gob.conavi.sniiv.fragments;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;

@@ -21,6 +21,5 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-
     </TableLayout>
 </RelativeLayout>

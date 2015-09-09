@@ -4,14 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_avance_obra"
-        android:id="@+id/txtTitleSubsidios"
-        android:layout_marginTop="20dp"
-        style="@style/Title"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
