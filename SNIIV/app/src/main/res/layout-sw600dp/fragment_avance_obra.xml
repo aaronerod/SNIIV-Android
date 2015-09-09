@@ -4,119 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/datos"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title_avance_obra"
-        android:id="@+id/txtTitleSubsidios"
-        android:layout_marginTop="20dp"
-        style="@style/Title"/>
-
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTitleSubsidios"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
-
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow1"
-                android:text="@string/title_50"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtProceso50"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow2"
-                android:text="@string/title_99"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtProceso99"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow3"
-                android:text="@string/title_recientes"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtTerminadasRecientes"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow4"
-                android:text="@string/title_antiguas"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtTerminadasAntiguas"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow5"
-                android:text="@string/title_total"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtTotal"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-    </TableLayout>
+        layout="@layout/dialog_datos"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tableLayout"
+        android:layout_below="@id/datos"
         android:orientation="vertical">
 
         <com.github.mikephil.charting.charts.PieChart
@@ -135,9 +32,5 @@
             android:layout_gravity="center"
             />
     </LinearLayout>
-
-
-
-
 
 </RelativeLayout>
