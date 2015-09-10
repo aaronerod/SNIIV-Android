@@ -26,10 +26,7 @@ public class AvanceObra implements Modelo{
         this.viv_term_rec = viv_term_rec;
         this.viv_term_ant = viv_term_ant;
         this.total = total;
-
-
     }
-
 
     public int getCve_ent() {
         return cve_ent;
@@ -92,11 +89,11 @@ public class AvanceObra implements Modelo{
 
     @Override
     public ArrayList<String> getParties() {
-        ArrayList<String> PARTIES = new ArrayList<>();
-        PARTIES.add("Hasta 50%");
-        PARTIES.add("Hasta 99%");
-        PARTIES.add("Recientes");
-        PARTIES.add("Antiguas");
-        return PARTIES;
+        ArrayList<String> parties = new ArrayList<>();
+        parties.add("Hasta 50%");
+        parties.add("Hasta 99%");
+        parties.add("Recientes");
+        parties.add("Antiguas");
+        return parties;
     }
 }
