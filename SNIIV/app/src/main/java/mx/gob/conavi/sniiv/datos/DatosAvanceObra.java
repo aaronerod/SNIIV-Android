@@ -8,17 +8,15 @@ import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 /**
  * Created by admin on 06/08/15.
  */
-public class DatosAvanceObra {
-    private AvanceObra[] datos;
-    private AvanceObraRepository repository;
+public class DatosAvanceObra extends Datos<AvanceObra> {
 
     public DatosAvanceObra(Context context, AvanceObra[] datos) {
-        this.datos = datos;
+        super(datos);
         repository = new AvanceObraRepository(context);
     }
 
     public AvanceObra consultaNacional() {
-        return repository.consultaNacional();
+        return ((AvanceObraRepository)repository).consultaNacional();
     }
 
     public AvanceObra consultaEntidad(int entidad) {
