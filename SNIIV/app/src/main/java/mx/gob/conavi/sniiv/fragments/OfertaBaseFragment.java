@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.NumberPicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -14,17 +17,25 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.PieChart;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
+import mx.gob.conavi.sniiv.sqlite.Repository;
 
 /**
  * Created by octavio.munguia on 01/09/2015.
  */
-public abstract class OfertaBaseFragment extends BaseFragment {
+public abstract class OfertaBaseFragment<T> extends BaseFragment {
     private static final String TAG = OfertaBaseFragment.class.getSimpleName();
     @Nullable @Bind(R.id.chart) PieChart mChart;
     @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
     @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
+
+    protected T entidad;
+    protected Datos<T> datos;
+    protected Repository<T> repository;
 
     protected EstadoMenuOferta estado = EstadoMenuOferta.NINGUNO;
     protected String configuracion;
@@ -32,6 +43,8 @@ public abstract class OfertaBaseFragment extends BaseFragment {
     protected String[] valores;
     protected String titulo;
 
+
+    //region Métodos del Ciclo de Vida
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +58,18 @@ public abstract class OfertaBaseFragment extends BaseFragment {
         super.onResume();
 
         intentaInicializarGrafica();
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(getLayoutId(), container, false);
+        ButterKnife.bind(this, rootView);
+
+        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
+        configuraPickerView();
+
+        etiquetas = getEtiquetas();
+
+        return rootView;
     }
 
     @Override
@@ -87,17 +112,74 @@ public abstract class OfertaBaseFragment extends BaseFragment {
 
         return super.onOptionsItemSelected(item);
     }
+    //endregion
 
-    protected abstract void intentaInicializarGrafica();
-    protected abstract void inicializaDatosChart();
+    @Override
+    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
+        return new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (newVal == 0) {
+                    entidad = datos.consultaNacional();
+                } else {
+                    entidad = datos.consultaEntidad(newVal);
+                }
 
-    protected void guardarChart() {
+                mostrarDatos();
+            }
+        };
+    }
+
+    protected void loadFromStorage() {
+        T[] datosStorage = repository.loadFromStorage();
+        if(datosStorage.length > 0) {
+            datos = getDatos(datosStorage);
+            entidad = datos.consultaNacional();
+            pickerEstados.setEnabled(true);
+        } else {
+            Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
+        }
+
+        loadFechasStorage();
+
+        mostrarDatos();
+    }
+
+    protected void mostrarDatos() {
+        if (entidad == null) {
+            return;
+        }
+
+        inicializaDatos();
+
+        if (configuracion.equals("sw600dp") && tableLayout.getChildCount() == 0) {
+            creaTableLayout();
+        }
+
         if (mChart != null) {
-            mChart.saveToGallery(getKey() + System.currentTimeMillis() + ".jpg", 100);
-            Toast.makeText(getActivity().getApplicationContext(),
-                    R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
+            inicializaDatosChart();
         }
     }
+
+    protected void intentaInicializarGrafica() {
+        if (entidad == null) {
+            estado = EstadoMenuOferta.NINGUNO;
+            return;
+        }
+
+        if (configuracion.equals("sw600dp")) {
+            inicializaDatosChart();
+            estado = EstadoMenuOferta.GUARDAR;
+        } else {
+            estado = EstadoMenuOferta.GRAFICA;
+        }
+    }
+
+    protected abstract void inicializaDatosChart();
+    protected void inicializaDatos() {}
+    protected String[] getEtiquetas() {return new String[]{};}
+    protected int getLayoutId() {return 0;}
+    protected Datos<T> getDatos(T[] datos) {return null;}
 
     protected void creaTableLayout() {
         for (int i = 0; i< etiquetas.length; i++) {
@@ -121,5 +203,13 @@ public abstract class OfertaBaseFragment extends BaseFragment {
         args.putString("Titulo", titulo);
         dialog.setArguments(args);
         dialog.show(getFragmentManager(), "DatosOfertaDialog");
+    }
+
+    protected void guardarChart() {
+        if (mChart != null) {
+            mChart.saveToGallery(getKey() + System.currentTimeMillis() + ".jpg", 100);
+            Toast.makeText(getActivity().getApplicationContext(),
+                    R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
+        }
     }
 }
