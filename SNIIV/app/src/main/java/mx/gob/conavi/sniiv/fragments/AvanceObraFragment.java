@@ -56,22 +56,7 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
         repository = new AvanceObraRepository(getActivity());
     }
 
-    protected void inicializaDatos() {
-        valores =  new String[]{Utils.toString(entidad.getViv_proc_m50()),
-                Utils.toString(entidad.getViv_proc_50_99()),
-                Utils.toString(entidad.getViv_term_rec()),
-                Utils.toString(entidad.getViv_term_ant()),
-                Utils.toString(entidad.getTotal())};
-
-        if (fechas != null) {
-            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
-                    Utils.formatoMes(fechas.getFecha_vv()));
-            titulo =  avance;
-        } else {
-            titulo = getString(R.string.title_avance_obra);
-        }
-    }
-
+    //region Implementaciones BaseFragment
     @Override
     protected AsyncTask<Void, Void, Void> getAsyncTask() {
         return new AsyncTaskRunner();
@@ -86,6 +71,7 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
     protected String getFechaAsString() {
         return fechas != null ? fechas.getFecha_vv() : null;
     }
+    //endregion
 
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
         @Override
@@ -129,6 +115,7 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
         }
     }
 
+    //region Implementaciones OfertaBaseFragment
     protected void inicializaDatosChart() {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
@@ -139,6 +126,22 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
                 pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
         OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), pEstado, pParties);
         mChart.setOnChartValueSelectedListener(listener);
+    }
+
+    protected void inicializaDatos() {
+        valores =  new String[]{Utils.toString(entidad.getViv_proc_m50()),
+                Utils.toString(entidad.getViv_proc_50_99()),
+                Utils.toString(entidad.getViv_term_rec()),
+                Utils.toString(entidad.getViv_term_ant()),
+                Utils.toString(entidad.getTotal())};
+
+        if (fechas != null) {
+            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
+                    Utils.formatoMes(fechas.getFecha_vv()));
+            titulo =  avance;
+        } else {
+            titulo = getString(R.string.title_avance_obra);
+        }
     }
 
     @Override
@@ -158,4 +161,5 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
     protected Datos<AvanceObra> getDatos(AvanceObra[] datos) {
         return new DatosAvanceObra(getActivity(), datos);
     }
+    //endregion
 }

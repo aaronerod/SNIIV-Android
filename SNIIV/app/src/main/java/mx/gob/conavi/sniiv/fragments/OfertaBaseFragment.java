@@ -175,12 +175,6 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment {
         }
     }
 
-    protected abstract void inicializaDatosChart();
-    protected void inicializaDatos() {}
-    protected String[] getEtiquetas() {return new String[]{};}
-    protected int getLayoutId() {return 0;}
-    protected Datos<T> getDatos(T[] datos) {return null;}
-
     protected void creaTableLayout() {
         for (int i = 0; i< etiquetas.length; i++) {
             TableRow row = (TableRow) LayoutInflater.from(getActivity()).inflate(R.layout.table_row, null);
@@ -212,4 +206,10 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment {
                     R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
         }
     }
+
+    protected abstract void inicializaDatosChart();
+    protected void inicializaDatos() {}
+    protected String[] getEtiquetas() {return new String[]{};}
+    protected int getLayoutId() {return 0;}
+    protected Datos<T> getDatos(T[] datos) {return null;}
 }
