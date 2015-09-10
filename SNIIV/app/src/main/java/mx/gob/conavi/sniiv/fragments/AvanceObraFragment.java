@@ -1,50 +1,22 @@
 package mx.gob.conavi.sniiv.fragments;
 
-
 import android.app.ProgressDialog;
-import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.NumberPicker;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.PercentFormatter;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
 import mx.gob.conavi.sniiv.modelos.AvanceObra;
-import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.parsing.ParseAvanceObra;
 import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
-import mx.gob.conavi.sniiv.sqlite.FechasRepository;
-import mx.gob.conavi.sniiv.templates.ColorTemplate;
 
 public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
     public static final String TAG = "AvanceObraFragment";

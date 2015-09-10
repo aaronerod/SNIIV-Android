@@ -3,85 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/datos"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title_tipo_vivienda"
-        android:id="@+id/txtTitleTipoVivienda"
-        android:layout_marginTop="20dp"
-        style="@style/Title" />
-
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTitleTipoVivienda"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
-
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow1"
-                android:text="@string/title_horizontal"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtHorizontal"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow2"
-                android:text="@string/title_vertical"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtVertical"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-
-
-
-        <TableRow
-            android:id="@+id/tableRow5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dip" >
-
-            <TextView
-                android:id="@+id/txtRow5"
-                android:text="Total"
-                android:layout_weight="1"
-                style="@style/Etiqueta" />
-
-            <TextView
-                android:id="@+id/txtTotal"
-                android:layout_weight="1"
-                style="@style/EtiquetaCantidad" />
-        </TableRow>
-    </TableLayout>
+        layout="@layout/dialog_datos"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tableLayout"
+        android:layout_below="@id/datos"
         android:orientation="vertical">
 
         <com.github.mikephil.charting.charts.PieChart
@@ -100,6 +31,5 @@
             android:layout_gravity="center"
             />
     </LinearLayout>
-
 
 </RelativeLayout>

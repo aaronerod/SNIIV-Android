@@ -8,17 +8,15 @@ import mx.gob.conavi.sniiv.sqlite.TipoViviendaRepository;
 /**
  * Created by admin on 06/08/15.
  */
-public class DatosTipoVivienda {
-    private final TipoVivienda[] datos;
-    private final TipoViviendaRepository repository;
+public class DatosTipoVivienda extends Datos<TipoVivienda> {
 
     public DatosTipoVivienda(Context context, TipoVivienda[] datos) {
-        this.datos = datos;
+        super(datos);
         repository = new TipoViviendaRepository(context);
     }
 
     public TipoVivienda consultaNacional() {
-        return repository.consultaNacional();
+        return ((TipoViviendaRepository)repository).consultaNacional();
     }
 
     public TipoVivienda consultaEntidad(int entidad) {
