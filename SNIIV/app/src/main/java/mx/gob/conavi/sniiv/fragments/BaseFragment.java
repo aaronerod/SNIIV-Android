@@ -27,9 +27,6 @@ public abstract class BaseFragment extends Fragment {
     protected Fechas fechas;
     protected FechasRepository fechasRepository;
 
-    protected abstract void loadFromStorage();
-    protected abstract void mostrarDatos();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +59,6 @@ public abstract class BaseFragment extends Fragment {
         progressDialog.dismiss();
     }
 
-    protected abstract NumberPicker.OnValueChangeListener configuraValueChangeListener();
-    protected abstract AsyncTask<Void, Void, Void> getAsyncTask();
-    protected abstract String getKey();
-
     protected boolean isDataLoaded() {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         long time = app.getTimeLastUpdated(getKey());
@@ -77,22 +70,6 @@ public abstract class BaseFragment extends Fragment {
     protected void saveTimeLastUpdated(long lastTime) {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         app.setTimeLastUpdated(getKey(), lastTime);
-    }
-
-    @Deprecated
-    protected void saveTimeLastUpdated() {
-        SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
-        app.setTimeLastUpdated(getKey(), new Date().getTime());
-    }
-
-    @Deprecated
-    protected void obtenerFechas() {
-        ParseFechas parseFechas = new ParseFechas();
-        Fechas[] fechasWeb = parseFechas.getDatos();
-        fechasRepository.deleteAll();
-        fechasRepository.saveAll(fechasWeb);
-
-        loadFechasStorage();
     }
 
     protected void loadFechasStorage() {
@@ -114,8 +91,12 @@ public abstract class BaseFragment extends Fragment {
         }
 
         return new Date(0);
-
     }
 
+    protected abstract void loadFromStorage();
+    protected abstract void mostrarDatos();
+    protected abstract NumberPicker.OnValueChangeListener configuraValueChangeListener();
+    protected abstract AsyncTask<Void, Void, Void> getAsyncTask();
+    protected abstract String getKey();
     protected abstract String getFechaAsString();
 }
