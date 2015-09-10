@@ -36,6 +36,7 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
+import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
 import mx.gob.conavi.sniiv.modelos.AvanceObra;
@@ -45,12 +46,8 @@ import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 import mx.gob.conavi.sniiv.templates.ColorTemplate;
 
-public class AvanceObraFragment extends OfertaBaseFragment {
+public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
     public static final String TAG = "AvanceObraFragment";
-
-    private DatosAvanceObra datos;
-    private AvanceObra entidad;
-    private AvanceObraRepository repository;
     private boolean errorRetrievingData = false;
 
     @Override
@@ -59,71 +56,7 @@ public class AvanceObraFragment extends OfertaBaseFragment {
         repository = new AvanceObraRepository(getActivity());
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_avance_obra, container, false);
-        ButterKnife.bind(this, rootView);
-
-        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
-        configuraPickerView();
-
-        etiquetas = new String[]{
-                getString(R.string.title_50), getString(R.string.title_99),
-                getString(R.string.title_recientes), getString(R.string.title_antiguas),
-                getString(R.string.title_total)};
-
-        return rootView;
-    }
-
-    @Override
-    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
-        return new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if (newVal == 0) {
-                    entidad = datos.consultaNacional();
-                } else {
-                    entidad = datos.consultaEntidad(newVal);
-                }
-
-                mostrarDatos();
-            }
-        };
-    }
-
-    protected void loadFromStorage() {
-        AvanceObra[] datosStorage = repository.loadFromStorage();
-        if(datosStorage.length > 0) {
-            datos = new DatosAvanceObra(getActivity(), datosStorage);
-            entidad = datos.consultaNacional();
-            pickerEstados.setEnabled(true);
-        } else {
-            Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        }
-
-        loadFechasStorage();
-
-        mostrarDatos();
-    }
-
-    protected void mostrarDatos() {
-        if (entidad == null) {
-            return;
-        }
-
-        inicializaDatos();
-
-        if (configuracion.equals("sw600dp") && tableLayout.getChildCount() == 0) {
-            creaTableLayout();
-        }
-
-        if (mChart != null) {
-            inicializaDatosChart();
-        }
-    }
-
-    private void inicializaDatos() {
+    protected void inicializaDatos() {
         valores =  new String[]{Utils.toString(entidad.getViv_proc_m50()),
                 Utils.toString(entidad.getViv_proc_50_99()),
                 Utils.toString(entidad.getViv_term_rec()),
@@ -196,20 +129,6 @@ public class AvanceObraFragment extends OfertaBaseFragment {
         }
     }
 
-    protected void intentaInicializarGrafica() {
-        if (entidad == null) {
-            estado = EstadoMenuOferta.NINGUNO;
-            return;
-        }
-
-        if (configuracion.equals("sw600dp")) {
-            inicializaDatosChart();
-            estado = EstadoMenuOferta.GUARDAR;
-        } else {
-            estado = EstadoMenuOferta.GRAFICA;
-        }
-    }
-
     protected void inicializaDatosChart() {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
@@ -220,5 +139,23 @@ public class AvanceObraFragment extends OfertaBaseFragment {
                 pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
         OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), pEstado, pParties);
         mChart.setOnChartValueSelectedListener(listener);
+    }
+
+    @Override
+    protected String[] getEtiquetas() {
+        return new String[]{
+                getString(R.string.title_50), getString(R.string.title_99),
+                getString(R.string.title_recientes), getString(R.string.title_antiguas),
+                getString(R.string.title_total)};
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_avance_obra;
+    }
+
+    @Override
+    protected Datos<AvanceObra> getDatos(AvanceObra[] datos) {
+        return new DatosAvanceObra(getActivity(), datos);
     }
 }
