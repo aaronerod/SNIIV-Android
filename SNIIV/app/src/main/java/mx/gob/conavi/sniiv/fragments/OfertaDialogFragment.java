@@ -39,7 +39,7 @@ public class OfertaDialogFragment extends DialogFragment {
 
         mChart = (PieChart) view.findViewById(R.id.chart);
 
-        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText, pYvalLegend,
+        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 pEstado, getString(R.string.etiqueta_conavi));
         OnChartValueSelected listener = new OnChartValueSelected(mChart, descripcion, pEstado, pParties);
         mChart.setOnChartValueSelectedListener(listener);

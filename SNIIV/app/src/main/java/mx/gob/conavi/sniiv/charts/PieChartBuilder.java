@@ -20,9 +20,9 @@ import mx.gob.conavi.sniiv.templates.ColorTemplate;
  */
 public class PieChartBuilder {
     public static void buildPieChart(PieChart chart, ArrayList<String> parties, long[] values,
-        String centerText, String yValLegend, int estado, String description){
+                                     String centerText, int estado, String description){
         initChart(chart, centerText, estado, description);
-        setData(chart, yValLegend, values, parties);
+        setData(chart, values, parties);
     }
 
     private static void initChart(PieChart chart, String centerText, int estado, String description) {
@@ -42,13 +42,13 @@ public class PieChartBuilder {
         chart.setLongClickable(true);
         chart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
         Legend l = chart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
-        l.setYOffset(0f);
+        l.setYOffset(2f);
     }
 
-    private static void setData(PieChart chart, String yLegend, long[] values, ArrayList<String> parties) {
+    private static void setData(PieChart chart, long[] values, ArrayList<String> parties) {
         ArrayList<Entry> yVals1 = new ArrayList<>();
 
         for(int a = 0; a<values.length; a++) {
@@ -57,11 +57,11 @@ public class PieChartBuilder {
 
         ArrayList<String> xVals = new ArrayList<>();
 
-        for(int a = 0; a<parties.size(); a++) {
+        for(int a = 0; a < parties.size(); a++) {
             xVals.add(parties.get(a));
         }
 
-        PieDataSet dataSet = new PieDataSet(yVals1, yLegend);
+        PieDataSet dataSet = new PieDataSet(yVals1, "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
@@ -76,7 +76,7 @@ public class PieChartBuilder {
 
         PieData data = new PieData(xVals, dataSet);
         data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
+        data.setValueTextSize(10f);
         data.setValueTextColor(Color.WHITE);
         chart.setData(data);
 

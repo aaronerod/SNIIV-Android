@@ -6,35 +6,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.NumberPicker;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.Utils.Constants;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.Datos;
-import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.datos.DatosPCU;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
-import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.modelos.PCU;
 import mx.gob.conavi.sniiv.parsing.ParsePCU;
-import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 import mx.gob.conavi.sniiv.sqlite.PCURepository;
 
 
@@ -113,10 +95,9 @@ public class PCUFragment extends OfertaBaseFragment<PCU> {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
         String pCenterText = "PCU";
-        String pYvalLegend = getString(R.string.etiqueta_porcentaje);
         int pEstado = entidad.getCve_ent();
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
-                pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
+                pEstado, getString(R.string.etiqueta_conavi));
         OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), pEstado, pParties);
         mChart.setOnChartValueSelectedListener(listener);
     }

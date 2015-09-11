@@ -96,10 +96,9 @@ public class TipoViviendaFragment extends OfertaBaseFragment<TipoVivienda> {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
         String pCenterText = "Tipo de Vivienda";
-        String pYvalLegend = getString(R.string.etiqueta_porcentaje);
         int pEstado = entidad.getCve_ent();
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
-                pYvalLegend, pEstado, getString(R.string.etiqueta_conavi));
+                pEstado, getString(R.string.etiqueta_conavi));
         OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), pEstado, pParties);
         mChart.setOnChartValueSelectedListener(listener);
     }
