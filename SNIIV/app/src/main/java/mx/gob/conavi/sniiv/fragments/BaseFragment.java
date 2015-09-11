@@ -41,6 +41,7 @@ public abstract class BaseFragment<T> extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fechasRepository = new FechasRepository(getActivity());
+        valueChangeListener = configuraValueChangeListener();
     }
 
     @Override

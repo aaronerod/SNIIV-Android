@@ -44,7 +44,6 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configuracion = getString(R.string.selected_configuration);
-        valueChangeListener = configuraValueChangeListener();
         setHasOptionsMenu(true);
     }
 
