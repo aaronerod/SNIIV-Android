@@ -27,22 +27,17 @@ import mx.gob.conavi.sniiv.sqlite.Repository;
 /**
  * Created by octavio.munguia on 01/09/2015.
  */
-public abstract class OfertaBaseFragment<T> extends BaseFragment {
+public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     private static final String TAG = OfertaBaseFragment.class.getSimpleName();
     @Nullable @Bind(R.id.chart) PieChart mChart;
     @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
     @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
-
-    protected T entidad;
-    protected Datos<T> datos;
-    protected Repository<T> repository;
 
     protected EstadoMenuOferta estado = EstadoMenuOferta.NINGUNO;
     protected String configuracion;
     protected String[] etiquetas;
     protected String[] valores;
     protected String titulo;
-
 
     //region Métodos del Ciclo de Vida
     @Override
@@ -61,15 +56,9 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(getLayoutId(), container, false);
-        ButterKnife.bind(this, rootView);
-
-        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
-        configuraPickerView();
-
         etiquetas = getEtiquetas();
 
-        return rootView;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -113,37 +102,6 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
     //endregion
-
-    @Override
-    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
-        return new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if (newVal == 0) {
-                    entidad = datos.consultaNacional();
-                } else {
-                    entidad = datos.consultaEntidad(newVal);
-                }
-
-                mostrarDatos();
-            }
-        };
-    }
-
-    protected void loadFromStorage() {
-        T[] datosStorage = repository.loadFromStorage();
-        if(datosStorage.length > 0) {
-            datos = getDatos(datosStorage);
-            entidad = datos.consultaNacional();
-            pickerEstados.setEnabled(true);
-        } else {
-            Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        }
-
-        loadFechasStorage();
-
-        mostrarDatos();
-    }
 
     protected void mostrarDatos() {
         if (entidad == null) {
@@ -210,6 +168,4 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment {
     protected abstract void inicializaDatosChart();
     protected void inicializaDatos() {}
     protected String[] getEtiquetas() {return new String[]{};}
-    protected int getLayoutId() {return 0;}
-    protected Datos<T> getDatos(T[] datos) {return null;}
 }
