@@ -30,7 +30,6 @@ public class SubsidiosFragment extends BaseFragment {
     private ConsultaSubsidio entidad;
     private SubsidioRepository repository;
 
-
     @Bind(R.id.txtNuevaAcc) TextView txtNuevaAcc;
     @Bind(R.id.txtNuevaMto) TextView txtNuevaMto;
     @Bind(R.id.txtUsadaAcc) TextView txtUsadaAcc;
@@ -46,7 +45,6 @@ public class SubsidiosFragment extends BaseFragment {
     @Bind(R.id.txtTotalAcc) TextView txtTotalAcc;
     @Bind(R.id.txtTotalMto) TextView txtTotalMto;
     @Bind(R.id.txtTitleSubsidios) TextView txtTitleSubsidios;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
