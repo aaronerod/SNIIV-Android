@@ -33,10 +33,6 @@ import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
  */
 public class ReporteGeneralFragment extends BaseFragment<ReporteGeneral> {
     public static final String TAG = "ReporteGeneralFragment";
-
-    private DatosReporteGeneral datos;
-    private ReporteGeneral entidad;
-    private ReporteGeneralRepository repository;
     private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
@@ -135,7 +131,7 @@ public class ReporteGeneralFragment extends BaseFragment<ReporteGeneral> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_avance_obra;
+        return R.layout.activity_reportegeneral;
     }
 
     @Override
