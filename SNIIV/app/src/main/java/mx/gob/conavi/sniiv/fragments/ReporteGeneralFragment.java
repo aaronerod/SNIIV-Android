@@ -19,7 +19,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.datos.Datos;
+import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
+import mx.gob.conavi.sniiv.modelos.AvanceObra;
 import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
@@ -28,12 +31,8 @@ import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 /**
  * Created by admin on 04/08/15.
  */
-public class ReporteGeneralFragment extends BaseFragment {
+public class ReporteGeneralFragment extends BaseFragment<ReporteGeneral> {
     public static final String TAG = "ReporteGeneralFragment";
-
-    private DatosReporteGeneral datos;
-    private ReporteGeneral entidad;
-    private ReporteGeneralRepository repository;
     private boolean errorRetrievingData = false;
 
     @Bind(R.id.txtAccionesFinan) TextView txtAccFinan;
@@ -50,7 +49,6 @@ public class ReporteGeneralFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = new ReporteGeneralRepository(getActivity());
-        valueChangeListener = configuraValueChangeListener();
     }
 
     @Override
@@ -63,52 +61,9 @@ public class ReporteGeneralFragment extends BaseFragment {
         return fechas != null ? fechas.getFecha_subs() : null;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_reportegeneral, container, false);
-        ButterKnife.bind(this, rootView);
-
-        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
-        configuraPickerView();
-
-        return rootView;
-    }
-
-    @Override
-    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
-        return new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if (newVal == 0) {
-                    entidad = datos.consultaNacional();
-                } else {
-                    entidad = datos.consultaEntidad(newVal);
-                }
-
-                mostrarDatos();
-            }
-        };
-    }
-
     @Override
     protected AsyncTask<Void, Void, Void> getAsyncTask() {
         return new AsyncTaskRunner();
-    }
-
-    protected void loadFromStorage() {
-        ReporteGeneral[] datosStorage = repository.loadFromStorage();
-        if(datosStorage.length > 0) {
-            datos = new DatosReporteGeneral(getActivity(), datosStorage);
-            entidad = datos.consultaNacional();
-            pickerEstados.setEnabled(true);
-        } else {
-            Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        }
-
-        loadFechasStorage();
-
-        mostrarDatos();
     }
 
     public void mostrarDatos() {
@@ -172,5 +127,15 @@ public class ReporteGeneralFragment extends BaseFragment {
                 progressDialog.dismiss();
             }
         }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_reportegeneral;
+    }
+
+    @Override
+    protected Datos<ReporteGeneral> getDatos(ReporteGeneral[] datos) {
+        return new DatosReporteGeneral(getActivity(), datos);
     }
 }
