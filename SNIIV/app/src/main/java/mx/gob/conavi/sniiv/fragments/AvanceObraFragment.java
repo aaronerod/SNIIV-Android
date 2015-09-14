@@ -124,11 +124,6 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_oferta;
-    }
-
-    @Override
     protected Datos<AvanceObra> getDatos(AvanceObra[] datos) {
         return new DatosAvanceObra(getActivity(), datos);
     }

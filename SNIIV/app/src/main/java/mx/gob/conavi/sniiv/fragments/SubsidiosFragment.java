@@ -22,7 +22,6 @@ import mx.gob.conavi.sniiv.modelos.Subsidio;
 import mx.gob.conavi.sniiv.parsing.ParseSubsidio;
 import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 
-
 public class SubsidiosFragment extends BaseFragment {
     public static final String TAG = "SubsidiosFragment";
 
