@@ -128,7 +128,7 @@ public class PCUFragment extends OfertaBaseFragment<PCU> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pcu;
+        return R.layout.fragment_oferta;
     }
 
     @Override

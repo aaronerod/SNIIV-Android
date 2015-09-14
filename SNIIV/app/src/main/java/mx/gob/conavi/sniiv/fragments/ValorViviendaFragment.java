@@ -128,7 +128,7 @@ public class ValorViviendaFragment extends OfertaBaseFragment<ValorVivienda> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_valor_vivienda;
+        return R.layout.fragment_oferta;
     }
 
     @Override

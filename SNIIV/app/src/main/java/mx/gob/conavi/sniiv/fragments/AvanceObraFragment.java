@@ -125,7 +125,7 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_avance_obra;
+        return R.layout.fragment_oferta;
     }
 
     @Override
