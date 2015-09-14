@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.NumberPicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -16,13 +15,11 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 
+import java.util.EnumSet;
+
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
-import mx.gob.conavi.sniiv.sqlite.Repository;
 
 /**
  * Created by octavio.munguia on 01/09/2015.
@@ -33,7 +30,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
     @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
 
-    protected EstadoMenuOferta estado = EstadoMenuOferta.NINGUNO;
+    protected EnumSet<EstadoMenuOferta> estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
     protected String configuracion;
     protected String[] etiquetas;
     protected String[] valores;
@@ -67,19 +64,17 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         MenuItem guardar = menu.findItem(R.id.action_guardar);
         MenuItem grafica = menu.findItem(R.id.action_grafica);
 
-        switch (estado) {
-            case NINGUNO:
-                guardar.setVisible(false);
-                grafica.setVisible(false);
-                break;
-            case GUARDAR:
-                guardar.setVisible(true);
-                grafica.setVisible(false);
-                break;
-            case GRAFICA:
-                guardar.setVisible(false);
-                grafica.setVisible(true);
-                break;
+        if (estado.contains(EstadoMenuOferta.NINGUNO)) {
+            guardar.setVisible(false);
+            grafica.setVisible(false);
+        }
+
+        if (estado.contains(EstadoMenuOferta.GUARDAR)){
+            guardar.setVisible(true);
+        }
+
+        if (estado.contains(EstadoMenuOferta.DATOS)) {
+            grafica.setVisible(true);
         }
 
         super.onCreateOptionsMenu(menu, inflater);
@@ -102,6 +97,11 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     }
     //endregion
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_oferta;
+    }
+
     protected void mostrarDatos() {
         if (entidad == null) {
             return;
@@ -120,15 +120,15 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
 
     protected void intentaInicializarGrafica() {
         if (entidad == null) {
-            estado = EstadoMenuOferta.NINGUNO;
+            estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
             return;
         }
 
         if (configuracion.equals("sw600dp")) {
             inicializaDatosChart();
-            estado = EstadoMenuOferta.GUARDAR;
+            estado = EnumSet.of(EstadoMenuOferta.GUARDAR);
         } else {
-            estado = EstadoMenuOferta.GRAFICA;
+            estado = EstadoMenuOferta.AMBOS;
         }
     }
 
