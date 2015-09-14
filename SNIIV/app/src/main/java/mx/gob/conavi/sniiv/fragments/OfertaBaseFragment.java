@@ -1,5 +1,6 @@
 package mx.gob.conavi.sniiv.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -59,9 +60,14 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         etiquetas = getEtiquetas();
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        if (mChart != null) {
+            mChart.setNoDataText("Datos no disponibles");
+        }
+
+        return view;
     }
 
     @Override
