@@ -51,6 +51,13 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         intentaInicializarGrafica();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        errorShowed = false;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         etiquetas = getEtiquetas();
 

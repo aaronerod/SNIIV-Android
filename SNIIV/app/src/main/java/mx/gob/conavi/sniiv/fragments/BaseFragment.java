@@ -36,6 +36,7 @@ public abstract class BaseFragment<T> extends Fragment {
     protected T entidad;
     protected Datos<T> datos;
     protected Repository<T> repository;
+    protected static boolean errorShowed = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,12 @@ public abstract class BaseFragment<T> extends Fragment {
         }
 
         loadFromStorage();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        errorShowed = false;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,7 +95,10 @@ public abstract class BaseFragment<T> extends Fragment {
             entidad = datos.consultaNacional();
             pickerEstados.setEnabled(true);
         } else {
-            Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
+            if (!errorShowed) {
+                Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
+                errorShowed = true;
+            }
         }
 
         loadFechasStorage();
@@ -114,7 +124,6 @@ public abstract class BaseFragment<T> extends Fragment {
         SniivApplication app = (SniivApplication)getActivity().getApplicationContext();
         long time = app.getTimeLastUpdated(getKey());
         Date fechaActualizacion = getFechaActualizacion();
-        Log.v(TAG, Utils.fmtDMY.format(new Date(time)) + " - " + Utils.fmtDMY.format(fechaActualizacion));
         return Utils.equalDays(new Date(time), fechaActualizacion);
     }
 

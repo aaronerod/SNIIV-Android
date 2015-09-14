@@ -58,9 +58,9 @@ public class SubsidiosFragment extends BaseFragment {
             datos = new DatosSubsidio(getActivity(), datosStorage);
             entidad = datos.consultaNacional();
             pickerEstados.setEnabled(true);
-        } else {
+        } /*else {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        }
+        } */
 
         loadFechasStorage();
 
