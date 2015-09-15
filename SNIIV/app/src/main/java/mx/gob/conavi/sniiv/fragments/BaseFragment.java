@@ -37,10 +37,12 @@ public abstract class BaseFragment<T> extends Fragment {
     protected Datos<T> datos;
     protected Repository<T> repository;
     protected static boolean errorShowed = false;
+    protected String configuracion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configuracion = getString(R.string.selected_configuration);
         fechasRepository = new FechasRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
     }
