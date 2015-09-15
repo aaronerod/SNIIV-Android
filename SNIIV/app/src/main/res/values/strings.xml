@@ -22,7 +22,6 @@
     <string name="title_nd">ND: </string>
 
 
-
     <string name="title_horizontal">Horizontal: </string>
     <string name="title_vertical">Vertical: </string>
 
@@ -55,8 +54,10 @@
     <string name="title_grafica">Gráfica</string>
     <string name="mensaje_imagen_guardada">Imagen Guardada en Galería</string>
     <string name="etiqueta_guardar">Guardar</string>
-    <string name="etiqueta_conavi">FUENTE: Comisión Nacional de Vivienda</string>
+    <string name="etiqueta_conavi">Fuente: CONAVI</string>
     <string name="texto_cancelar">Cerrar</string>
     <string name="title_guardar">Guardar</string>
     <string name="etiqueta_porcentaje">Porcentaje</string>
+    <string name="title_datos">Datos</string>
+    <string name="selected_configuration">standard</string>
 </resources>

@@ -55,8 +55,6 @@ public class FinanciamientosFragment extends BaseFragment {
     @Bind(R.id.txtTitleSubsidios) TextView txtTitleFinanciamientos;
 
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,7 +164,6 @@ public class FinanciamientosFragment extends BaseFragment {
                 datos = new DatosFinanciamiento(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
                 Log.v(TAG, "entidad" + entidad.toString());
-
 
                 saveTimeLastUpdated(getFechaActualizacion().getTime());
 

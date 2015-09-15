@@ -55,9 +55,6 @@ public class OfertaActivity extends AppCompatActivity implements ActionBar.TabLi
         }
     }
 
-
-
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());

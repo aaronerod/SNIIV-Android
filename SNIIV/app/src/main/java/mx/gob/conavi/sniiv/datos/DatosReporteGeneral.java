@@ -8,17 +8,15 @@ import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 /**
  * Created by admin on 03/08/15.
  */
-public class DatosReporteGeneral {
-    private final ReporteGeneral[] datos;
-    private final ReporteGeneralRepository repository;
+public class DatosReporteGeneral extends Datos<ReporteGeneral> {
 
     public DatosReporteGeneral(Context context, ReporteGeneral[] datos) {
-        this.datos = datos;
+        super(datos);
         repository = new ReporteGeneralRepository(context);
     }
 
     public ReporteGeneral consultaNacional() {
-        return repository.consultaNacional();
+        return ((ReporteGeneralRepository)repository).consultaNacional();
     }
 
     public ReporteGeneral consultaEntidad(int entidad) {

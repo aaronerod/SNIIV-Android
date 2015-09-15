@@ -8,17 +8,15 @@ import mx.gob.conavi.sniiv.sqlite.PCURepository;
 /**
  * Created by admin on 06/08/15.
  */
-public class DatosPCU {
-    private final PCU[] datos;
-    private final PCURepository repository;
+public class DatosPCU extends Datos<PCU>{
 
     public DatosPCU(Context context, PCU[] datos) {
-        this.datos = datos;
+        super(datos);
         repository = new PCURepository(context);
     }
 
     public PCU consultaNacional() {
-        return repository.consultaNacional();
+        return ((PCURepository)repository).consultaNacional();
     }
 
     public PCU consultaEntidad(int entidad) {

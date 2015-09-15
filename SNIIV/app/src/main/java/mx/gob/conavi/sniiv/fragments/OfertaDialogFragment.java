@@ -2,40 +2,22 @@ package mx.gob.conavi.sniiv.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.PercentFormatter;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Constants;
-import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
-import mx.gob.conavi.sniiv.templates.ColorTemplate;
 
 public class OfertaDialogFragment extends DialogFragment {
 
@@ -57,7 +39,7 @@ public class OfertaDialogFragment extends DialogFragment {
 
         mChart = (PieChart) view.findViewById(R.id.chart);
 
-        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText, pYvalLegend,
+        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 pEstado, getString(R.string.etiqueta_conavi));
         OnChartValueSelected listener = new OnChartValueSelected(mChart, descripcion, pEstado, pParties);
         mChart.setOnChartValueSelectedListener(listener);

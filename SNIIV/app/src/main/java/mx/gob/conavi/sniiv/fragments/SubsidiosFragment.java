@@ -22,14 +22,12 @@ import mx.gob.conavi.sniiv.modelos.Subsidio;
 import mx.gob.conavi.sniiv.parsing.ParseSubsidio;
 import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 
-
 public class SubsidiosFragment extends BaseFragment {
     public static final String TAG = "SubsidiosFragment";
 
     private DatosSubsidio datos;
     private ConsultaSubsidio entidad;
     private SubsidioRepository repository;
-
 
     @Bind(R.id.txtNuevaAcc) TextView txtNuevaAcc;
     @Bind(R.id.txtNuevaMto) TextView txtNuevaMto;
@@ -47,7 +45,6 @@ public class SubsidiosFragment extends BaseFragment {
     @Bind(R.id.txtTotalMto) TextView txtTotalMto;
     @Bind(R.id.txtTitleSubsidios) TextView txtTitleSubsidios;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +58,9 @@ public class SubsidiosFragment extends BaseFragment {
             datos = new DatosSubsidio(getActivity(), datosStorage);
             entidad = datos.consultaNacional();
             pickerEstados.setEnabled(true);
-        } else {
+        } /*else {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        }
+        } */
 
         loadFechasStorage();
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableRow1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dip" >
+
+    <TextView
+        android:id="@+id/txtEtiqueta"
+        android:layout_weight="1"
+        style="@style/Etiqueta" />
+
+    <TextView
+        android:id="@+id/txtValor"
+        android:layout_weight="1"
+        style="@style/EtiquetaCantidad" />
+</TableRow>

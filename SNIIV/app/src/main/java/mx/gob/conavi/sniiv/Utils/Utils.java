@@ -17,11 +17,12 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
+    private static final Locale locale = new Locale("es", "MX");
     public static final DecimalFormat decimalFormat = new DecimalFormat("###,###.#");
-    public static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-    public static final SimpleDateFormat fmtDMY = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-    public static final SimpleDateFormat fmtDiaMes = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
-    public static final SimpleDateFormat fmtMes = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+    public static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", locale);
+    public static final SimpleDateFormat fmtDMY = new SimpleDateFormat("dd/MM/yyyy", locale);
+    public static final SimpleDateFormat fmtDiaMes = new SimpleDateFormat("d MMMM yyyy", locale);
+    public static final SimpleDateFormat fmtMes = new SimpleDateFormat("MMMM yyyy", locale);
 
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();

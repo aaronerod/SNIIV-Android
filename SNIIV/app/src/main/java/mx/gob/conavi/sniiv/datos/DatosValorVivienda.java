@@ -8,17 +8,15 @@ import mx.gob.conavi.sniiv.sqlite.ValorViviendaRepository;
 /**
  * Created by admin on 07/08/15.
  */
-public class DatosValorVivienda {
-    private final ValorVivienda[] datos;
-    private final ValorViviendaRepository repository;
+public class DatosValorVivienda extends Datos<ValorVivienda> {
 
     public DatosValorVivienda(Context context, ValorVivienda[] datos) {
-        this.datos = datos;
+        super(datos);
         repository = new ValorViviendaRepository(context);
     }
 
     public ValorVivienda consultaNacional() {
-        return repository.consultaNacional();
+        return ((ValorViviendaRepository)repository).consultaNacional();
     }
 
     public ValorVivienda consultaEntidad(int entidad) {
