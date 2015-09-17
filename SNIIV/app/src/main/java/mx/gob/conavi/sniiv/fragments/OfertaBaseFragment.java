@@ -1,6 +1,5 @@
 package mx.gob.conavi.sniiv.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -73,7 +72,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         inflater.inflate(R.menu.menu_oferta, menu);
 
         MenuItem guardar = menu.findItem(R.id.action_guardar);
-        MenuItem grafica = menu.findItem(R.id.action_grafica);
+        MenuItem grafica = menu.findItem(R.id.action_datos);
 
         if (estado.contains(EstadoMenuOferta.NINGUNO)) {
             guardar.setVisible(false);
@@ -96,7 +95,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_grafica:
+            case R.id.action_datos:
                 muestraDialogo();
                 break;
             case R.id.action_guardar:
