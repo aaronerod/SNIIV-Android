@@ -5,12 +5,16 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 
@@ -43,33 +47,10 @@ public class FinanciamientosFragment extends BaseFragment {
 
     @Nullable @Bind(R.id.chart) PieChart mChart;
 
-    @Bind(R.id.txtNuevasCofinAcc) TextView txtNuevasCofinAcc;
-    @Bind(R.id.txtNuevasCofinMto) TextView txtNuevasCofinMto;
-    @Bind(R.id.txtNuevasCredAcc) TextView txtNuevasCredAcc;
-    @Bind(R.id.txtNuevasCredMto) TextView txtNuevasCredMto;
-
-    @Bind(R.id.txtUsadasCofinAcc) TextView txtUsadasCofinAcc;
-    @Bind(R.id.txtUsadasCofinMto) TextView txtUsadasCofinMto;
-    @Bind(R.id.txtUsadasCredAcc) TextView txtUsadasCredAcc;
-    @Bind(R.id.txtUsadasCredMto) TextView txtUsadasCredMto;
-
-    @Bind(R.id.txtMejoramientoCofinAcc) TextView txtMejoramientoCofinAcc;
-    @Bind(R.id.txtMejoramientoCofinMto) TextView txtMejoramientoCofinMto;
-    @Bind(R.id.txtMejoramientoCrediAcc) TextView txtMejoramientoCrediAcc;
-    @Bind(R.id.txtMejoramientoCrediMto) TextView txtMejoramientoCrediMto;
-
-    @Bind(R.id.txtOtrosAcc) TextView txtOtrosAcc;
-    @Bind(R.id.txtOtrosMto) TextView txtOtrosMto;
-
-    @Bind(R.id.txtTotalAcc) TextView txtTotalAcc;
-    @Bind(R.id.txtTotalMto) TextView txtTotalMto;
-
-    @Bind(R.id.txtTitleSubsidios) TextView txtTitleFinanciamientos;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         repository = new FinanciamientoRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
     }
@@ -115,7 +96,7 @@ public class FinanciamientosFragment extends BaseFragment {
         inicializaDatos();
 
         if (configuracion.equals("sw600dp")) {
-            creaTableLayout();
+            createFragment();
         }
 
         if (mChart != null) {
@@ -123,31 +104,13 @@ public class FinanciamientosFragment extends BaseFragment {
         }
     }
 
-    private void creaTableLayout() {
-        if(entidad != null) {
-            txtNuevasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getAcciones()));
-            txtNuevasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getMonto(),1000000));
-            txtNuevasCredAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCreditoIndividual().getAcciones()));
-            txtNuevasCredMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCreditoIndividual().getMonto(), 1000000));
-            txtUsadasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCofinanciamiento().getAcciones()));
-            txtUsadasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCofinanciamiento().getMonto(), 1000000));
-            txtUsadasCredAcc.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCreditoIndividual().getAcciones()));
-            txtUsadasCredMto.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCreditoIndividual().getMonto(), 1000000));
-            txtMejoramientoCofinAcc.setText(Utils.toStringDivide(entidad.getMejoramientos().getCofinanciamiento().getAcciones()));
-            txtMejoramientoCofinMto.setText(Utils.toStringDivide(entidad.getMejoramientos().getCofinanciamiento().getMonto(), 1000000));
-            txtMejoramientoCrediAcc.setText(Utils.toStringDivide(entidad.getMejoramientos().getCreditoIndividual().getAcciones()));
-            txtMejoramientoCrediMto.setText(Utils.toStringDivide(entidad.getMejoramientos().getCreditoIndividual().getMonto(), 1000000));
-            txtOtrosAcc.setText(Utils.toStringDivide(entidad.getOtrosProgramas().getCreditoIndividual().getAcciones()));
-            txtOtrosMto.setText(Utils.toStringDivide(entidad.getOtrosProgramas().getCreditoIndividual().getMonto(), 1000000));
-            txtTotalAcc.setText(Utils.toStringDivide(entidad.getTotal().getAcciones()));
-            txtTotalMto.setText(Utils.toStringDivide(entidad.getTotal().getMonto(), 1000000));
-        }
+    private void createFragment() {
+        DatosFinanciamientosDialogFragment fragment = new DatosFinanciamientosDialogFragment();
+        FragmentTransaction transaction = getChildFragmentManager()
+                .beginTransaction();
 
-        if (fechas != null) {
-            String pcu = String.format("%s (%s)", getString(R.string.title_financiamiento),
-                    Utils.formatoDiaMes(fechas.getFecha_finan()));
-            txtTitleFinanciamientos.setText(pcu);
-        }
+        transaction.add(R.id.datos, fragment)
+                .addToBackStack(null).commit();
     }
 
     protected void intentaInicializarGrafica() {
@@ -243,16 +206,65 @@ public class FinanciamientosFragment extends BaseFragment {
 
     protected void inicializaDatos() {
         if (fechas != null) {
-            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
-                    Utils.formatoMes(fechas.getFecha_vv()));
-            titulo =  avance;
+            String financiamiento = String.format("%s (%s)", getString(R.string.title_financiamiento),
+                    Utils.formatoMes(fechas.getFecha_finan()));
+            titulo =  financiamiento;
         } else {
-            titulo = getString(R.string.title_avance_obra);
+            titulo = getString(R.string.title_financiamiento);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_oferta, menu);
+
+        MenuItem guardar = menu.findItem(R.id.action_guardar);
+        MenuItem datos = menu.findItem(R.id.action_datos);
+
+        if (estado.contains(EstadoMenuOferta.NINGUNO)) {
+            guardar.setVisible(false);
+            datos.setVisible(false);
+        }
+
+        if (estado.contains(EstadoMenuOferta.GUARDAR)){
+            guardar.setVisible(true);
+        }
+
+        if (estado.contains(EstadoMenuOferta.DATOS)) {
+            datos.setVisible(true);
+        }
+
+        datos.setVisible(true); // debug
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_datos:
+                muestraDialogo();
+                break;
+            case R.id.action_guardar:
+                guardarChart();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void guardarChart() {
+        if (mChart != null) {
+            mChart.saveToGallery(getKey() + System.currentTimeMillis() + ".jpg", 100);
+            Toast.makeText(getActivity(),
+                    R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
         }
     }
 
     protected void muestraDialogo() {
-        DatosOfertaDialogFragment dialog = new DatosOfertaDialogFragment();
+        DatosFinanciamientosDialogFragment dialog = new DatosFinanciamientosDialogFragment();
         Bundle args = new Bundle();
         args.putString("Titulo", titulo);
         dialog.setArguments(args);

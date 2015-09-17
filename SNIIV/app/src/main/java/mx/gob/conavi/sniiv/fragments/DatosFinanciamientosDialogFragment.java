@@ -1,14 +1,18 @@
 package mx.gob.conavi.sniiv.fragments;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,28 +50,25 @@ public class DatosFinanciamientosDialogFragment extends DialogFragment {
     private String titulo;
     private ConsultaFinanciamiento entidad;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo);
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.dialog_financiamientos, container, false);
+        ButterKnife.bind(this, root);
+        return root;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_financiamientos, null);
-        ButterKnife.bind(this, view);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        //etiquetas = getArguments().getStringArray("Etiquetas");
-        //valores = getArguments().getStringArray("Valores");
-        titulo = getArguments().getString("Titulo");
-
-        inicializaDatos();
-
-        builder.setView(view)
-                .setNegativeButton(getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        DatosFinanciamientosDialogFragment.this.getDialog().cancel();
-                    }
-                });
-
-        return builder.create();
+        return dialog;
     }
 
     private void inicializaDatos() {
