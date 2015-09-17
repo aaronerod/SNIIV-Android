@@ -5,10 +5,10 @@ import java.util.EnumSet;
 /**
  * Created by octavio.munguia on 01/09/2015.
  */
-public enum EstadoMenuOferta {
+public enum EstadoMenu {
     DATOS,
     GUARDAR,
     NINGUNO;
 
-    public static final EnumSet<EstadoMenuOferta> AMBOS = EnumSet.of(DATOS, GUARDAR);
+    public static final EnumSet<EstadoMenu> AMBOS = EnumSet.of(DATOS, GUARDAR);
 }

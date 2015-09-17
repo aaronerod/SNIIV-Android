@@ -19,7 +19,7 @@ import java.util.EnumSet;
 
 import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
+import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 
 /**
  * Created by octavio.munguia on 01/09/2015.
@@ -30,7 +30,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
     @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
 
-    protected EnumSet<EstadoMenuOferta> estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
+    protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
     protected String[] etiquetas;
     protected String[] valores;
     protected String titulo;
@@ -74,16 +74,16 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         MenuItem guardar = menu.findItem(R.id.action_guardar);
         MenuItem grafica = menu.findItem(R.id.action_datos);
 
-        if (estado.contains(EstadoMenuOferta.NINGUNO)) {
+        if (estado.contains(EstadoMenu.NINGUNO)) {
             guardar.setVisible(false);
             grafica.setVisible(false);
         }
 
-        if (estado.contains(EstadoMenuOferta.GUARDAR)){
+        if (estado.contains(EstadoMenu.GUARDAR)){
             guardar.setVisible(true);
         }
 
-        if (estado.contains(EstadoMenuOferta.DATOS)) {
+        if (estado.contains(EstadoMenu.DATOS)) {
             grafica.setVisible(true);
         }
 
@@ -130,15 +130,15 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
 
     protected void intentaInicializarGrafica() {
         if (entidad == null) {
-            estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
+            estado = EnumSet.of(EstadoMenu.NINGUNO);
             return;
         }
 
         if (configuracion.equals("sw600dp")) {
             inicializaDatosChart();
-            estado = EnumSet.of(EstadoMenuOferta.GUARDAR);
+            estado = EnumSet.of(EstadoMenu.GUARDAR);
         } else {
-            estado = EstadoMenuOferta.AMBOS;
+            estado = EstadoMenu.AMBOS;
         }
     }
 
