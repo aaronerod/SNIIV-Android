@@ -1,10 +1,12 @@
 package mx.gob.conavi.sniiv.fragments;
 
 
+
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +31,7 @@ import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosFinanciamiento;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
 import mx.gob.conavi.sniiv.modelos.ConsultaFinanciamiento;
-import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
+import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 import mx.gob.conavi.sniiv.modelos.Financiamiento;
 import mx.gob.conavi.sniiv.parsing.ParseFinanciamiento;
 import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
@@ -41,7 +43,7 @@ public class FinanciamientosFragment extends BaseFragment {
     private DatosFinanciamiento datos;
     private ConsultaFinanciamiento entidad;
     private FinanciamientoRepository repository;
-    protected EnumSet<EstadoMenuOferta> estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
+    protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
     protected int idEntidad = 0;
     protected String titulo;
 
@@ -105,24 +107,27 @@ public class FinanciamientosFragment extends BaseFragment {
     }
 
     private void createFragment() {
-        DatosFinanciamientosDialogFragment fragment = new DatosFinanciamientosDialogFragment();
+        DatosFinanciamientosDialogFragment dialog =
+                DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+                        entidad.getMontos());
         FragmentTransaction transaction = getChildFragmentManager()
                 .beginTransaction();
 
-        transaction.add(R.id.datos, fragment)
+        transaction.add(R.id.datos, dialog)
                 .addToBackStack(null).commit();
     }
 
     protected void intentaInicializarGrafica() {
         if (entidad == null) {
-            estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
+            estado = EnumSet.of(EstadoMenu.NINGUNO);
             return;
         }
+
         if (configuracion.equals("sw600dp")) {
             inicializaDatosChart();
-            estado = EnumSet.of(EstadoMenuOferta.GUARDAR);
+            estado = EnumSet.of(EstadoMenu.GUARDAR);
         } else {
-            estado = EstadoMenuOferta.AMBOS;
+            estado = EstadoMenu.AMBOS;
         }
     }
 
@@ -221,20 +226,18 @@ public class FinanciamientosFragment extends BaseFragment {
         MenuItem guardar = menu.findItem(R.id.action_guardar);
         MenuItem datos = menu.findItem(R.id.action_datos);
 
-        if (estado.contains(EstadoMenuOferta.NINGUNO)) {
+        if (estado.contains(EstadoMenu.NINGUNO)) {
             guardar.setVisible(false);
             datos.setVisible(false);
         }
 
-        if (estado.contains(EstadoMenuOferta.GUARDAR)){
+        if (estado.contains(EstadoMenu.GUARDAR)){
             guardar.setVisible(true);
         }
 
-        if (estado.contains(EstadoMenuOferta.DATOS)) {
+        if (estado.contains(EstadoMenu.DATOS)) {
             datos.setVisible(true);
         }
-
-        datos.setVisible(true); // debug
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -264,10 +267,10 @@ public class FinanciamientosFragment extends BaseFragment {
     }
 
     protected void muestraDialogo() {
-        DatosFinanciamientosDialogFragment dialog = new DatosFinanciamientosDialogFragment();
-        Bundle args = new Bundle();
-        args.putString("Titulo", titulo);
-        dialog.setArguments(args);
+        DatosFinanciamientosDialogFragment dialog =
+                DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+                        entidad.getMontos());
+        dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.MyDialogTheme );
         dialog.show(getFragmentManager(), "DatosOfertaDialog");
     }
 }

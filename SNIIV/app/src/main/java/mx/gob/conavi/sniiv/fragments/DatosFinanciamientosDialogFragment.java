@@ -1,18 +1,16 @@
 package mx.gob.conavi.sniiv.fragments;
 
 import android.app.Dialog;
-
-import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,17 +46,28 @@ public class DatosFinanciamientosDialogFragment extends DialogFragment {
     @Bind(R.id.txtTitleSubsidios) TextView txtTitleFinanciamientos;
 
     private String titulo;
-    private ConsultaFinanciamiento entidad;
+    private long[] acciones;
+    private double[] montos;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo);
+    public static DatosFinanciamientosDialogFragment newInstance(String titulo, long[] acciones, double[] montos) {
+        DatosFinanciamientosDialogFragment frag = new DatosFinanciamientosDialogFragment();
+        Bundle args = new Bundle();
+
+        args.putString("titulo", titulo);
+        args.putLongArray("acciones", acciones);
+        args.putDoubleArray("montos", montos);
+        frag.setArguments(args);
+        return frag;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.dialog_financiamientos, container, false);
         ButterKnife.bind(this, root);
+        titulo = getArguments().getString("titulo");
+        acciones = getArguments().getLongArray("acciones");
+        montos = getArguments().getDoubleArray("montos");
+        inicializaDatos();
+
         return root;
     }
 
@@ -74,23 +83,23 @@ public class DatosFinanciamientosDialogFragment extends DialogFragment {
     private void inicializaDatos() {
         txtTitleFinanciamientos.setText(titulo);
 
-        if(entidad != null) {
-            txtNuevasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getAcciones()));
-            txtNuevasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getMonto(),1000000));
-            txtNuevasCredAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCreditoIndividual().getAcciones()));
-            txtNuevasCredMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCreditoIndividual().getMonto(), 1000000));
-            txtUsadasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCofinanciamiento().getAcciones()));
-            txtUsadasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCofinanciamiento().getMonto(), 1000000));
-            txtUsadasCredAcc.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCreditoIndividual().getAcciones()));
-            txtUsadasCredMto.setText(Utils.toStringDivide(entidad.getViviendasUsadas().getCreditoIndividual().getMonto(), 1000000));
-            txtMejoramientoCofinAcc.setText(Utils.toStringDivide(entidad.getMejoramientos().getCofinanciamiento().getAcciones()));
-            txtMejoramientoCofinMto.setText(Utils.toStringDivide(entidad.getMejoramientos().getCofinanciamiento().getMonto(), 1000000));
-            txtMejoramientoCrediAcc.setText(Utils.toStringDivide(entidad.getMejoramientos().getCreditoIndividual().getAcciones()));
-            txtMejoramientoCrediMto.setText(Utils.toStringDivide(entidad.getMejoramientos().getCreditoIndividual().getMonto(), 1000000));
-            txtOtrosAcc.setText(Utils.toStringDivide(entidad.getOtrosProgramas().getCreditoIndividual().getAcciones()));
-            txtOtrosMto.setText(Utils.toStringDivide(entidad.getOtrosProgramas().getCreditoIndividual().getMonto(), 1000000));
-            txtTotalAcc.setText(Utils.toStringDivide(entidad.getTotal().getAcciones()));
-            txtTotalMto.setText(Utils.toStringDivide(entidad.getTotal().getMonto(), 1000000));
+        if(acciones != null && montos != null) {
+            txtNuevasCofinAcc.setText(Utils.toStringDivide(acciones[0]));
+            txtNuevasCofinMto.setText(Utils.toStringDivide(montos[0],1000000));
+            txtNuevasCredAcc.setText(Utils.toStringDivide(acciones[1]));
+            txtNuevasCredMto.setText(Utils.toStringDivide(montos[1], 1000000));
+            txtUsadasCofinAcc.setText(Utils.toStringDivide(acciones[2]));
+            txtUsadasCofinMto.setText(Utils.toStringDivide(montos[2], 1000000));
+            txtUsadasCredAcc.setText(Utils.toStringDivide(acciones[3]));
+            txtUsadasCredMto.setText(Utils.toStringDivide(montos[3], 1000000));
+            txtMejoramientoCofinAcc.setText(Utils.toStringDivide(acciones[4]));
+            txtMejoramientoCofinMto.setText(Utils.toStringDivide(montos[4], 1000000));
+            txtMejoramientoCrediAcc.setText(Utils.toStringDivide(acciones[5]));
+            txtMejoramientoCrediMto.setText(Utils.toStringDivide(montos[5], 1000000));
+            txtOtrosAcc.setText(Utils.toStringDivide(acciones[6]));
+            txtOtrosMto.setText(Utils.toStringDivide(montos[6], 1000000));
+            txtTotalAcc.setText(Utils.toStringDivide(acciones[7]));
+            txtTotalMto.setText(Utils.toStringDivide(montos[7], 1000000));
         }
     }
 }
