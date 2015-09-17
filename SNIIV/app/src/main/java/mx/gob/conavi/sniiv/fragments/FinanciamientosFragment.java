@@ -12,12 +12,20 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosFinanciamiento;
+import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
 import mx.gob.conavi.sniiv.modelos.ConsultaFinanciamiento;
+import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
 import mx.gob.conavi.sniiv.modelos.Financiamiento;
 import mx.gob.conavi.sniiv.parsing.ParseFinanciamiento;
 import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
@@ -29,7 +37,11 @@ public class FinanciamientosFragment extends BaseFragment {
     private DatosFinanciamiento datos;
     private ConsultaFinanciamiento entidad;
     private FinanciamientoRepository repository;
+    protected EnumSet<EstadoMenuOferta> estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
+    protected int idEntidad = 0;
+    protected String titulo;
 
+    @Nullable @Bind(R.id.chart) PieChart mChart;
 
     @Bind(R.id.txtNuevasCofinAcc) TextView txtNuevasCofinAcc;
     @Bind(R.id.txtNuevasCofinMto) TextView txtNuevasCofinMto;
@@ -62,6 +74,13 @@ public class FinanciamientosFragment extends BaseFragment {
         valueChangeListener = configuraValueChangeListener();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        intentaInicializarGrafica();
+    }
+
     protected void loadFromStorage() {
         Financiamiento[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
@@ -89,6 +108,22 @@ public class FinanciamientosFragment extends BaseFragment {
     }
 
     protected void mostrarDatos() {
+        if (entidad == null) {
+            return;
+        }
+
+        inicializaDatos();
+
+        if (configuracion.equals("sw600dp")) {
+            creaTableLayout();
+        }
+
+        if (mChart != null) {
+            inicializaDatosChart();
+        }
+    }
+
+    private void creaTableLayout() {
         if(entidad != null) {
             txtNuevasCofinAcc.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getAcciones()));
             txtNuevasCofinMto.setText(Utils.toStringDivide(entidad.getViviendasNuevas().getCofinanciamiento().getMonto(),1000000));
@@ -115,6 +150,19 @@ public class FinanciamientosFragment extends BaseFragment {
         }
     }
 
+    protected void intentaInicializarGrafica() {
+        if (entidad == null) {
+            estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
+            return;
+        }
+        if (configuracion.equals("sw600dp")) {
+            inicializaDatosChart();
+            estado = EnumSet.of(EstadoMenuOferta.GUARDAR);
+        } else {
+            estado = EstadoMenuOferta.AMBOS;
+        }
+    }
+
     @Override
     protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
         return new NumberPicker.OnValueChangeListener() {
@@ -125,6 +173,8 @@ public class FinanciamientosFragment extends BaseFragment {
                 } else {
                     entidad = datos.consultaEntidad(newVal);
                 }
+
+                idEntidad = newVal;
 
                 mostrarDatos();
             }
@@ -179,5 +229,33 @@ public class FinanciamientosFragment extends BaseFragment {
         protected void onPostExecute(Void s) {
             habilitaPantalla();
         }
+    }
+
+    protected void inicializaDatosChart() {
+        ArrayList<String> pParties =  entidad.getParties();
+        long[] pValues = entidad.getValues();
+        String pCenterText = "Financiamientos";
+        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
+                idEntidad, getString(R.string.etiqueta_conavi));
+        OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), idEntidad, pParties);
+        mChart.setOnChartValueSelectedListener(listener);
+    }
+
+    protected void inicializaDatos() {
+        if (fechas != null) {
+            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
+                    Utils.formatoMes(fechas.getFecha_vv()));
+            titulo =  avance;
+        } else {
+            titulo = getString(R.string.title_avance_obra);
+        }
+    }
+
+    protected void muestraDialogo() {
+        DatosOfertaDialogFragment dialog = new DatosOfertaDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("Titulo", titulo);
+        dialog.setArguments(args);
+        dialog.show(getFragmentManager(), "DatosOfertaDialog");
     }
 }
