@@ -95,4 +95,30 @@ public class ConsultaFinanciamiento implements Modelo {
         parties.add("Otros Programas");
         return parties;
     }
+
+    public long[] getAcciones() {
+        return new long[] {
+            viviendasNuevas.getCofinanciamiento().getAcciones(),
+                viviendasNuevas.getCreditoIndividual().getAcciones(),
+                viviendasUsadas.getCofinanciamiento().getAcciones(),
+                viviendasUsadas.getCreditoIndividual().getAcciones(),
+                mejoramientos.getCofinanciamiento().getAcciones(),
+                mejoramientos.getCreditoIndividual().getAcciones(),
+                otrosProgramas.getCreditoIndividual().getAcciones(),
+                total.getAcciones()
+        };
+    }
+
+    public double[] getMontos() {
+        return new double[] {
+                viviendasNuevas.getCofinanciamiento().getMonto(),
+                viviendasNuevas.getCreditoIndividual().getMonto(),
+                viviendasUsadas.getCofinanciamiento().getMonto(),
+                viviendasUsadas.getCreditoIndividual().getMonto(),
+                mejoramientos.getCofinanciamiento().getMonto(),
+                mejoramientos.getCreditoIndividual().getMonto(),
+                otrosProgramas.getCreditoIndividual().getMonto(),
+                total.getMonto()
+        };
+    }
 }
