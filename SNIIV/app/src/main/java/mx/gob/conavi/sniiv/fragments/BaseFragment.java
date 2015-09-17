@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.modelos.Fechas;
-import mx.gob.conavi.sniiv.parsing.ParseFechas;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 import mx.gob.conavi.sniiv.sqlite.Repository;
 
