@@ -32,7 +32,6 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
 
     protected EnumSet<EstadoMenuOferta> estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
-    protected String configuracion;
     protected String[] etiquetas;
     protected String[] valores;
     protected String titulo;
@@ -41,7 +40,6 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        configuracion = getString(R.string.selected_configuration);
         setHasOptionsMenu(true);
     }
 
