@@ -1,8 +1,6 @@
 package mx.gob.conavi.sniiv.fragments;
 
 import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -16,7 +14,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.modelos.ConsultaFinanciamiento;
 
 /**
  * Created by octavio.munguia on 15/09/2015.

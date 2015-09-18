@@ -64,6 +64,19 @@ public class FinanciamientosFragment extends BaseFragment {
         intentaInicializarGrafica();
     }
 
+    @Override
+    protected void configuraPickerView() {
+        super.configuraPickerView();
+        pickerEstados.setOnScrollListener(new NumberPicker.OnScrollListener() {
+            @Override
+            public void onScrollStateChange(NumberPicker view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    mostrarDatos();
+                }
+            }
+        });
+    }
+
     protected void loadFromStorage() {
         Financiamiento[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
@@ -107,14 +120,23 @@ public class FinanciamientosFragment extends BaseFragment {
     }
 
     private void createFragment() {
-        DatosFinanciamientosDialogFragment dialog =
-                DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
-                        entidad.getMontos());
+        DatosFinanciamientosDialogFragment dialog = (DatosFinanciamientosDialogFragment) getChildFragmentManager()
+                .findFragmentById(R.id.datos);
+
         FragmentTransaction transaction = getChildFragmentManager()
                 .beginTransaction();
+        if (dialog == null) {
+            dialog = DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+                    entidad.getMontos());
+            transaction.add(R.id.datos, dialog);
+        } else {
+            dialog = DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+                    entidad.getMontos());
+            transaction.replace(R.id.datos, dialog);
+        }
 
-        transaction.add(R.id.datos, dialog)
-                .addToBackStack(null).commit();
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     protected void intentaInicializarGrafica() {
@@ -144,7 +166,7 @@ public class FinanciamientosFragment extends BaseFragment {
 
                 idEntidad = newVal;
 
-                mostrarDatos();
+                //mostrarDatos();
             }
         };
     }
