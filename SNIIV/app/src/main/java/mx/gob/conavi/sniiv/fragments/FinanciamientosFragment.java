@@ -1,7 +1,5 @@
 package mx.gob.conavi.sniiv.fragments;
 
-
-
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -64,19 +62,6 @@ public class FinanciamientosFragment extends BaseFragment {
         intentaInicializarGrafica();
     }
 
-    @Override
-    protected void configuraPickerView() {
-        super.configuraPickerView();
-        pickerEstados.setOnScrollListener(new NumberPicker.OnScrollListener() {
-            @Override
-            public void onScrollStateChange(NumberPicker view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    mostrarDatos();
-                }
-            }
-        });
-    }
-
     protected void loadFromStorage() {
         Financiamiento[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
@@ -123,19 +108,19 @@ public class FinanciamientosFragment extends BaseFragment {
         DatosFinanciamientosDialogFragment dialog = (DatosFinanciamientosDialogFragment) getChildFragmentManager()
                 .findFragmentById(R.id.datos);
 
-        FragmentTransaction transaction = getChildFragmentManager()
-                .beginTransaction();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+
         if (dialog == null) {
             dialog = DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
                     entidad.getMontos());
+
             transaction.add(R.id.datos, dialog);
+            transaction.addToBackStack(null);
         } else {
-            dialog = DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
-                    entidad.getMontos());
-            transaction.replace(R.id.datos, dialog);
+            dialog.actualizaDatos(titulo, entidad.getAcciones(), entidad.getMontos());
+            transaction.detach(dialog).attach(dialog);
         }
 
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -166,7 +151,7 @@ public class FinanciamientosFragment extends BaseFragment {
 
                 idEntidad = newVal;
 
-                //mostrarDatos();
+                mostrarDatos();
             }
         };
     }

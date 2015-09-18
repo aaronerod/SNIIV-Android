@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import mx.gob.conavi.sniiv.Utils.Utils;
  * Created by octavio.munguia on 15/09/2015.
  */
 public class DatosFinanciamientosDialogFragment extends DialogFragment {
+    public static final String TAG = "DatosDialogFragment";
     @Bind(R.id.txtNuevasCofinAcc) TextView txtNuevasCofinAcc;
     @Bind(R.id.txtNuevasCofinMto) TextView txtNuevasCofinMto;
     @Bind(R.id.txtNuevasCredAcc) TextView txtNuevasCredAcc;
@@ -58,6 +60,7 @@ public class DatosFinanciamientosDialogFragment extends DialogFragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.v(TAG, "onCreateView");
         View root = inflater.inflate(R.layout.dialog_financiamientos, container, false);
         ButterKnife.bind(this, root);
         titulo = getArguments().getString("titulo");
@@ -75,6 +78,12 @@ public class DatosFinanciamientosDialogFragment extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
+    }
+
+    public void actualizaDatos(String titulo, long[] acciones, double[] montos) {
+        getArguments().putString("titulo", titulo);
+        getArguments().putLongArray("acciones", acciones);
+        getArguments().putDoubleArray("montos", montos);
     }
 
     private void inicializaDatos() {
