@@ -119,7 +119,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
 
         inicializaDatos();
 
-        if (configuracion.equals("sw600dp") && tableLayout.getChildCount() == 0) {
+        if (configuracion.equals("sw600dp")) {
             creaTableLayout();
         }
 
@@ -143,6 +143,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     }
 
     protected void creaTableLayout() {
+        tableLayout.removeAllViews();
         for (int i = 0; i< etiquetas.length; i++) {
             TableRow row = (TableRow) LayoutInflater.from(getActivity()).inflate(R.layout.table_row, null);
             TextView etiqueta = (TextView) row.findViewById(R.id.txtEtiqueta);
