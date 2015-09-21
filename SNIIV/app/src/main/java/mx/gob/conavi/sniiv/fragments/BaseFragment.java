@@ -49,6 +49,8 @@ public abstract class BaseFragment<T> extends Fragment {
     public void onResume() {
         super.onResume();
 
+        pickerEstados.setValue(0);
+
         if (!isDataLoaded() && Utils.isNetworkAvailable(getActivity())) {
             getAsyncTask().execute();
             return;
