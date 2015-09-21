@@ -28,6 +28,7 @@ import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosFinanciamiento;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
+import mx.gob.conavi.sniiv.listeners.OnChartValueSelectedMillones;
 import mx.gob.conavi.sniiv.modelos.ConsultaFinanciamiento;
 import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 import mx.gob.conavi.sniiv.modelos.Financiamiento;
@@ -212,7 +213,7 @@ public class FinanciamientosFragment extends BaseFragment {
         String pCenterText = "Financiamientos";
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 idEntidad, getString(R.string.etiqueta_conavi));
-        OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), idEntidad, pParties);
+        OnChartValueSelectedMillones listener = new OnChartValueSelectedMillones(mChart, getKey(), idEntidad, pParties);
         mChart.setOnChartValueSelectedListener(listener);
     }
 

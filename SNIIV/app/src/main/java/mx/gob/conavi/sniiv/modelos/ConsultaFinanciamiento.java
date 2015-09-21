@@ -79,8 +79,6 @@ public class ConsultaFinanciamiento implements Modelo {
                 (long)(viviendasUsadas.getCofinanciamiento().getMonto() +
                         viviendasUsadas.getCreditoIndividual().getMonto()),
                 (long)(mejoramientos.getCofinanciamiento().getMonto() +
-                        mejoramientos.getCreditoIndividual().getMonto()),
-                (long)(mejoramientos.getCofinanciamiento().getMonto() +
                         mejoramientos.getCreditoIndividual().getMonto())
         };
         return l;
@@ -92,7 +90,6 @@ public class ConsultaFinanciamiento implements Modelo {
         parties.add("Viviendas Nuevas");
         parties.add("Viviendas Usadas");
         parties.add("Mejoramiento");
-        parties.add("Otros Programas");
         return parties;
     }
 
