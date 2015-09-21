@@ -9,14 +9,9 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.PercentFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.templates.ColorTemplate;
@@ -65,6 +60,7 @@ public class PieChartBuilder {
             sum += values[i];
         }
 
+        // Solo añade los valores mayores a 2%
         ArrayList<String> xVals = new ArrayList<>();
         for(int a = 0; a < values.length; a++) {
             double calculatedPercent = (values[a] / sum * 100);
@@ -95,6 +91,7 @@ public class PieChartBuilder {
 
         chart.highlightValues(null);
 
+        chart.notifyDataSetChanged();
         chart.invalidate();
     }
 }
