@@ -40,12 +40,12 @@ public class DatosOfertaDialogFragment extends DialogFragment{
 
         inicializaDatos();
 
-        builder.setView(view)
-                .setNegativeButton(getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
+        builder.setView(view);
+        /*        .setNegativeButton(getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         DatosOfertaDialogFragment.this.getDialog().cancel();
                     }
-                });
+                });*/
 
         return builder.create();
     }
