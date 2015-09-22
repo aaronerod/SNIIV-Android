@@ -183,7 +183,7 @@ public class SubsidiosFragment extends DemandaBaseFragment {
     protected void inicializaDatos() {
         if (fechas != null) {
             String subsidio = String.format("%s (%s)", getString(R.string.title_subsidios),
-                    Utils.formatoMes(fechas.getFecha_subs()));
+                    Utils.formatoDiaMes(fechas.getFecha_subs()));
             titulo =  subsidio;
         } else {
             titulo = getString(R.string.title_subsidios);

@@ -185,7 +185,7 @@ public class FinanciamientosFragment extends DemandaBaseFragment {
     protected void inicializaDatos() {
         if (fechas != null) {
             String financiamiento = String.format("%s (%s)", getString(R.string.title_financiamiento),
-                    Utils.formatoMes(fechas.getFecha_finan()));
+                    Utils.formatoDiaMes(fechas.getFecha_finan()));
             titulo =  financiamiento;
         } else {
             titulo = getString(R.string.title_financiamiento);
