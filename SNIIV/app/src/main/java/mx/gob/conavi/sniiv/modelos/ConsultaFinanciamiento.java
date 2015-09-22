@@ -1,9 +1,11 @@
 package mx.gob.conavi.sniiv.modelos;
 
+import java.util.ArrayList;
+
 /**
  * Created by admin on 10/08/15.
  */
-public class ConsultaFinanciamiento {
+public class ConsultaFinanciamiento implements Modelo {
     private FinanciamientoResultado viviendasNuevas;
     private FinanciamientoResultado viviendasUsadas;
     private FinanciamientoResultado mejoramientos;
@@ -67,5 +69,53 @@ public class ConsultaFinanciamiento {
                 ", otrosProgramas=" + otrosProgramas +
                 ", total=" + total +
                 '}';
+    }
+
+    @Override
+    public long[] getValues() {
+        long[] l=new long[]{
+                (long)(viviendasNuevas.getCofinanciamiento().getMonto() +
+                        viviendasNuevas.getCreditoIndividual().getMonto()),
+                (long)(viviendasUsadas.getCofinanciamiento().getMonto() +
+                        viviendasUsadas.getCreditoIndividual().getMonto()),
+                (long)(mejoramientos.getCofinanciamiento().getMonto() +
+                        mejoramientos.getCreditoIndividual().getMonto())
+        };
+        return l;
+    }
+
+    @Override
+    public ArrayList<String> getParties() {
+        ArrayList<String> parties = new ArrayList<>();
+        parties.add("Viviendas Nuevas");
+        parties.add("Viviendas Usadas");
+        parties.add("Mejoramiento");
+        return parties;
+    }
+
+    public long[] getAcciones() {
+        return new long[] {
+            viviendasNuevas.getCofinanciamiento().getAcciones(),
+                viviendasNuevas.getCreditoIndividual().getAcciones(),
+                viviendasUsadas.getCofinanciamiento().getAcciones(),
+                viviendasUsadas.getCreditoIndividual().getAcciones(),
+                mejoramientos.getCofinanciamiento().getAcciones(),
+                mejoramientos.getCreditoIndividual().getAcciones(),
+                otrosProgramas.getCreditoIndividual().getAcciones(),
+                total.getAcciones()
+        };
+    }
+
+    public double[] getMontos() {
+        return new double[] {
+                viviendasNuevas.getCofinanciamiento().getMonto(),
+                viviendasNuevas.getCreditoIndividual().getMonto(),
+                viviendasUsadas.getCofinanciamiento().getMonto(),
+                viviendasUsadas.getCreditoIndividual().getMonto(),
+                mejoramientos.getCofinanciamiento().getMonto(),
+                mejoramientos.getCreditoIndividual().getMonto(),
+                otrosProgramas.getCreditoIndividual().getMonto(),
+                total.getMonto()
+        };
     }
 }

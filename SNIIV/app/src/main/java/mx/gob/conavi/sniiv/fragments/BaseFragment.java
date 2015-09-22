@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.modelos.Fechas;
-import mx.gob.conavi.sniiv.parsing.ParseFechas;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 import mx.gob.conavi.sniiv.sqlite.Repository;
 
@@ -37,10 +35,12 @@ public abstract class BaseFragment<T> extends Fragment {
     protected Datos<T> datos;
     protected Repository<T> repository;
     protected static boolean errorShowed = false;
+    protected String configuracion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configuracion = getString(R.string.selected_configuration);
         fechasRepository = new FechasRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
     }
@@ -48,6 +48,8 @@ public abstract class BaseFragment<T> extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        pickerEstados.setValue(0);
 
         if (!isDataLoaded() && Utils.isNetworkAvailable(getActivity())) {
             getAsyncTask().execute();

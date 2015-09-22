@@ -1,9 +1,11 @@
 package mx.gob.conavi.sniiv.modelos;
 
+import java.util.ArrayList;
+
 /**
  * Created by admin on 07/08/15.
  */
-public class ConsultaSubsidio {
+public class ConsultaSubsidio implements Modelo {
     private Consulta nueva;
     private Consulta usada;
     private Consulta autoproduccion;
@@ -89,5 +91,50 @@ public class ConsultaSubsidio {
                 ", otros=" + otros +
                 ", total=" + total +
                 '}';
+    }
+
+    @Override
+    public long[] getValues() {
+        long[] l=new long[]{
+                (long)nueva.getMonto(),
+                (long)usada.getMonto() ,
+                (long)autoproduccion.getMonto(),
+                (long)mejoramiento.getMonto()
+        };
+        return l;
+    }
+
+    @Override
+    public ArrayList<String> getParties() {
+        ArrayList<String> parties = new ArrayList<>();
+        parties.add("Nueva");
+        parties.add("Usada");
+        parties.add("Autoproducción");
+        parties.add("Mejoramiento");
+        return parties;
+    }
+
+    public long[] getAcciones() {
+        return new long[] {
+                nueva.getAcciones(),
+                usada.getAcciones() ,
+                autoproduccion.getAcciones(),
+                mejoramiento.getAcciones(),
+                lotes.getAcciones(),
+                otros.getAcciones(),
+                total.getAcciones()
+        };
+    }
+
+    public double[] getMontos() {
+        return new double[] {
+                nueva.getMonto(),
+                usada.getMonto() ,
+                autoproduccion.getMonto(),
+                mejoramiento.getMonto(),
+                lotes.getMonto(),
+                otros.getMonto(),
+                total.getMonto()
+        };
     }
 }

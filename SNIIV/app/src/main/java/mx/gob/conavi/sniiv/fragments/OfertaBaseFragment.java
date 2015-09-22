@@ -1,6 +1,5 @@
 package mx.gob.conavi.sniiv.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import java.util.EnumSet;
 
 import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.modelos.EstadoMenuOferta;
+import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 
 /**
  * Created by octavio.munguia on 01/09/2015.
@@ -31,8 +30,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     @Nullable @Bind(R.id.tableLayout) TableLayout tableLayout;
     @Nullable @Bind(R.id.txtTitulo) TextView txtTitle;
 
-    protected EnumSet<EstadoMenuOferta> estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
-    protected String configuracion;
+    protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
     protected String[] etiquetas;
     protected String[] valores;
     protected String titulo;
@@ -41,7 +39,6 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        configuracion = getString(R.string.selected_configuration);
         setHasOptionsMenu(true);
     }
 
@@ -75,18 +72,18 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         inflater.inflate(R.menu.menu_oferta, menu);
 
         MenuItem guardar = menu.findItem(R.id.action_guardar);
-        MenuItem grafica = menu.findItem(R.id.action_grafica);
+        MenuItem grafica = menu.findItem(R.id.action_datos);
 
-        if (estado.contains(EstadoMenuOferta.NINGUNO)) {
+        if (estado.contains(EstadoMenu.NINGUNO)) {
             guardar.setVisible(false);
             grafica.setVisible(false);
         }
 
-        if (estado.contains(EstadoMenuOferta.GUARDAR)){
+        if (estado.contains(EstadoMenu.GUARDAR)){
             guardar.setVisible(true);
         }
 
-        if (estado.contains(EstadoMenuOferta.DATOS)) {
+        if (estado.contains(EstadoMenu.DATOS)) {
             grafica.setVisible(true);
         }
 
@@ -98,7 +95,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_grafica:
+            case R.id.action_datos:
                 muestraDialogo();
                 break;
             case R.id.action_guardar:
@@ -122,7 +119,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
 
         inicializaDatos();
 
-        if (configuracion.equals("sw600dp") && tableLayout.getChildCount() == 0) {
+        if (configuracion.equals("sw600dp")) {
             creaTableLayout();
         }
 
@@ -133,19 +130,20 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
 
     protected void intentaInicializarGrafica() {
         if (entidad == null) {
-            estado = EnumSet.of(EstadoMenuOferta.NINGUNO);
+            estado = EnumSet.of(EstadoMenu.NINGUNO);
             return;
         }
 
         if (configuracion.equals("sw600dp")) {
             inicializaDatosChart();
-            estado = EnumSet.of(EstadoMenuOferta.GUARDAR);
+            estado = EnumSet.of(EstadoMenu.GUARDAR);
         } else {
-            estado = EstadoMenuOferta.AMBOS;
+            estado = EstadoMenu.AMBOS;
         }
     }
 
     protected void creaTableLayout() {
+        tableLayout.removeAllViews();
         for (int i = 0; i< etiquetas.length; i++) {
             TableRow row = (TableRow) LayoutInflater.from(getActivity()).inflate(R.layout.table_row, null);
             TextView etiqueta = (TextView) row.findViewById(R.id.txtEtiqueta);

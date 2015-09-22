@@ -5,49 +5,37 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import java.util.ArrayList;
+import java.util.EnumSet;
+
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.DatosSubsidio;
+import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
+import mx.gob.conavi.sniiv.listeners.OnChartValueSelectedMillones;
 import mx.gob.conavi.sniiv.modelos.ConsultaSubsidio;
+import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 import mx.gob.conavi.sniiv.modelos.Subsidio;
 import mx.gob.conavi.sniiv.parsing.ParseSubsidio;
 import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 
-public class SubsidiosFragment extends BaseFragment {
+public class SubsidiosFragment extends DemandaBaseFragment {
     public static final String TAG = "SubsidiosFragment";
 
     private DatosSubsidio datos;
     private ConsultaSubsidio entidad;
     private SubsidioRepository repository;
 
-    @Bind(R.id.txtNuevaAcc) TextView txtNuevaAcc;
-    @Bind(R.id.txtNuevaMto) TextView txtNuevaMto;
-    @Bind(R.id.txtUsadaAcc) TextView txtUsadaAcc;
-    @Bind(R.id.txtUsadaMto) TextView txtUsadaMto;
-    @Bind(R.id.txtAutoproduccionAcc) TextView txtAutoproduccionAcc;
-    @Bind(R.id.txtAutoproduccionMto) TextView txtAutoproduccionMto;
-    @Bind(R.id.txtMejoramientoAcc) TextView txtMejoramientoAcc;
-    @Bind(R.id.txtMejoramientoMto) TextView txtMejoramientoMto;
-    @Bind(R.id.txtLotesAcc) TextView txtLotesAcc;
-    @Bind(R.id.txtLotesMto) TextView txtLotesMto;
-    @Bind(R.id.txtOtrosAcc) TextView txtOtrosAcc;
-    @Bind(R.id.txtOtrosMto) TextView txtOtrosMto;
-    @Bind(R.id.txtTotalAcc) TextView txtTotalAcc;
-    @Bind(R.id.txtTotalMto) TextView txtTotalMto;
-    @Bind(R.id.txtTitleSubsidios) TextView txtTitleSubsidios;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         repository = new SubsidioRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
     }
@@ -67,42 +55,53 @@ public class SubsidiosFragment extends BaseFragment {
         mostrarDatos();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_subsidios, container, false);
-        ButterKnife.bind(this, rootView);
-
-        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
-        configuraPickerView();
-        return rootView;
-    }
-
     protected void mostrarDatos() {
-        if(entidad != null) {
-            txtNuevaAcc.setText(Utils.toStringDivide(entidad.getNueva().getAcciones()));
-            txtNuevaMto.setText(Utils.toStringDivide(entidad.getNueva().getMonto(),1000000));
-            txtUsadaAcc.setText(Utils.toStringDivide(entidad.getUsada().getAcciones()));
-            txtUsadaMto.setText(Utils.toStringDivide(entidad.getUsada().getMonto(),1000000));
-            txtAutoproduccionAcc.setText(Utils.toStringDivide(entidad.getAutoproduccion().getAcciones()));
-            txtAutoproduccionMto.setText(Utils.toStringDivide(entidad.getAutoproduccion().getMonto(),1000000));
-            txtMejoramientoAcc.setText(Utils.toStringDivide(entidad.getMejoramiento().getAcciones()));
-            txtMejoramientoMto.setText(Utils.toStringDivide(entidad.getMejoramiento().getMonto(),1000000));
-
-            txtLotesAcc.setText(Utils.toStringDivide(entidad.getLotes().getAcciones()));
-            txtLotesMto.setText(Utils.toStringDivide(entidad.getLotes().getMonto(),1000000));
-
-            txtOtrosAcc.setText(Utils.toStringDivide(entidad.getOtros().getAcciones()));
-            txtOtrosMto.setText(Utils.toStringDivide(entidad.getOtros().getMonto(),1000000));
-
-            txtTotalAcc.setText(Utils.toStringDivide(entidad.getTotal().getAcciones()));
-            txtTotalMto.setText(Utils.toStringDivide(entidad.getTotal().getMonto(),1000000));
+        if (entidad == null) {
+            return;
         }
 
-        if (fechas != null) {
-            String pcu = String.format("%s (%s)", getString(R.string.title_subsidios),
-                    Utils.formatoDiaMes(fechas.getFecha_subs()));
-            txtTitleSubsidios.setText(pcu);
+        inicializaDatos();
+
+        if (configuracion.equals("sw600dp")) {
+            createFragment();
+        }
+
+        if (mChart != null) {
+            inicializaDatosChart();
+        }
+    }
+
+    protected void createFragment() {
+        DatosSubsidiosDialogFragment dialog = (DatosSubsidiosDialogFragment) getChildFragmentManager()
+                .findFragmentById(R.id.datos);
+
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+
+        if (dialog == null) {
+            dialog = DatosSubsidiosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+                    entidad.getMontos());
+
+            transaction.add(R.id.datos, dialog);
+            transaction.addToBackStack(null);
+        } else {
+            dialog.actualizaDatos(titulo, entidad.getAcciones(), entidad.getMontos());
+            transaction.detach(dialog).attach(dialog);
+        }
+
+        transaction.commit();
+    }
+
+    protected void intentaInicializarGrafica() {
+        if (entidad == null) {
+            estado = EnumSet.of(EstadoMenu.NINGUNO);
+            return;
+        }
+
+        if (configuracion.equals("sw600dp")) {
+            inicializaDatosChart();
+            estado = EnumSet.of(EstadoMenu.GUARDAR);
+        } else {
+            estado = EstadoMenu.AMBOS;
         }
     }
 
@@ -169,5 +168,33 @@ public class SubsidiosFragment extends BaseFragment {
         protected void onPostExecute(Void s) {
             habilitaPantalla();
         }
+    }
+
+    protected void inicializaDatosChart() {
+        ArrayList<String> pParties =  entidad.getParties();
+        long[] pValues = entidad.getValues();
+        String pCenterText = "Subsidios";
+        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
+                idEntidad, getString(R.string.etiqueta_conavi));
+        OnChartValueSelected listener = new OnChartValueSelectedMillones(mChart, getKey(), idEntidad, pParties);
+        mChart.setOnChartValueSelectedListener(listener);
+    }
+
+    protected void inicializaDatos() {
+        if (fechas != null) {
+            String subsidio = String.format("%s (%s)", getString(R.string.title_subsidios),
+                    Utils.formatoMes(fechas.getFecha_subs()));
+            titulo =  subsidio;
+        } else {
+            titulo = getString(R.string.title_subsidios);
+        }
+    }
+
+    protected void muestraDialogo() {
+        DatosSubsidiosDialogFragment dialog =
+                DatosSubsidiosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+                        entidad.getMontos());
+        dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.MyDialogTheme );
+        dialog.show(getFragmentManager(), "DatosSubsidiosDialog");
     }
 }

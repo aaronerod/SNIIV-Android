@@ -5,9 +5,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
 
@@ -15,10 +13,10 @@ import mx.gob.conavi.sniiv.Utils.Utils;
  * Created by octavio.munguia on 03/09/2015.
  */
 public class OnChartValueSelected implements OnChartValueSelectedListener {
-    private PieChart mChart;
-    private String descripcion;
-    private int pEstado;
-    private ArrayList<String> pParties;
+    protected PieChart mChart;
+    protected String descripcion;
+    protected int pEstado;
+    protected ArrayList<String> pParties;
 
     public OnChartValueSelected(PieChart mChart, String descripcion, int pEstado, ArrayList<String> pParties) {
         this.mChart = mChart;
@@ -29,7 +27,7 @@ public class OnChartValueSelected implements OnChartValueSelectedListener {
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado] + "\n" + NumberFormat.getNumberInstance(Locale.US).format((int) e.getVal()) +" " + pParties.get(e.getXIndex()));
+        mChart.setCenterText(descripcion + "\n " + Utils.listEdo[pEstado] + "\n" +  Utils.toString(e.getVal()) + " " + pParties.get(e.getXIndex()));
     }
 
     @Override
