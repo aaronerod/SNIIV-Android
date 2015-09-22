@@ -8,23 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.NumberPicker;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
@@ -37,18 +25,12 @@ import mx.gob.conavi.sniiv.modelos.Subsidio;
 import mx.gob.conavi.sniiv.parsing.ParseSubsidio;
 import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 
-public class SubsidiosFragment extends BaseFragment {
+public class SubsidiosFragment extends DemandaBaseFragment {
     public static final String TAG = "SubsidiosFragment";
 
     private DatosSubsidio datos;
     private ConsultaSubsidio entidad;
     private SubsidioRepository repository;
-
-    protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
-    protected int idEntidad = 0;
-    protected String titulo;
-
-    @Nullable @Bind(R.id.chart) PieChart mChart;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,13 +38,6 @@ public class SubsidiosFragment extends BaseFragment {
         setHasOptionsMenu(true);
         repository = new SubsidioRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        intentaInicializarGrafica();
     }
 
     protected void loadFromStorage() {
@@ -78,17 +53,6 @@ public class SubsidiosFragment extends BaseFragment {
         loadFechasStorage();
 
         mostrarDatos();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_subsidios, container, false);
-        ButterKnife.bind(this, rootView);
-
-        pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
-        configuraPickerView();
-        return rootView;
     }
 
     protected void mostrarDatos() {
@@ -107,7 +71,7 @@ public class SubsidiosFragment extends BaseFragment {
         }
     }
 
-    private void createFragment() {
+    protected void createFragment() {
         DatosSubsidiosDialogFragment dialog = (DatosSubsidiosDialogFragment) getChildFragmentManager()
                 .findFragmentById(R.id.datos);
 
@@ -207,7 +171,6 @@ public class SubsidiosFragment extends BaseFragment {
     }
 
     protected void inicializaDatosChart() {
-        //Todo: Revisar bug en conteo nacional vivienda nueva
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
         String pCenterText = "Subsidios";
@@ -224,53 +187,6 @@ public class SubsidiosFragment extends BaseFragment {
             titulo =  subsidio;
         } else {
             titulo = getString(R.string.title_subsidios);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_oferta, menu);
-
-        MenuItem guardar = menu.findItem(R.id.action_guardar);
-        MenuItem datos = menu.findItem(R.id.action_datos);
-
-        if (estado.contains(EstadoMenu.NINGUNO)) {
-            guardar.setVisible(false);
-            datos.setVisible(false);
-        }
-
-        if (estado.contains(EstadoMenu.GUARDAR)){
-            guardar.setVisible(true);
-        }
-
-        if (estado.contains(EstadoMenu.DATOS)) {
-            datos.setVisible(true);
-        }
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_datos:
-                muestraDialogo();
-                break;
-            case R.id.action_guardar:
-                guardarChart();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    protected void guardarChart() {
-        if (mChart != null) {
-            mChart.saveToGallery(getKey() + System.currentTimeMillis() + ".jpg", 100);
-            Toast.makeText(getActivity(),
-                    R.string.mensaje_imagen_guardada, Toast.LENGTH_SHORT).show();
         }
     }
 

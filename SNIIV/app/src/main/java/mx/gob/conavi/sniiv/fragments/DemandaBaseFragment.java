@@ -25,6 +25,7 @@ import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 /**
  * Created by octavio.munguia on 21/09/2015.
  */
+// TODO: refactorizar FinanciamientoFragment
 public abstract class DemandaBaseFragment extends BaseFragment {
     protected Repository repository;
     protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
@@ -33,14 +34,6 @@ public abstract class DemandaBaseFragment extends BaseFragment {
 
     @Nullable
     @Bind(R.id.chart) PieChart mChart;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        repository = new SubsidioRepository(getActivity());
-        valueChangeListener = configuraValueChangeListener();
-    }
 
     @Override
     public void onResume() {
@@ -55,25 +48,13 @@ public abstract class DemandaBaseFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_subsidios, container, false);
         ButterKnife.bind(this, rootView);
 
+        if (mChart != null) {
+            mChart.setNoDataText("Datos no disponibles");
+        }
+
         pickerEstados = (NumberPicker) rootView.findViewById(R.id.pckEstados);
         configuraPickerView();
         return rootView;
-    }
-
-    protected void mostrarDatos() {
-        if (entidad == null) {
-            return;
-        }
-
-        inicializaDatos();
-
-        if (configuracion.equals("sw600dp")) {
-            createFragment();
-        }
-
-        if (mChart != null) {
-            inicializaDatosChart();
-        }
     }
 
     protected abstract void createFragment();
