@@ -161,6 +161,7 @@ public class FinanciamientosFragment extends DemandaBaseFragment {
                 loadFechasStorage();
             } catch (Exception e) {
                 Log.v(TAG, "Error obteniendo datos");
+                errorRetrievingData = true;
             }
 
             return null;
@@ -168,7 +169,15 @@ public class FinanciamientosFragment extends DemandaBaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            habilitaPantalla();
+            Log.v(TAG, "onPostExecute: errorRetrievingData " + errorRetrievingData );
+            if (!errorRetrievingData) {
+                habilitaPantalla();
+                intentaInicializarGrafica();
+                getActivity().invalidateOptionsMenu();
+            } else {
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                progressDialog.dismiss();
+            }
         }
     }
 

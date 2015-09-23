@@ -31,6 +31,7 @@ public abstract class DemandaBaseFragment extends BaseFragment {
     protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
     protected int idEntidad = 0;
     protected String titulo;
+    protected boolean errorRetrievingData = false;
 
     @Nullable
     @Bind(R.id.chart) PieChart mChart;
