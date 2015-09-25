@@ -7,8 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import mx.gob.conavi.sniiv.parsing.ParseFechas;
 
@@ -17,13 +19,15 @@ import mx.gob.conavi.sniiv.parsing.ParseFechas;
  */
 public class EvolucionFinanciamiento {
     private static String TAG = ParseFechas.class.getSimpleName();
-    List<EvolucionFinanciamientoResultado> periodos;
+    public static final String TABLE = "EvolucionFinanciamiento";
+
+    Map<String, EvolucionFinanciamientoResultado> periodos;
 
     public EvolucionFinanciamiento() {
-        periodos = new ArrayList<>();
+        periodos = new HashMap<>();
     }
 
-    public EvolucionFinanciamiento(List<EvolucionFinanciamientoResultado> periodos) {
+    public EvolucionFinanciamiento(Map<String, EvolucionFinanciamientoResultado> periodos) {
         this.periodos = periodos;
     }
 
@@ -35,15 +39,15 @@ public class EvolucionFinanciamiento {
             String key = (String)keys.next();
             JSONArray array = (JSONArray) json.get(key);
             EvolucionFinanciamientoResultado efr = new EvolucionFinanciamientoResultado(array);
-            periodos.add(efr);
+            periodos.put(key, efr);
         }
     }
 
-    public List<EvolucionFinanciamientoResultado> getPeriodos() {
+    public Map<String, EvolucionFinanciamientoResultado> getPeriodos() {
         return periodos;
     }
 
-    public void setPeriodos(List<EvolucionFinanciamientoResultado> periodos) {
+    public void setPeriodos(Map<String, EvolucionFinanciamientoResultado> periodos) {
         this.periodos = periodos;
     }
 }
