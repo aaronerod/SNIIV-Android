@@ -11,18 +11,16 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.fragments.oferta.AvanceObraFragment;
 import mx.gob.conavi.sniiv.fragments.oferta.PCUFragment;
 import mx.gob.conavi.sniiv.fragments.oferta.TipoViviendaFragment;
-import mx.gob.conavi.sniiv.fragments.oferta.ValorViviendaFragment;
 
 /**
- * Created by admin on 04/08/15.
+ * Created by octavio.munguia on 28/09/2015.
  */
-public class OfertaPagerAdapter extends FragmentPagerAdapter {
-
+public class EvolucionFinanciamientoPageAdapter extends FragmentPagerAdapter {
     private final Context mContext;
 
-    public OfertaPagerAdapter(Context context, FragmentManager fm) {
+    public EvolucionFinanciamientoPageAdapter(Context mContext, FragmentManager fm) {
         super(fm);
-        mContext = context;
+        this.mContext = mContext;
     }
 
     @Override
@@ -31,7 +29,6 @@ public class OfertaPagerAdapter extends FragmentPagerAdapter {
             case 0: return new AvanceObraFragment();
             case 1: return new PCUFragment();
             case 2: return new TipoViviendaFragment();
-            case 3: return new ValorViviendaFragment();
         }
 
         return null;
@@ -39,7 +36,7 @@ public class OfertaPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
     @Override
@@ -47,25 +44,12 @@ public class OfertaPagerAdapter extends FragmentPagerAdapter {
         Locale l = Locale.getDefault();
         switch (position) {
             case 0:
-                return mContext.getString(R.string.title_avance_obra).toUpperCase(l);
+                return mContext.getString(R.string.title_financiamiento).toUpperCase(l);
             case 1:
-                return mContext.getString(R.string.title_pcu).toUpperCase(l);
+                return mContext.getString(R.string.title_subsidios).toUpperCase(l);
             case 2:
-                return mContext.getString(R.string.title_tipo_vivienda).toUpperCase(l);
-            case 3:
-                return mContext.getString(R.string.title_valor_vivienda).toUpperCase(l);
+                return mContext.getString(R.string.title_oferta_vivienda).toUpperCase(l);
         }
         return null;
     }
-
-    /*public int getIcon(int position) {
-        switch (position) {
-            case 0:
-                return R.drawable.ic_tab_inbox;
-            case 1:
-                return R.drawable.ic_tab_friends;
-
-            default: return 0;
-        }
-    }*/
 }

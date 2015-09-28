@@ -2,7 +2,7 @@ package mx.gob.conavi.sniiv.datos;
 
 import android.content.Context;
 
-import mx.gob.conavi.sniiv.modelos.PCU;
+import mx.gob.conavi.sniiv.modelos.oferta.PCU;
 import mx.gob.conavi.sniiv.sqlite.PCURepository;
 
 /**

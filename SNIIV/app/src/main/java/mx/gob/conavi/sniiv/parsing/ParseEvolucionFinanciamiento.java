@@ -46,7 +46,7 @@ public class ParseEvolucionFinanciamiento extends ParseBase<EvolucionFinanciamie
                         String key = (String)keys.next();
                         JSONArray array = (JSONArray) object.get(key);
                         JSONObject o = (JSONObject) array.get(0);
-
+                        Log.v(TAG, key);
                         EvolucionFinanciamiento ef = new EvolucionFinanciamiento(o);
                         datos.add(ef);
                     }

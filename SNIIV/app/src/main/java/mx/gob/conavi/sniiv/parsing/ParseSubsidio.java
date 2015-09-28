@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.modelos.Subsidio;
+import mx.gob.conavi.sniiv.modelos.demanda.Subsidio;
 
 /**
  * Created by admin on 10/08/15.

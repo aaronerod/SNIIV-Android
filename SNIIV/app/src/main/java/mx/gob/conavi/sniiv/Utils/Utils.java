@@ -32,6 +32,7 @@ public class Utils {
         listMenu.add("Reporte General");
         listMenu.add("Oferta");
         listMenu.add("Demanda");
+        listMenu.add("Evolución Mensual");
         populateEstados();
         populateEdos();
     }

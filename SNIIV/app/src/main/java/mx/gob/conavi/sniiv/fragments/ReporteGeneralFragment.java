@@ -6,25 +6,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.util.Date;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.Datos;
-import mx.gob.conavi.sniiv.datos.DatosAvanceObra;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
-import mx.gob.conavi.sniiv.modelos.Fechas;
+import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
+import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 
@@ -99,6 +90,9 @@ public class ReporteGeneralFragment extends BaseFragment<ReporteGeneral> {
         @Override
         protected Void doInBackground(Void... params) {
             try {
+                ParseEvolucionFinanciamiento ps = new ParseEvolucionFinanciamiento();
+                EvolucionFinanciamiento[] d = ps.getDatos();
+
                 ParseReporteGeneral parse = new ParseReporteGeneral();
                 ReporteGeneral[] reportes = parse.getDatos();
                 repository.deleteAll();

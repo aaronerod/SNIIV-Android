@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.modelos.Financiamiento;
+import mx.gob.conavi.sniiv.modelos.demanda.Financiamiento;
 
 /**
  * Created by admin on 10/08/15.

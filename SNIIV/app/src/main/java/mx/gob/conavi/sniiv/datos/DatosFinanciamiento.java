@@ -2,8 +2,8 @@ package mx.gob.conavi.sniiv.datos;
 
 import android.content.Context;
 
-import mx.gob.conavi.sniiv.modelos.ConsultaFinanciamiento;
-import mx.gob.conavi.sniiv.modelos.Financiamiento;
+import mx.gob.conavi.sniiv.modelos.demanda.ConsultaFinanciamiento;
+import mx.gob.conavi.sniiv.modelos.demanda.Financiamiento;
 import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
 
 /**

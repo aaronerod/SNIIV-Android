@@ -8,12 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
+import mx.gob.conavi.sniiv.modelos.oferta.AvanceObra;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
-import mx.gob.conavi.sniiv.modelos.PCU;
+import mx.gob.conavi.sniiv.modelos.oferta.PCU;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
-import mx.gob.conavi.sniiv.modelos.TipoVivienda;
-import mx.gob.conavi.sniiv.modelos.ValorVivienda;
+import mx.gob.conavi.sniiv.modelos.oferta.TipoVivienda;
+import mx.gob.conavi.sniiv.modelos.oferta.ValorVivienda;
 
 class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 

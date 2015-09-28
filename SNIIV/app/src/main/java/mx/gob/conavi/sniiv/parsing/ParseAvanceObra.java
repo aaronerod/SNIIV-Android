@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
+import mx.gob.conavi.sniiv.modelos.oferta.AvanceObra;
 
 /**
  * Created by admin on 06/08/15.

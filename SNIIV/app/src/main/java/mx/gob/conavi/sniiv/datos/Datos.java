@@ -1,9 +1,5 @@
 package mx.gob.conavi.sniiv.datos;
 
-import android.content.Context;
-
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
-import mx.gob.conavi.sniiv.sqlite.AvanceObraRepository;
 import mx.gob.conavi.sniiv.sqlite.Repository;
 
 /**

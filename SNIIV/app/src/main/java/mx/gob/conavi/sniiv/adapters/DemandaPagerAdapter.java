@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.Locale;
 
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.fragments.FinanciamientosFragment;
-import mx.gob.conavi.sniiv.fragments.SubsidiosFragment;
+import mx.gob.conavi.sniiv.fragments.demanda.FinanciamientosFragment;
+import mx.gob.conavi.sniiv.fragments.demanda.SubsidiosFragment;
 
 /**
  * Created by admin on 04/08/15.

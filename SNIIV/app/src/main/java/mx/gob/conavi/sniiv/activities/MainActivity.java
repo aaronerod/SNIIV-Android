@@ -1,6 +1,5 @@
 package mx.gob.conavi.sniiv.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,12 +14,8 @@ import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
-import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
 import mx.gob.conavi.sniiv.modelos.Fechas;
-import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
-import mx.gob.conavi.sniiv.parsing.ParseFechas;
 import mx.gob.conavi.sniiv.parsing.ParseFechasWeb;
-import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,15 +63,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeActivity(int position) {
-        Intent intent=null;
+        Intent intent = null;
 
         if (position == 0) {
-            intent=new Intent(this, ReporteGeneralActivity.class);
+            intent = new Intent(this, ReporteGeneralActivity.class);
         } else if (position == 1) {
-            intent=new Intent(this, OfertaActivity.class);
-        } else if (position == 2)
-        {
-            intent=new Intent(this, DemandaActivity.class);
+            intent = new Intent(this, OfertaActivity.class);
+        } else if (position == 2) {
+            intent = new Intent(this, DemandaActivity.class);
+        } else if (position == 3) {
+            intent = new Intent(this, EvolucionFinanciamientoActivity.class);
         }
 
         startActivity(intent);

@@ -2,8 +2,8 @@ package mx.gob.conavi.sniiv.datos;
 
 import android.content.Context;
 
-import mx.gob.conavi.sniiv.modelos.ConsultaSubsidio;
-import mx.gob.conavi.sniiv.modelos.Subsidio;
+import mx.gob.conavi.sniiv.modelos.demanda.ConsultaSubsidio;
+import mx.gob.conavi.sniiv.modelos.demanda.Subsidio;
 import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 
 /**
