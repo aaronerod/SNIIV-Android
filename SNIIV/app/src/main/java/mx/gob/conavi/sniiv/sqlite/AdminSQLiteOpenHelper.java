@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import mx.gob.conavi.sniiv.modelos.AvanceObra;
+import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.modelos.PCU;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
 import mx.gob.conavi.sniiv.modelos.TipoVivienda;
@@ -16,7 +17,11 @@ import mx.gob.conavi.sniiv.modelos.ValorVivienda;
 
 class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 6;
+    /**
+     * Indica la versión de la base de datos, se debe aumentar en 1
+     * cada que cambia su estructura.
+     */
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "sniiv.db";
 
     public AdminSQLiteOpenHelper(Context context ) {
@@ -142,6 +147,15 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         insertOrganismo(db);
         insertDestino(db);
         insertAgrupacion(db);
+
+        db.execSQL(
+                "CREATE TABLE EvolucionFinanciamiento(" +
+                        "cve_ent INTEGER" +
+                        ",anio TEXT" +
+                        ",mes TEXT" +
+                        ",acciones INTEGER" +
+                        ",monto REAL" +
+                        ")");
     }
 
     @Override
@@ -164,6 +178,7 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS Destino");
         db.execSQL("DROP TABLE IF EXISTS Agrupacion");
         db.execSQL("DROP TABLE IF EXISTS Financiamiento");
+        db.execSQL("DROP TABLE IF EXISTS " + EvolucionFinanciamiento.TABLE);
         init(db);
     }
 
