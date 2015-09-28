@@ -10,12 +10,10 @@ import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
  * Created by admin on 10/08/15.
  */
 public class DatosFinanciamiento {
-    private Financiamiento[] datos;
     private final FinanciamientoRepository repository;
     private ConsultaFinanciamiento nacional;
 
     public DatosFinanciamiento(Context context, Financiamiento[] datos) {
-        this.datos = datos;
         repository = new FinanciamientoRepository(context);
     }
 

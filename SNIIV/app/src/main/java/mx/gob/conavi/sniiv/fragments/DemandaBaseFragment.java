@@ -25,7 +25,6 @@ import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 /**
  * Created by octavio.munguia on 21/09/2015.
  */
-// TODO: refactorizar FinanciamientoFragment
 public abstract class DemandaBaseFragment extends BaseFragment {
     protected Repository repository;
     protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
