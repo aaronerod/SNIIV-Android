@@ -9,16 +9,14 @@ import mx.gob.conavi.sniiv.sqlite.EvolucionFinanciamientoRepository;
  * Created by octavio.munguia on 24/09/2015.
  */
 public class DatosEvolucionFinanciamiento extends Datos<EvolucionFinanciamiento> {
-    EvolucionFinanciamiento[] datos;
-
     public DatosEvolucionFinanciamiento(Context context, EvolucionFinanciamiento[] datos) {
         super(datos);
-        repository = new EvolucionFinanciamientoRepository(context);
+        // repository = new EvolucionFinanciamientoRepository(context);
     }
 
     @Override
     public EvolucionFinanciamiento consultaNacional() {
-        return ((EvolucionFinanciamientoRepository)repository).consultaNacional();
+        return consultaEntidad(0);
     }
 
     @Override
