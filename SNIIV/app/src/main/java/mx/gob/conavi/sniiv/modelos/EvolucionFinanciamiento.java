@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import mx.gob.conavi.sniiv.parsing.ParseFechas;
 
@@ -24,7 +26,7 @@ public class EvolucionFinanciamiento {
     Map<String, EvolucionFinanciamientoResultado> periodos;
 
     public EvolucionFinanciamiento() {
-        periodos = new HashMap<>();
+        periodos = new TreeMap<>();
     }
 
     public EvolucionFinanciamiento(Map<String, EvolucionFinanciamientoResultado> periodos) {
@@ -49,5 +51,26 @@ public class EvolucionFinanciamiento {
 
     public void setPeriodos(Map<String, EvolucionFinanciamientoResultado> periodos) {
         this.periodos = periodos;
+    }
+
+    public ArrayList<String> getParties() {
+        ArrayList<String> parties = new ArrayList<>(periodos.keySet());
+        return parties;
+    }
+
+    public ArrayList<double[]> getYValuesAcciones() {
+        ArrayList<double[]> yValues = new ArrayList<>();
+        for (String key : periodos.keySet()) {
+            EvolucionFinanciamientoResultado resultado = periodos.get(key);
+            Consulta[] meses = resultado.getMeses();
+            double[] values = new double[meses.length];
+            for (int i = 0; i < meses.length; i++) {
+                if (meses[i] == null) {break;}
+                values[i] = meses[i].getAcciones();
+            }
+            yValues.add(values);
+        }
+
+        return yValues;
     }
 }
