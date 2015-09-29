@@ -90,9 +90,6 @@ public class ReporteGeneralFragment extends BaseFragment<ReporteGeneral> {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                ParseEvolucionFinanciamiento ps = new ParseEvolucionFinanciamiento();
-                EvolucionFinanciamiento[] d = ps.getDatos();
-
                 ParseReporteGeneral parse = new ParseReporteGeneral();
                 ReporteGeneral[] reportes = parse.getDatos();
                 repository.deleteAll();
