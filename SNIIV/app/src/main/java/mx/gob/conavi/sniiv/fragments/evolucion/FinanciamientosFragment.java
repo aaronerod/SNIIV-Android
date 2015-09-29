@@ -1,8 +1,10 @@
 package mx.gob.conavi.sniiv.fragments.evolucion;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +12,20 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 
 import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.charts.LineChartBuilder;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosEvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.fragments.BaseFragment;
 import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
+import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
+import mx.gob.conavi.sniiv.sqlite.EvolucionFinanciamientoRepository;
 
 /**
  * Created by octavio.munguia on 28/09/2015.
@@ -30,11 +36,13 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
     protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
     protected String titulo;
+    private boolean errorRetrievingData = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        repository = new EvolucionFinanciamientoRepository(getActivity());
     }
 
     @Override
@@ -103,7 +111,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
     @Override
     protected AsyncTask<Void, Void, Void> getAsyncTask() {
-        return null;
+        return new AsyncTaskRunner();
     }
 
     @Override
@@ -116,16 +124,55 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         return fechas != null ? fechas.getFecha_finan() : null;
     }
 
+    protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getActivity(),
+                    null, getString(R.string.mensaje_espera));
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                ParseEvolucionFinanciamiento parse = new ParseEvolucionFinanciamiento();
+                EvolucionFinanciamiento[] datosParse = parse.getDatos();
+                repository.deleteAll();
+                repository.saveAll(datosParse);
+
+                datos = new DatosEvolucionFinanciamiento(getActivity(), datosParse);
+                entidad = datos.consultaNacional();
+
+                // saveTimeLastUpdated(getFechaActualizacion().getTime());
+
+                loadFechasStorage();
+            } catch (Exception e) {
+                Log.v(TAG, "Error obteniendo datos");
+                errorRetrievingData = true;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void s) {
+            if (!errorRetrievingData) {
+                habilitaPantalla();
+                intentaInicializarGrafica();
+                getActivity().invalidateOptionsMenu();
+            } else {
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                progressDialog.dismiss();
+            }
+        }
+    }
+
     // TODO: crear LineChartBuilder
     protected void inicializaDatosChart() {
-        /* ArrayList<String> pParties =  entidad.getParties();
-        long[] pValues = entidad.getValues();
-        String pCenterText = "Avance Obra";
-        int pEstado = entidad.getCve_ent();
-        PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
-                pEstado, getString(R.string.etiqueta_conavi));
-        OnChartValueSelected listener = new OnChartValueSelected(mChart, getKey(), pEstado, pParties);
-        mChart.setOnChartValueSelectedListener(listener); */
+        int[] xValues = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        ArrayList<String> pParties =  entidad.getParties();
+        ArrayList<double[]> yValues = entidad.getYValuesAcciones();
+        String pCenterText = "Financiamientos Otorgados";
+        LineChartBuilder.buildPieChart(mChart, pParties, xValues, yValues, pCenterText);
     }
 
     protected void inicializaDatos() {
