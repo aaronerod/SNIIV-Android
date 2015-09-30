@@ -6,102 +6,84 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import org.apache.commons.lang3.NotImplementedException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import mx.gob.conavi.sniiv.modelos.Consulta;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamientoResultado;
+import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
 
 /**
  * Created by octavio.munguia on 25/09/2015.
  */
 public class EvolucionFinanciamientoRepository implements Repository<EvolucionFinanciamiento> {
     private static final String TAG = FinanciamientoRepository.class.getSimpleName();
-    private final AdminSQLiteOpenHelper dbHelper;
+    public static final String FILE_NAME = "evolucionFinanciamiento";
+    private Context context;
 
     public EvolucionFinanciamientoRepository(Context context) {
-        dbHelper = new AdminSQLiteOpenHelper(context);
+        this.context = context;
     }
 
     @Override
     public void saveAll(EvolucionFinanciamiento[] elementos) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        throw new NotImplementedException("saveAll");
+    }
 
-        int entidad = 0;
-        for (EvolucionFinanciamiento elemento : elementos) {
-            Map<String, EvolucionFinanciamientoResultado> periodos = elemento.getPeriodos();
-            for (Map.Entry<String, EvolucionFinanciamientoResultado> entry : periodos.entrySet()) {
-                String anio = entry.getKey();
-                EvolucionFinanciamientoResultado resultado = entry.getValue();
-                Consulta[] meses = resultado.getMeses();
+    public void saveAll(JSONObject object) {
+        String filename = FILE_NAME;
+        String string = object.toString();
+        FileOutputStream outputStream;
 
-                for (int i = 0; i < meses.length; i++) {
-                    if (meses[i] == null) {break;}
-                    ContentValues values = new ContentValues();
-                    values.put("cve_ent", entidad);
-                    values.put("anio", anio);
-                    values.put("mes", i);
-                    values.put("acciones", meses[i].getAcciones());
-                    values.put("monto", meses[i].getMonto());
-                    db.insert(EvolucionFinanciamiento.TABLE, null, values);
-                }
-            }
-
-            entidad++;
+        try {
+            outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(string.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        db.close();
     }
 
     @Override
     public void deleteAll() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete(EvolucionFinanciamiento.TABLE, null, null);
-        db.close();
+        context.deleteFile("evolucionFinanciamiento");
     }
 
-    // TODO: Generar modelo a partir de la consulta
-    @Override
     public EvolucionFinanciamiento[] loadFromStorage() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery =  "SELECT * FROM " + EvolucionFinanciamiento.TABLE +
-                " ORDER BY cve_ent, anio, mes";
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.v(TAG, "loadFromStorage");
+        try {
+            BufferedReader input;
+            input = new BufferedReader(new InputStreamReader(
+                    context.openFileInput("evolucionFinanciamiento")));
+            StringBuffer content = new StringBuffer();
+            char[] buffer = new char[1024];
+            int num;
+            while ((num = input.read(buffer)) > 0) {
+                content.append(buffer, 0, num);
+            }
 
-        if (cursor.moveToFirst()) {
-            do {
-                int cve_ent = cursor.getInt(cursor.getColumnIndex("cve_ent"));
-                int anio = cursor.getInt(cursor.getColumnIndex("anio"));
-                int mes = cursor.getInt((cursor.getColumnIndex("mes")));
-                long acciones = cursor.getLong(cursor.getColumnIndex("acciones"));
-                double monto = cursor.getDouble(cursor.getColumnIndex("monto"));
-
-                Log.v(TAG + " loadFromStorage", String.format("%2d %4d %2d %10d %12.2f", cve_ent, anio, mes, acciones, monto));
-            } while (cursor.moveToNext());
+            JSONObject object = new JSONObject(content.toString());
+            return ParseEvolucionFinanciamiento.createModel(object);
+        } catch (JSONException jse) {
+            Log.v(TAG, "Error parseando json EvolucionFinanciamiento");
+        } catch (IOException e) {
+            Log.v(TAG, "Error leyendo del archivo");
         }
 
         return new EvolucionFinanciamiento[0];
     }
-
-   /* // TODO: Completar consulta
-    public EvolucionFinanciamiento consultaNacional() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery =  "SELECT * FROM " + EvolucionFinanciamiento.TABLE +
-                " WHERE cve_ent = 0";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                int cve_ent = cursor.getInt(cursor.getColumnIndex("cve_ent"));
-                int anio = cursor.getInt(cursor.getColumnIndex("anio"));
-                int mes = cursor.getInt((cursor.getColumnIndex("mes")));
-                long acciones = cursor.getLong(cursor.getColumnIndex("acciones"));
-                double monto = cursor.getDouble(cursor.getColumnIndex("monto"));
-
-                Log.v(TAG, String.format("%2d %4d %2d %10d %12.2f", cve_ent, anio, mes, acciones, monto));
-            } while (cursor.moveToNext());
-        }
-
-        return new EvolucionFinanciamiento();
-    }*/
 }
