@@ -24,6 +24,7 @@ import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
  */
 public class ParseEvolucionFinanciamiento extends ParseBase<EvolucionFinanciamiento[]> {
     private static String TAG = ParseEvolucionFinanciamiento.class.getSimpleName();
+    private JSONObject object;
 
     public ParseEvolucionFinanciamiento() {
         super("get_finan_evol_acum");
@@ -42,26 +43,42 @@ public class ParseEvolucionFinanciamiento extends ParseBase<EvolucionFinanciamie
                 Element element = (Element) nNode;
                 String jsonString = Utils.getTextContent(element, "get_finan_evol_acumResult");
                 try {
-                    JSONObject object = new JSONObject(jsonString.trim());
-                    Iterator<?> keys = object.keys();
-
-                    Set<String> setKeys = new TreeSet<>();
-                    while( keys.hasNext() ) {
-                        setKeys.add((String)keys.next());
-                    }
-
-                    for(String key : setKeys) {
-                        JSONArray array = (JSONArray) object.get(key);
-                        JSONObject o = (JSONObject) array.get(0);
-                        EvolucionFinanciamiento ef = new EvolucionFinanciamiento(o);
-                        datos.add(ef);
-                    }
+                    object = new JSONObject(jsonString.trim());
+                    return createModel(object);
                 } catch (JSONException jse) {
                     Log.v(TAG, "Error parseando json EvolucionFinanciamiento");
                 }
             }
         }
 
+        return new EvolucionFinanciamiento[0];
+    }
+
+    public static EvolucionFinanciamiento[] createModel(JSONObject object) throws JSONException {
+        ArrayList<EvolucionFinanciamiento> datos = new ArrayList<>();
+        Iterator<?> keys = object.keys();
+
+        Set<String> setKeys = new TreeSet<>();
+        while( keys.hasNext() ) {
+            setKeys.add((String)keys.next());
+        }
+
+        for(String key : setKeys) {
+            JSONArray array = (JSONArray) object.get(key);
+            JSONObject o = (JSONObject) array.get(0);
+            EvolucionFinanciamiento ef = new EvolucionFinanciamiento(o);
+            datos.add(ef);
+        }
+
         return datos.toArray(new EvolucionFinanciamiento[0]);
     }
+
+    public JSONObject getJsonObject() {
+        return object;
+    }
+
+    public void setJsonObject(JSONObject jsonObject) {
+        this.object = jsonObject;
+    }
+
 }
