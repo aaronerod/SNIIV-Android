@@ -11,7 +11,6 @@ import mx.gob.conavi.sniiv.sqlite.EvolucionFinanciamientoRepository;
 public class DatosEvolucionFinanciamiento extends Datos<EvolucionFinanciamiento> {
     public DatosEvolucionFinanciamiento(Context context, EvolucionFinanciamiento[] datos) {
         super(datos);
-        // repository = new EvolucionFinanciamientoRepository(context);
     }
 
     @Override

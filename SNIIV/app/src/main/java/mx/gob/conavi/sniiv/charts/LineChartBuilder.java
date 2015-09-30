@@ -1,8 +1,5 @@
 package mx.gob.conavi.sniiv.charts;
 
-import android.graphics.Color;
-import android.util.Log;
-
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -11,12 +8,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.XAxisValueFormatter;
-import com.github.mikephil.charting.formatter.YAxisValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 
+import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.templates.ColorTemplate;
 
 /**
@@ -32,39 +27,22 @@ public class LineChartBuilder {
 
     private static void initChart(LineChart mChart, String description) {
         mChart.setDescription(description);
+        mChart.setDescriptionTextSize(18f);
         mChart.setNoDataTextDescription("You need to provide data for the mChart.");
         mChart.setHighlightEnabled(true);
 
         XAxis xAxis = mChart.getXAxis();
-        XAxisValueFormatter formatter = new XAxisValueFormatter() {
-            @Override
-            public String getXValue(String original, int index, ViewPortHandler viewPortHandler) {
-                String[] months = {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul",
-                        "Ago", "Sep", "Oct", "Nov", "Dic"};
-
-                return months[index];
-            }
-        };
-        xAxis.setValueFormatter(formatter);
+        xAxis.setValueFormatter(MonthsXValueFormatter.getInstance());
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines();
         leftAxis.setStartAtZero(true);
-
-        YAxisValueFormatter yFormatter = new YAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, YAxis yAxis) {
-                return ((int)value / 1000) + "";
-            }
-        };
-        leftAxis.setValueFormatter(yFormatter);
-
-        //leftAxis.enableGridDashedLine(10f, 10f, 0f);
-        //leftAxis.setDrawLimitLinesBehindData(true);
+        leftAxis.setValueFormatter(AmountYValueFormatter.getInstance(Utils.THOUSAND));
 
         mChart.getAxisRight().setEnabled(false);
 
         mChart.animateX(2500, Easing.EasingOption.EaseInSine);
+
         Legend l = mChart.getLegend();
         l.setForm(Legend.LegendForm.SQUARE);
     }
@@ -75,8 +53,7 @@ public class LineChartBuilder {
             xVals.add(xValues[i] + "");
         }
 
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
         double maxValue = 0;
         for (int i = 0; i < yValues.size(); i++) {
             ArrayList<Entry> yVals = new ArrayList<Entry>();
@@ -90,21 +67,20 @@ public class LineChartBuilder {
                 }
             }
 
-            LineDataSet set1 = new LineDataSet(yVals, parties.get(i));
-            set1.setLineWidth(2.5f);
-            set1.setCircleSize(2.1f);
-            set1.setDrawCircleHole(false);
-            set1.setDrawValues(false);
-            set1.setDrawCubic(true);
+            LineDataSet set = new LineDataSet(yVals, parties.get(i));
+            set.setLineWidth(2.5f);
+            set.setCircleSize(2.1f);
+            set.setDrawCircleHole(false);
+            set.setDrawValues(false);
+            set.setDrawCubic(true);
 
-            set1.setColor(ColorTemplate.EVOLUCION_COLORS[i]);
-            set1.setCircleColor(ColorTemplate.EVOLUCION_COLORS[i]);
+            set.setColor(ColorTemplate.EVOLUCION_COLORS[i]);
+            set.setCircleColor(ColorTemplate.EVOLUCION_COLORS[i]);
 
-            dataSets.add(set1);
+            dataSets.add(set);
         }
 
-        mChart.getAxisLeft().setAxisMaxValue((float)maxValue);
-        Log.i("maxValue: ", maxValue + "");
+        mChart.getAxisLeft().setAxisMaxValue((float) maxValue);
 
         LineData data = new LineData(xVals, dataSets);
         mChart.setData(data);
