@@ -23,6 +23,8 @@ public class Utils {
     public static final SimpleDateFormat fmtDMY = new SimpleDateFormat("dd/MM/yyyy", locale);
     public static final SimpleDateFormat fmtDiaMes = new SimpleDateFormat("d MMMM yyyy", locale);
     public static final SimpleDateFormat fmtMes = new SimpleDateFormat("MMMM yyyy", locale);
+    public static final int THOUSAND = 1000;
+    public static final int MILLION = 1000_000;
 
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();
