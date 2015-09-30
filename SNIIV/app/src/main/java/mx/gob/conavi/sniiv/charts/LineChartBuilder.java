@@ -64,7 +64,7 @@ public class LineChartBuilder {
 
         mChart.getAxisRight().setEnabled(false);
 
-        mChart.animateX(2500, Easing.EasingOption.EaseInCubic);
+        mChart.animateX(2500, Easing.EasingOption.EaseInSine);
         Legend l = mChart.getLegend();
         l.setForm(Legend.LegendForm.SQUARE);
     }
@@ -91,7 +91,7 @@ public class LineChartBuilder {
             }
 
             LineDataSet set1 = new LineDataSet(yVals, parties.get(i));
-            set1.setLineWidth(2f);
+            set1.setLineWidth(2.5f);
             set1.setCircleSize(2.1f);
             set1.setDrawCircleHole(false);
             set1.setDrawValues(false);
