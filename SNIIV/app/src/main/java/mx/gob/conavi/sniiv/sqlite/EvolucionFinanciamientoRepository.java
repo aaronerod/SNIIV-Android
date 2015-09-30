@@ -36,6 +36,7 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
                 Consulta[] meses = resultado.getMeses();
 
                 for (int i = 0; i < meses.length; i++) {
+                    if (meses[i] == null) {break;}
                     ContentValues values = new ContentValues();
                     values.put("cve_ent", entidad);
                     values.put("anio", anio);
@@ -44,9 +45,9 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
                     values.put("monto", meses[i].getMonto());
                     db.insert(EvolucionFinanciamiento.TABLE, null, values);
                 }
-
-                entidad++;
             }
+
+            entidad++;
         }
 
         db.close();
@@ -75,14 +76,14 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
                 long acciones = cursor.getLong(cursor.getColumnIndex("acciones"));
                 double monto = cursor.getDouble(cursor.getColumnIndex("monto"));
 
-                Log.v(TAG, String.format("%2d %4d %2d %10d %12.2f", cve_ent, anio, mes, acciones, monto));
+                Log.v(TAG + " loadFromStorage", String.format("%2d %4d %2d %10d %12.2f", cve_ent, anio, mes, acciones, monto));
             } while (cursor.moveToNext());
         }
 
         return new EvolucionFinanciamiento[0];
     }
 
-    // TODO: Completar consulta
+   /* // TODO: Completar consulta
     public EvolucionFinanciamiento consultaNacional() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT * FROM " + EvolucionFinanciamiento.TABLE +
@@ -102,5 +103,5 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
         }
 
         return new EvolucionFinanciamiento();
-    }
+    }*/
 }
