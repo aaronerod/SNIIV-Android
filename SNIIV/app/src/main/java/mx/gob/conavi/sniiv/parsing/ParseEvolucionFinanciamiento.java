@@ -11,7 +11,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
@@ -20,7 +23,7 @@ import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
  * Created by octavio.munguia on 24/09/2015.
  */
 public class ParseEvolucionFinanciamiento extends ParseBase<EvolucionFinanciamiento[]> {
-    private static String TAG = ParseFechas.class.getSimpleName();
+    private static String TAG = ParseEvolucionFinanciamiento.class.getSimpleName();
 
     public ParseEvolucionFinanciamiento() {
         super("get_finan_evol_acum");
@@ -42,11 +45,14 @@ public class ParseEvolucionFinanciamiento extends ParseBase<EvolucionFinanciamie
                     JSONObject object = new JSONObject(jsonString.trim());
                     Iterator<?> keys = object.keys();
 
+                    Set<String> setKeys = new TreeSet<>();
                     while( keys.hasNext() ) {
-                        String key = (String)keys.next();
+                        setKeys.add((String)keys.next());
+                    }
+
+                    for(String key : setKeys) {
                         JSONArray array = (JSONArray) object.get(key);
                         JSONObject o = (JSONObject) array.get(0);
-                        Log.v(TAG, key);
                         EvolucionFinanciamiento ef = new EvolucionFinanciamiento(o);
                         datos.add(ef);
                     }
