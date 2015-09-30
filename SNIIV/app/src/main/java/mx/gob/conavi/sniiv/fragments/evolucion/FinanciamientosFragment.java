@@ -19,6 +19,7 @@ import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.LineChartBuilder;
+import mx.gob.conavi.sniiv.charts.MyMarkerView;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosEvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.fragments.BaseFragment;
@@ -137,12 +138,12 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
                 ParseEvolucionFinanciamiento parse = new ParseEvolucionFinanciamiento();
                 EvolucionFinanciamiento[] datosParse = parse.getDatos();
                 repository.deleteAll();
-                repository.saveAll(datosParse);
+                ((EvolucionFinanciamientoRepository)repository).saveAll(parse.getJsonObject());
 
                 datos = new DatosEvolucionFinanciamiento(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
-                // saveTimeLastUpdated(getFechaActualizacion().getTime());
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
                 loadFechasStorage();
             } catch (Exception e) {
@@ -171,17 +172,19 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         int[] xValues = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         ArrayList<String> pParties =  entidad.getParties();
         ArrayList<double[]> yValues = entidad.getYValuesAcciones();
-        String pCenterText = "Financiamientos Otorgados";
-        LineChartBuilder.buildPieChart(mChart, pParties, xValues, yValues, pCenterText);
+        String description = titulo;
+        MyMarkerView mv = new MyMarkerView(getActivity(), R.layout.custom_marker_view);
+        mChart.setMarkerView(mv);
+        LineChartBuilder.buildPieChart(mChart, pParties, xValues, yValues, description);
     }
 
     protected void inicializaDatos() {
         if (fechas != null) {
-            String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
-                    Utils.formatoMes(fechas.getFecha_vv()));
-            titulo =  avance;
+            String finan = String.format("%s (%s)", "Financiamientos Otorgados",
+                    Utils.formatoDiaMes(fechas.getFecha_finan()));
+            titulo =  finan;
         } else {
-            titulo = getString(R.string.title_avance_obra);
+            titulo = "Financiamientos Otorgados";
         }
     }
 
