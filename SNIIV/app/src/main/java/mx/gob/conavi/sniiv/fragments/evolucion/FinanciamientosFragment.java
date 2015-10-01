@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -38,19 +41,13 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
     protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
     protected String titulo;
     private boolean errorRetrievingData = false;
+    private boolean showAcciones = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         repository = new EvolucionFinanciamientoRepository(getActivity());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        intentaInicializarGrafica();
     }
 
     @Override
@@ -70,6 +67,30 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         return view;
     }
 
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_evolucion, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_toggle:
+                showAcciones = !showAcciones;
+                inicializaDatosChart();
+                break;
+            case R.id.action_guardar:
+                guardarChart();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_evolucion;
@@ -85,20 +106,6 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
         if (mChart != null) {
             inicializaDatosChart();
-        }
-    }
-
-    protected void intentaInicializarGrafica() {
-        if (entidad == null) {
-            estado = EnumSet.of(EstadoMenu.NINGUNO);
-            return;
-        }
-
-        if (configuracion.equals("sw600dp")) {
-            //inicializaDatosChart();
-            estado = EnumSet.of(EstadoMenu.GUARDAR);
-        } else {
-            estado = EstadoMenu.AMBOS;
         }
     }
 
@@ -157,8 +164,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         @Override
         protected void onPostExecute(Void s) {
             if (!errorRetrievingData) {
-                habilitaPantalla();
-                intentaInicializarGrafica();
+                habilitaPantalla();;
                 getActivity().invalidateOptionsMenu();
             } else {
                 Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
@@ -167,15 +173,15 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         }
     }
 
-    // TODO: crear LineChartBuilder
+    // TODO: Refactorizar LineChartBuilder
     protected void inicializaDatosChart() {
         int[] xValues = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         ArrayList<String> pParties =  entidad.getParties();
-        ArrayList<double[]> yValues = entidad.getYValuesAcciones();
+        ArrayList<double[]> yValues = getValues();
         String description = titulo;
         MyMarkerView mv = new MyMarkerView(getActivity(), R.layout.custom_marker_view);
         mChart.setMarkerView(mv);
-        LineChartBuilder.buildPieChart(mChart, pParties, xValues, yValues, description);
+        LineChartBuilder.buildLineChart(mChart, pParties, xValues, yValues, description);
     }
 
     protected void inicializaDatos() {
@@ -190,5 +196,13 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
     protected Datos<EvolucionFinanciamiento> getDatos(EvolucionFinanciamiento[] datos) {
         return new DatosEvolucionFinanciamiento(getActivity(), datos);
+    }
+
+    private ArrayList<double[]> getValues() {
+        if (showAcciones) {
+            return entidad.getYValuesAcciones();
+        } else {
+            return entidad.getYValuesMontos();
+        }
     }
 }
