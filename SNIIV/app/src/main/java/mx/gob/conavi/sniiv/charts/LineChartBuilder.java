@@ -1,5 +1,8 @@
 package mx.gob.conavi.sniiv.charts;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -11,6 +14,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 
+import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.templates.ColorTemplate;
 
@@ -18,26 +22,51 @@ import mx.gob.conavi.sniiv.templates.ColorTemplate;
  * Created by octavio.munguia on 29/09/2015.
  */
 public class LineChartBuilder {
+    private static float descriptionTextSize;
+    private static float lineWidth;
+    private static float circleSize;
+    private static float legendTextSize;
+    private static final float TABLE_SIZE_FACTOR = 1.7f;
 
-    public static void buildPieChart(LineChart chart, ArrayList<String> parties, int[] xValues,
-                                     ArrayList<double[]> yValues, String description){
-        initChart(chart, description);
-        setData(chart, xValues, yValues, parties);
+    public static void buildLineChart(Context context, LineChart chart, LineChartConfig config) {
+        initSettings(config.getConfiguracion());
+        initChart(context, chart, config.getDescription(), config.isShowAcciones());
+        setData(chart, config.getxValues(), config.getyValues(), config.getParties());
     }
 
-    private static void initChart(LineChart mChart, String description) {
+    private  static void initSettings(String configuration) {
+        descriptionTextSize = 12f;
+        lineWidth = 2.4f;
+        circleSize = 2.0f;
+        legendTextSize = 13.3f;
+
+        if ("sw600dp".equals(configuration)) {
+            float factor = TABLE_SIZE_FACTOR;
+            descriptionTextSize *= factor;
+            lineWidth *= factor;
+            circleSize *= factor;
+            legendTextSize *= factor;
+        }
+    }
+
+    private static void initChart(Context context, LineChart mChart, String description, boolean showAcciones) {
         mChart.setDescription(description);
-        mChart.setDescriptionTextSize(18f);
+        mChart.setDescriptionTextSize(descriptionTextSize);
         mChart.setNoDataTextDescription("You need to provide data for the mChart.");
         mChart.setHighlightEnabled(true);
 
+        MyMarkerView mv = new MyMarkerView(context, R.layout.custom_marker_view);
+        mChart.setMarkerView(mv);
+
         XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(MonthsXValueFormatter.getInstance());
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines();
         leftAxis.setStartAtZero(true);
-        leftAxis.setValueFormatter(AmountYValueFormatter.getInstance(Utils.THOUSAND));
+        int amountDivide = showAcciones ? Utils.THOUSAND : Utils.MILLION;
+        leftAxis.setValueFormatter(AmountYValueFormatter.getInstance(amountDivide));
 
         mChart.getAxisRight().setEnabled(false);
 
@@ -45,6 +74,7 @@ public class LineChartBuilder {
 
         Legend l = mChart.getLegend();
         l.setForm(Legend.LegendForm.SQUARE);
+        l.setTextSize(legendTextSize);
     }
 
     private static void setData(LineChart mChart, int[] xValues, ArrayList<double[]> yValues, ArrayList<String> parties) {
@@ -68,8 +98,8 @@ public class LineChartBuilder {
             }
 
             LineDataSet set = new LineDataSet(yVals, parties.get(i));
-            set.setLineWidth(2.5f);
-            set.setCircleSize(2.1f);
+            set.setLineWidth(lineWidth);
+            set.setCircleSize(circleSize);
             set.setDrawCircleHole(false);
             set.setDrawValues(false);
             set.setDrawCubic(true);
@@ -84,6 +114,8 @@ public class LineChartBuilder {
 
         LineData data = new LineData(xVals, dataSets);
         mChart.setData(data);
+        mChart.invalidate();
+        mChart.notifyDataSetChanged();
     }
 }
 
