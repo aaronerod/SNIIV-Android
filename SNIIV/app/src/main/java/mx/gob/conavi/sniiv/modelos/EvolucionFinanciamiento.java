@@ -73,4 +73,20 @@ public class EvolucionFinanciamiento {
 
         return yValues;
     }
+
+    public ArrayList<double[]> getYValuesMontos() {
+        ArrayList<double[]> yValues = new ArrayList<>();
+        for (String key : periodos.keySet()) {
+            EvolucionFinanciamientoResultado resultado = periodos.get(key);
+            Consulta[] meses = resultado.getMeses();
+            double[] values = new double[meses.length];
+            for (int i = 0; i < meses.length; i++) {
+                if (meses[i] == null) {break;}
+                values[i] = meses[i].getMonto();
+            }
+            yValues.add(values);
+        }
+
+        return yValues;
+    }
 }
