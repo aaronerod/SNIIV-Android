@@ -62,4 +62,5 @@
     <string name="etiqueta_porcentaje">Porcentaje</string>
     <string name="title_datos">Datos</string>
     <string name="selected_configuration">standard</string>
+    <string name="etiqueta_monto">Montos</string>
 </resources>

@@ -35,7 +35,6 @@ public class ParseEvolucionFinanciamiento extends ParseBase<EvolucionFinanciamie
         Document xml = getDocument();
 
         NodeList nList = xml.getElementsByTagName("get_finan_evol_acumResponse");
-        ArrayList<EvolucionFinanciamiento> datos = new ArrayList<>();
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
 
