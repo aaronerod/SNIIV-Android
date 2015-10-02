@@ -22,6 +22,7 @@ import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.LineChartBuilder;
+import mx.gob.conavi.sniiv.charts.LineChartConfig;
 import mx.gob.conavi.sniiv.charts.MyMarkerView;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosEvolucionFinanciamiento;
@@ -42,6 +43,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
     protected String titulo;
     private boolean errorRetrievingData = false;
     private boolean showAcciones = true;
+    private Menu menu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_evolucion, menu);
-
+        this.menu = menu;
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -81,6 +83,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         switch (id) {
             case R.id.action_toggle:
                 showAcciones = !showAcciones;
+                setOptionTitle();
                 inicializaDatosChart();
                 break;
             case R.id.action_guardar:
@@ -176,17 +179,19 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
     // TODO: Refactorizar LineChartBuilder
     protected void inicializaDatosChart() {
         int[] xValues = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-        ArrayList<String> pParties =  entidad.getParties();
-        ArrayList<double[]> yValues = getValues();
-        String description = titulo;
-        MyMarkerView mv = new MyMarkerView(getActivity(), R.layout.custom_marker_view);
-        mChart.setMarkerView(mv);
-        LineChartBuilder.buildLineChart(mChart, pParties, xValues, yValues, description);
+        LineChartConfig config = new LineChartConfig();
+        config.setParties(entidad.getParties());
+        config.setyValues(getValues());
+        config.setDescription(titulo);
+        config.setxValues(xValues);
+        config.setShowAcciones(showAcciones);
+        config.setConfiguracion(configuracion);
+        LineChartBuilder.buildLineChart(getActivity(), mChart,config);
     }
 
     protected void inicializaDatos() {
         if (fechas != null) {
-            String finan = String.format("%s (%s)", "Financiamientos Otorgados",
+            String finan = String.format("%s\n(%s)", "Financiamientos Otorgados",
                     Utils.formatoDiaMes(fechas.getFecha_finan()));
             titulo =  finan;
         } else {
@@ -203,6 +208,15 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
             return entidad.getYValuesAcciones();
         } else {
             return entidad.getYValuesMontos();
+        }
+    }
+
+    private void setOptionTitle() {
+        MenuItem item = menu.findItem(R.id.action_toggle);
+        if (showAcciones){
+            item.setTitle("MONTOS");
+        } else {
+            item.setTitle("ACCIONES");
         }
     }
 }
