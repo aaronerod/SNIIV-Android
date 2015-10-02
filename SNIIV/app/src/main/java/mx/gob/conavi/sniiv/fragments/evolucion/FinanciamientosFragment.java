@@ -39,7 +39,6 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
     private static final String TAG = FinanciamientosFragment.class.getSimpleName();
     @Nullable  @Bind(R.id.chart) LineChart mChart;
 
-    protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);
     protected String titulo;
     private boolean errorRetrievingData = false;
     private boolean showAcciones = true;
@@ -176,7 +175,6 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         }
     }
 
-    // TODO: Refactorizar LineChartBuilder
     protected void inicializaDatosChart() {
         int[] xValues = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         LineChartConfig config = new LineChartConfig();
