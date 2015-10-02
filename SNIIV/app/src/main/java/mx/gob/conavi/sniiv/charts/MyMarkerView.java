@@ -8,8 +8,10 @@ import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.utils.Utils;
+
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.Utils.Utils;
+
 /**
  * Custom implementation of the MarkerView.
  * 
@@ -29,15 +31,11 @@ public class MyMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-
         if (e instanceof CandleEntry) {
-
             CandleEntry ce = (CandleEntry) e;
-
-            tvContent.setText("" + Utils.formatNumber(ce.getHigh(), 0, true));
+            tvContent.setText(Utils.toString(ce.getHigh()));
         } else {
-
-            tvContent.setText("" + Utils.formatNumber(e.getVal(), 0, true));
+            tvContent.setText(Utils.toString(e.getVal()));
         }
     }
 
