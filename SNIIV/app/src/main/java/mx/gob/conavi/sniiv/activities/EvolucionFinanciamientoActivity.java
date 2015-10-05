@@ -7,7 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.adapters.EvolucionFinanciamientoPageAdapter;
+import mx.gob.conavi.sniiv.adapters.EvolucionPageAdapter;
 
 /**
  * Created by octavio.munguia on 28/09/2015.
@@ -30,8 +30,8 @@ public class EvolucionFinanciamientoActivity extends AppCompatActivity implement
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        EvolucionFinanciamientoPageAdapter mEvolucionPagerAdapter =
-                new EvolucionFinanciamientoPageAdapter(this, getSupportFragmentManager());
+        EvolucionPageAdapter mEvolucionPagerAdapter =
+                new EvolucionPageAdapter(this, getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

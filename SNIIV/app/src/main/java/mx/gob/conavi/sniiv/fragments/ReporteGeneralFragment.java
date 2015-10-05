@@ -13,9 +13,7 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosReporteGeneral;
-import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
-import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.parsing.ParseReporteGeneral;
 import mx.gob.conavi.sniiv.sqlite.ReporteGeneralRepository;
 

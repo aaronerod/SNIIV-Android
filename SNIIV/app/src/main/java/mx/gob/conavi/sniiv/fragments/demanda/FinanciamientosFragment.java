@@ -25,7 +25,7 @@ import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
 
 
 public class FinanciamientosFragment extends DemandaBaseFragment {
-    public static final String TAG = "FinanciamientosFragment";
+    public static final String TAG = "EvolucionFragment";
 
     private DatosFinanciamiento datos;
     private ConsultaFinanciamiento entidad;

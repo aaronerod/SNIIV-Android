@@ -1,40 +1,35 @@
 package mx.gob.conavi.sniiv.modelos;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import mx.gob.conavi.sniiv.parsing.ParseFechas;
 
 /**
  * Created by octavio.munguia on 24/09/2015.
  */
-public class EvolucionFinanciamiento {
+public class Evolucion {
     private static String TAG = ParseFechas.class.getSimpleName();
     public static final String FINANCIAMIENTO = "Financiamientos";
     public static final String SUBSIDIO = "Subsidios";
 
     Map<String, EvolucionFinanciamientoResultado> periodos;
 
-    public EvolucionFinanciamiento() {
+    public Evolucion() {
         periodos = new TreeMap<>();
     }
 
-    public EvolucionFinanciamiento(Map<String, EvolucionFinanciamientoResultado> periodos) {
+    public Evolucion(Map<String, EvolucionFinanciamientoResultado> periodos) {
         this.periodos = periodos;
     }
 
-    public EvolucionFinanciamiento(JSONObject json) throws JSONException {
+    public Evolucion(JSONObject json) throws JSONException {
         this();
 
         Iterator<?> keys = json.keys();

@@ -63,4 +63,5 @@
     <string name="title_datos">Datos</string>
     <string name="selected_configuration">standard</string>
     <string name="etiqueta_monto">Montos</string>
+    <string name="mensaje_datos_no_disponibles">Datos no disponibles</string>
 </resources>

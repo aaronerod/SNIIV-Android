@@ -62,7 +62,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         etiquetas = getEtiquetas();
 
         if (mChart != null) {
-            mChart.setNoDataText("Datos no disponibles");
+            mChart.setNoDataText(getString(R.string.mensaje_datos_no_disponibles));
         }
 
         return view;

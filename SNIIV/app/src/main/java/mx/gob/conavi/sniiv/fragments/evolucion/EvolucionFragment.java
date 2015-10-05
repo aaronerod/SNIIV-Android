@@ -23,18 +23,18 @@ import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.LineChartBuilder;
 import mx.gob.conavi.sniiv.charts.LineChartConfig;
 import mx.gob.conavi.sniiv.datos.Datos;
-import mx.gob.conavi.sniiv.datos.DatosEvolucionFinanciamiento;
+import mx.gob.conavi.sniiv.datos.DatosEvolucion;
 import mx.gob.conavi.sniiv.fragments.BaseFragment;
-import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
+import mx.gob.conavi.sniiv.modelos.Evolucion;
 import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
-import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
-import mx.gob.conavi.sniiv.sqlite.EvolucionFinanciamientoRepository;
+import mx.gob.conavi.sniiv.parsing.ParseEvolucion;
+import mx.gob.conavi.sniiv.sqlite.EvolucionRepository;
 
 /**
  * Created by octavio.munguia on 28/09/2015.
  */
-public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamiento> {
-    private static final String TAG = FinanciamientosFragment.class.getSimpleName();
+public class EvolucionFragment extends BaseFragment<Evolucion> {
+    private static final String TAG = EvolucionFragment.class.getSimpleName();
     @Nullable  @Bind(R.id.chart) LineChart mChart;
 
     protected String titulo;
@@ -43,8 +43,8 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
     private Menu menu;
     private EvolucionTipo tipo;
 
-    public static FinanciamientosFragment newInstance(EvolucionTipo tipo) {
-        FinanciamientosFragment myFragment = new FinanciamientosFragment();
+    public static EvolucionFragment newInstance(EvolucionTipo tipo) {
+        EvolucionFragment myFragment = new EvolucionFragment();
 
         Bundle args = new Bundle();
         args.putInt("tipo", tipo.getValue());
@@ -58,7 +58,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         tipo = EvolucionTipo.fromInteger(getArguments().getInt("tipo", 0));
-        repository = new EvolucionFinanciamientoRepository(getActivity(), tipo);
+        repository = new EvolucionRepository(getActivity(), tipo);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         if (mChart != null) {
-            mChart.setNoDataText("Datos no disponibles");
+            mChart.setNoDataText(getString(R.string.mensaje_datos_no_disponibles));
         }
 
         return view;
@@ -138,9 +138,9 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
     protected String getKey() {
         switch (tipo) {
             case FINANCIAMIENTOS:
-                return EvolucionFinanciamiento.FINANCIAMIENTO;
+                return Evolucion.FINANCIAMIENTO;
             case SUBSIDIOS:
-                return EvolucionFinanciamiento.SUBSIDIO;
+                return Evolucion.SUBSIDIO;
             default:
                 return "";
         }
@@ -148,7 +148,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
     @Override
     protected String getFechaAsString() {
-        return fechas != null ? fechas.getFecha_finan() : null;
+        return fechas != null ? getFecha() : null;
     }
 
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
@@ -161,12 +161,12 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                ParseEvolucionFinanciamiento parse = new ParseEvolucionFinanciamiento(tipo);
-                EvolucionFinanciamiento[] datosParse = parse.getDatos();
+                ParseEvolucion parse = new ParseEvolucion(tipo);
+                Evolucion[] datosParse = parse.getDatos();
                 repository.deleteAll();
-                ((EvolucionFinanciamientoRepository)repository).saveAll(parse.getJsonObject());
+                ((EvolucionRepository)repository).saveAll(parse.getJsonObject());
 
-                datos = new DatosEvolucionFinanciamiento(getActivity(), datosParse);
+                datos = new DatosEvolucion(datosParse);
                 entidad = datos.consultaNacional();
 
                 saveTimeLastUpdated(getFechaActualizacion().getTime());
@@ -214,8 +214,8 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         }
     }
 
-    protected Datos<EvolucionFinanciamiento> getDatos(EvolucionFinanciamiento[] datos) {
-        return new DatosEvolucionFinanciamiento(getActivity(), datos);
+    protected Datos<Evolucion> getDatos(Evolucion[] datos) {
+        return new DatosEvolucion(datos);
     }
 
     private ArrayList<double[]> getValues() {
