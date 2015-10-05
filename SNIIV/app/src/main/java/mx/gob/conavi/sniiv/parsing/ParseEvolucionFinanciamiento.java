@@ -18,6 +18,7 @@ import java.util.TreeSet;
 
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
+import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
 
 /**
  * Created by octavio.munguia on 24/09/2015.
@@ -25,22 +26,39 @@ import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
 public class ParseEvolucionFinanciamiento extends ParseBase<EvolucionFinanciamiento[]> {
     private static String TAG = ParseEvolucionFinanciamiento.class.getSimpleName();
     private JSONObject object;
+    private String[] actions = {"get_finan_evol_acum", "get_subs_evol_acum"};
+    private String[] tagNames = {"get_finan_evol_acumResponse", "get_subs_evol_acumResponse"};
+    private String[] elements = {"get_finan_evol_acumResult", "get_subs_evol_acumResult"};
 
     public ParseEvolucionFinanciamiento() {
         super("get_finan_evol_acum");
+    }
+    private int index = 0;
+
+    public ParseEvolucionFinanciamiento(EvolucionTipo tipo) {
+        switch (tipo) {
+            case FINANCIAMIENTOS:
+                index = 0;
+                break;
+            case SUBSIDIOS:
+                index = 1;
+                break;
+        }
+
+        setSoapAction(actions[index]);
     }
 
     @Override
     public EvolucionFinanciamiento[] getDatos() {
         Document xml = getDocument();
 
-        NodeList nList = xml.getElementsByTagName("get_finan_evol_acumResponse");
+        NodeList nList = xml.getElementsByTagName(tagNames[index]);
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
 
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nNode;
-                String jsonString = Utils.getTextContent(element, "get_finan_evol_acumResult");
+                String jsonString = Utils.getTextContent(element, elements[index]);
                 try {
                     object = new JSONObject(jsonString.trim());
                     return createModel(object);
