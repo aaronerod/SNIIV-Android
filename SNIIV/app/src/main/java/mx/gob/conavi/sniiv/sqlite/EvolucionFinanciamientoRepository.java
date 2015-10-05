@@ -25,6 +25,7 @@ import java.util.TreeSet;
 import mx.gob.conavi.sniiv.modelos.Consulta;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamientoResultado;
+import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
 import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
 
 /**
@@ -32,11 +33,21 @@ import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
  */
 public class EvolucionFinanciamientoRepository implements Repository<EvolucionFinanciamiento> {
     private static final String TAG = FinanciamientoRepository.class.getSimpleName();
-    public static final String FILE_NAME = "evolucionFinanciamiento";
+    public static final String[] FILE_NAMES = {"evolucionFinanciamiento", "evolucionSubsidios"};
     private Context context;
+    private EvolucionTipo tipo;
+    private int index = 0;
 
-    public EvolucionFinanciamientoRepository(Context context) {
+    public EvolucionFinanciamientoRepository(Context context, EvolucionTipo tipo) {
         this.context = context;
+        switch (tipo) {
+            case FINANCIAMIENTOS:
+                index = 0;
+                break;
+            case SUBSIDIOS:
+                index = 1;
+                break;
+        }
     }
 
     @Override
@@ -45,7 +56,7 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
     }
 
     public void saveAll(JSONObject object) {
-        String filename = FILE_NAME;
+        String filename = FILE_NAMES[index];
         String string = object.toString();
         FileOutputStream outputStream;
 
@@ -60,7 +71,7 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
 
     @Override
     public void deleteAll() {
-        context.deleteFile("evolucionFinanciamiento");
+        context.deleteFile(FILE_NAMES[index]);
     }
 
     public EvolucionFinanciamiento[] loadFromStorage() {
@@ -68,7 +79,7 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
         try {
             BufferedReader input;
             input = new BufferedReader(new InputStreamReader(
-                    context.openFileInput("evolucionFinanciamiento")));
+                    context.openFileInput(FILE_NAMES[index])));
             StringBuffer content = new StringBuffer();
             char[] buffer = new char[1024];
             int num;
@@ -79,7 +90,7 @@ public class EvolucionFinanciamientoRepository implements Repository<EvolucionFi
             JSONObject object = new JSONObject(content.toString());
             return ParseEvolucionFinanciamiento.createModel(object);
         } catch (JSONException jse) {
-            Log.v(TAG, "Error parseando json EvolucionFinanciamiento");
+            Log.v(TAG, "Error parseando json " + FILE_NAMES[index]);
         } catch (IOException e) {
             Log.v(TAG, "Error leyendo del archivo");
         }
