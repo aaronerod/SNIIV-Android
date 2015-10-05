@@ -12,6 +12,7 @@ import mx.gob.conavi.sniiv.fragments.ReporteGeneralFragment;
 import mx.gob.conavi.sniiv.fragments.evolucion.FinanciamientosFragment;
 import mx.gob.conavi.sniiv.fragments.oferta.PCUFragment;
 import mx.gob.conavi.sniiv.fragments.oferta.TipoViviendaFragment;
+import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
 
 /**
  * Created by octavio.munguia on 28/09/2015.
@@ -27,8 +28,8 @@ public class EvolucionFinanciamientoPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: return new FinanciamientosFragment();
-            case 1: return new ReporteGeneralFragment();
+            case 0: return FinanciamientosFragment.newInstance(EvolucionTipo.FINANCIAMIENTOS);
+            case 1: return FinanciamientosFragment.newInstance(EvolucionTipo.SUBSIDIOS);
             case 2: return new ReporteGeneralFragment();
         }
 
