@@ -16,19 +16,17 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.LineChart;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.LineChartBuilder;
 import mx.gob.conavi.sniiv.charts.LineChartConfig;
-import mx.gob.conavi.sniiv.charts.MyMarkerView;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosEvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.fragments.BaseFragment;
-import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 import mx.gob.conavi.sniiv.modelos.EvolucionFinanciamiento;
+import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
 import mx.gob.conavi.sniiv.parsing.ParseEvolucionFinanciamiento;
 import mx.gob.conavi.sniiv.sqlite.EvolucionFinanciamientoRepository;
 
@@ -43,12 +41,24 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
     private boolean errorRetrievingData = false;
     private boolean showAcciones = true;
     private Menu menu;
+    private EvolucionTipo tipo;
+
+    public static FinanciamientosFragment newInstance(EvolucionTipo tipo) {
+        FinanciamientosFragment myFragment = new FinanciamientosFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("tipo", tipo.getValue());
+        myFragment.setArguments(args);
+
+        return myFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        repository = new EvolucionFinanciamientoRepository(getActivity());
+        tipo = EvolucionTipo.fromInteger(getArguments().getInt("tipo", 0));
+        repository = new EvolucionFinanciamientoRepository(getActivity(), tipo);
     }
 
     @Override
@@ -126,7 +136,14 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
     @Override
     protected String getKey() {
-        return EvolucionFinanciamiento.TABLE;
+        switch (tipo) {
+            case FINANCIAMIENTOS:
+                return EvolucionFinanciamiento.FINANCIAMIENTO;
+            case SUBSIDIOS:
+                return EvolucionFinanciamiento.SUBSIDIO;
+            default:
+                return "";
+        }
     }
 
     @Override
@@ -144,7 +161,7 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                ParseEvolucionFinanciamiento parse = new ParseEvolucionFinanciamiento();
+                ParseEvolucionFinanciamiento parse = new ParseEvolucionFinanciamiento(tipo);
                 EvolucionFinanciamiento[] datosParse = parse.getDatos();
                 repository.deleteAll();
                 ((EvolucionFinanciamientoRepository)repository).saveAll(parse.getJsonObject());
@@ -189,11 +206,11 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
 
     protected void inicializaDatos() {
         if (fechas != null) {
-            String finan = String.format("%s\n(%s)", "Financiamientos Otorgados",
-                    Utils.formatoDiaMes(fechas.getFecha_finan()));
+            String finan = String.format("%s\n(%s)", getKey() + " Otorgados",
+                    Utils.formatoDiaMes(getFecha()));
             titulo =  finan;
         } else {
-            titulo = "Financiamientos Otorgados";
+            titulo = getKey() + " Otorgados";
         }
     }
 
@@ -215,6 +232,17 @@ public class FinanciamientosFragment extends BaseFragment<EvolucionFinanciamient
             item.setTitle("MONTOS");
         } else {
             item.setTitle("ACCIONES");
+        }
+    }
+
+    private String getFecha() {
+        switch (tipo) {
+            case FINANCIAMIENTOS:
+                return fechas.getFecha_finan();
+            case SUBSIDIOS:
+                return fechas.getFecha_subs();
+            default:
+                return "";
         }
     }
 }
