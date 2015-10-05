@@ -21,7 +21,7 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
      * Indica la versión de la base de datos, se debe aumentar en 1
      * cada que cambia su estructura.
      */
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "sniiv.db";
 
     public AdminSQLiteOpenHelper(Context context ) {
@@ -147,15 +147,6 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         insertOrganismo(db);
         insertDestino(db);
         insertAgrupacion(db);
-
-        db.execSQL(
-                "CREATE TABLE EvolucionFinanciamiento(" +
-                        "cve_ent INTEGER" +
-                        ",anio TEXT" +
-                        ",mes TEXT" +
-                        ",acciones INTEGER" +
-                        ",monto REAL" +
-                        ")");
     }
 
     @Override
@@ -178,7 +169,6 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS Destino");
         db.execSQL("DROP TABLE IF EXISTS Agrupacion");
         db.execSQL("DROP TABLE IF EXISTS Financiamiento");
-        db.execSQL("DROP TABLE IF EXISTS " + EvolucionFinanciamiento.TABLE);
         init(db);
     }
 
