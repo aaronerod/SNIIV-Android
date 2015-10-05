@@ -28,7 +28,7 @@ public class EvolucionPageAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0: return EvolucionFragment.newInstance(EvolucionTipo.FINANCIAMIENTOS);
             case 1: return EvolucionFragment.newInstance(EvolucionTipo.SUBSIDIOS);
-            case 2: return new ReporteGeneralFragment();
+            case 2: return EvolucionFragment.newInstance(EvolucionTipo.REGISTRO_VIVIENDA);
         }
 
         return null;
@@ -48,7 +48,7 @@ public class EvolucionPageAdapter extends FragmentPagerAdapter {
             case 1:
                 return mContext.getString(R.string.title_subsidios).toUpperCase(l);
             case 2:
-                return mContext.getString(R.string.title_oferta_vivienda).toUpperCase(l);
+                return mContext.getString(R.string.title_registro_vivienda).toUpperCase(l);
         }
         return null;
     }
