@@ -1,6 +1,7 @@
 package mx.gob.conavi.sniiv.fragments.evolucion;
 
 import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -57,7 +58,7 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        tipo = EvolucionTipo.fromInteger(getArguments().getInt("tipo", 0));
+        tipo = EvolucionTipo.fromInteger(getArguments().getInt(getString(R.string.etiqueta_tipo), 0));
         repository = new EvolucionRepository(getActivity(), tipo);
     }
 
@@ -81,9 +82,13 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_evolucion, menu);
         this.menu = menu;
+
+        if (tipo == EvolucionTipo.REGISTRO_VIVIENDA) {
+            menu.findItem(R.id.action_toggle).setVisible(false);
+        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -141,8 +146,10 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
                 return Evolucion.FINANCIAMIENTO;
             case SUBSIDIOS:
                 return Evolucion.SUBSIDIO;
+            case REGISTRO_VIVIENDA:
+                return Evolucion.REGISTRO_VIVIENDA;
             default:
-                return "";
+                throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
         }
     }
 
@@ -206,11 +213,11 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
 
     protected void inicializaDatos() {
         if (fechas != null) {
-            String finan = String.format("%s\n(%s)", getKey() + " Otorgados",
+            String finan = String.format("%s\n(%s)", getTitle(),
                     Utils.formatoDiaMes(getFecha()));
             titulo =  finan;
         } else {
-            titulo = getKey() + " Otorgados";
+            titulo = getTitle();
         }
     }
 
@@ -229,9 +236,9 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
     private void setOptionTitle() {
         MenuItem item = menu.findItem(R.id.action_toggle);
         if (showAcciones){
-            item.setTitle("MONTOS");
+            item.setTitle(R.string.title_menu_montos);
         } else {
-            item.setTitle("ACCIONES");
+            item.setTitle(R.string.title_menu_acciones);
         }
     }
 
@@ -241,8 +248,24 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
                 return fechas.getFecha_finan();
             case SUBSIDIOS:
                 return fechas.getFecha_subs();
+            case REGISTRO_VIVIENDA:
+                return fechas.getFecha_vv();
             default:
-                return "";
+                throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
+        }
+    }
+
+    private String getTitle() {
+        Resources res = getResources();
+        switch (tipo) {
+            // Los dos casos realizan la misma acción
+            case FINANCIAMIENTOS:
+            case SUBSIDIOS:
+                return String.format(res.getString(R.string.title_otorgados), getKey());
+            case REGISTRO_VIVIENDA:
+                return getString(R.string.title_inventario_oferta);
+            default:
+                throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
         }
     }
 }
