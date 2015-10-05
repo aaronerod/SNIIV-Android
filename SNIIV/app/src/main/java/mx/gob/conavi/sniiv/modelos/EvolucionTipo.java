@@ -5,7 +5,8 @@ package mx.gob.conavi.sniiv.modelos;
  */
 public enum EvolucionTipo {
     FINANCIAMIENTOS(0),
-    SUBSIDIOS(1);
+    SUBSIDIOS(1),
+    REGISTRO_VIVIENDA(2);
 
     private final int value;
     private EvolucionTipo(int value) {
@@ -22,6 +23,8 @@ public enum EvolucionTipo {
                 return FINANCIAMIENTOS;
             case 1:
                 return SUBSIDIOS;
+            case 2:
+                return REGISTRO_VIVIENDA;
         }
 
         return null;

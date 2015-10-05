@@ -25,13 +25,12 @@ import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
 public class ParseEvolucion extends ParseBase<Evolucion[]> {
     private static String TAG = ParseEvolucion.class.getSimpleName();
     private JSONObject object;
-    private String[] actions = {"get_finan_evol_acum", "get_subs_evol_acum"};
-    private String[] tagNames = {"get_finan_evol_acumResponse", "get_subs_evol_acumResponse"};
-    private String[] elements = {"get_finan_evol_acumResult", "get_subs_evol_acumResult"};
+    private String[] actions = {"get_finan_evol_acum", "get_subs_evol_acum", "get_regviv_evol_acum"};
+    private String[] tagNames = {"get_finan_evol_acumResponse", "get_subs_evol_acumResponse",
+                                    "get_regviv_evol_acumResponse"};
+    private String[] elements = {"get_finan_evol_acumResult", "get_subs_evol_acumResult",
+                                    "get_regviv_evol_acumResult"};
 
-    public ParseEvolucion() {
-        super("get_finan_evol_acum");
-    }
     private int index = 0;
 
     public ParseEvolucion(EvolucionTipo tipo) {
@@ -41,6 +40,9 @@ public class ParseEvolucion extends ParseBase<Evolucion[]> {
                 break;
             case SUBSIDIOS:
                 index = 1;
+                break;
+            case REGISTRO_VIVIENDA:
+                index = 2;
                 break;
         }
 

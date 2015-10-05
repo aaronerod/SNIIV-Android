@@ -21,7 +21,8 @@ import mx.gob.conavi.sniiv.parsing.ParseEvolucion;
  */
 public class EvolucionRepository implements Repository<Evolucion> {
     private static final String TAG = EvolucionRepository.class.getSimpleName();
-    public static final String[] FILE_NAMES = {"evolucionFinanciamiento", "evolucionSubsidios"};
+    public static final String[] FILE_NAMES = {"evolucionFinanciamiento", "evolucionSubsidios",
+            "evolucionRegistroVivienda"};
     private Context context;
     private EvolucionTipo tipo;
     private int index = 0;
@@ -34,6 +35,9 @@ public class EvolucionRepository implements Repository<Evolucion> {
                 break;
             case SUBSIDIOS:
                 index = 1;
+                break;
+            case REGISTRO_VIVIENDA:
+                index = 2;
                 break;
         }
     }
