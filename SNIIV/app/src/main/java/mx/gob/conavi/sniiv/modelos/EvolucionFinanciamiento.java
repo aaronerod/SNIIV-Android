@@ -21,7 +21,8 @@ import mx.gob.conavi.sniiv.parsing.ParseFechas;
  */
 public class EvolucionFinanciamiento {
     private static String TAG = ParseFechas.class.getSimpleName();
-    public static final String TABLE = "EvolucionFinanciamiento";
+    public static final String FINANCIAMIENTO = "Financiamientos";
+    public static final String SUBSIDIO = "Subsidios";
 
     Map<String, EvolucionFinanciamientoResultado> periodos;
 
