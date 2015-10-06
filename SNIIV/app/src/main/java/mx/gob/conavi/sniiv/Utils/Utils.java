@@ -203,4 +203,10 @@ public class Utils {
         listEstados.add("Yucatán");
         listEstados.add("Zacatecas");
     }
+
+    public static final String[] ENTIDAD_ABR = {
+        "NACIONAL", "AGS", "BC", "BCS", "CAMP", "COAH", "COL", "CHIS", "CHIH", "DF", "DGO",
+            "GTO", "GRO", "HGO", "JAL", "MEX", "MICH", "MOR", "NAY", "NL", "OAX", "PUE",
+            "QRO", "QROO", "SLP", "SIN", "SON", "TAB", "TAMPS", "TLAX", "VER", "YUC", "ZAC"
+    };
 }

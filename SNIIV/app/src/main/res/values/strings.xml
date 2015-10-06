@@ -68,5 +68,5 @@
     <string name="title_menu_montos">MONTOS</string>
     <string name="title_menu_acciones">ACCIONES</string>
     <string name="title_inventario_oferta">Inventario de Oferta de Vivienda Vigente</string>
-    <string name="title_otorgados">%1$s Otorgados</string>
+    <string name="title_otorgados">%1$s Otorgados %2$s</string>
 </resources>

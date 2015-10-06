@@ -1,9 +1,12 @@
 package mx.gob.conavi.sniiv.charts;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -52,7 +55,6 @@ public class LineChartBuilder {
     private static void initChart(Context context, LineChart mChart, String description, boolean showAcciones) {
         mChart.setDescription(description);
         mChart.setDescriptionTextSize(descriptionTextSize);
-        mChart.setNoDataTextDescription("You need to provide data for the mChart.");
         mChart.setHighlightEnabled(true);
 
         MyMarkerView mv = new MyMarkerView(context, R.layout.custom_marker_view);
