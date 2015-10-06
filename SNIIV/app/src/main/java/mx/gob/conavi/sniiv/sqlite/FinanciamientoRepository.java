@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.modelos.Consulta;
-import mx.gob.conavi.sniiv.modelos.ConsultaFinanciamiento;
-import mx.gob.conavi.sniiv.modelos.Financiamiento;
-import mx.gob.conavi.sniiv.modelos.FinanciamientoResultado;
+import mx.gob.conavi.sniiv.modelos.demanda.ConsultaFinanciamiento;
+import mx.gob.conavi.sniiv.modelos.demanda.Financiamiento;
+import mx.gob.conavi.sniiv.modelos.demanda.FinanciamientoResultado;
 
 /**
  * Created by admin on 10/08/15.

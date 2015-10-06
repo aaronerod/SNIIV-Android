@@ -2,7 +2,7 @@ package mx.gob.conavi.sniiv.datos;
 
 import android.content.Context;
 
-import mx.gob.conavi.sniiv.modelos.ValorVivienda;
+import mx.gob.conavi.sniiv.modelos.oferta.ValorVivienda;
 import mx.gob.conavi.sniiv.sqlite.ValorViviendaRepository;
 
 /**

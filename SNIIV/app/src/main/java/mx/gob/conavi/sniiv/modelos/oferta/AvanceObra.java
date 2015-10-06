@@ -1,11 +1,13 @@
-package mx.gob.conavi.sniiv.modelos;
+package mx.gob.conavi.sniiv.modelos.oferta;
 
 import java.util.ArrayList;
+
+import mx.gob.conavi.sniiv.modelos.Modelo;
 
 /**
  * Created by admin on 05/08/15.
  */
-public class AvanceObra implements Modelo{
+public class AvanceObra implements Modelo {
     private int cve_ent;
     private long viv_proc_m50;
     private long viv_proc_50_99;

@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.fragments;
+package mx.gob.conavi.sniiv.fragments.oferta;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -14,7 +14,7 @@ import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosValorVivienda;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
-import mx.gob.conavi.sniiv.modelos.ValorVivienda;
+import mx.gob.conavi.sniiv.modelos.oferta.ValorVivienda;
 import mx.gob.conavi.sniiv.parsing.ParseValorVivienda;
 import mx.gob.conavi.sniiv.sqlite.ValorViviendaRepository;
 

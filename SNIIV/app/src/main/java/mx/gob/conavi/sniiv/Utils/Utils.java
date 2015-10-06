@@ -23,6 +23,8 @@ public class Utils {
     public static final SimpleDateFormat fmtDMY = new SimpleDateFormat("dd/MM/yyyy", locale);
     public static final SimpleDateFormat fmtDiaMes = new SimpleDateFormat("d MMMM yyyy", locale);
     public static final SimpleDateFormat fmtMes = new SimpleDateFormat("MMMM yyyy", locale);
+    public static final int THOUSAND = 1000;
+    public static final int MILLION = 1000_000;
 
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();
@@ -32,6 +34,7 @@ public class Utils {
         listMenu.add("Reporte General");
         listMenu.add("Oferta");
         listMenu.add("Demanda");
+        listMenu.add("Evolución Mensual");
         populateEstados();
         populateEdos();
     }
@@ -200,4 +203,10 @@ public class Utils {
         listEstados.add("Yucatán");
         listEstados.add("Zacatecas");
     }
+
+    public static final String[] ENTIDAD_ABR = {
+        "NACIONAL", "AGS", "BC", "BCS", "CAMP", "COAH", "COL", "CHIS", "CHIH", "DF", "DGO",
+            "GTO", "GRO", "HGO", "JAL", "MEX", "MICH", "MOR", "NAY", "NL", "OAX", "PUE",
+            "QRO", "QROO", "SLP", "SIN", "SON", "TAB", "TAMPS", "TLAX", "VER", "YUC", "ZAC"
+    };
 }

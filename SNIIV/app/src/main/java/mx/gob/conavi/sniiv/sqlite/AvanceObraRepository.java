@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
+import mx.gob.conavi.sniiv.modelos.oferta.AvanceObra;
 
 /**
  * Created by admin on 05/08/15.

@@ -1,13 +1,15 @@
-package mx.gob.conavi.sniiv.modelos;
+package mx.gob.conavi.sniiv.modelos.oferta;
 
 import android.graphics.AvoidXfermode;
 
 import java.util.ArrayList;
 
+import mx.gob.conavi.sniiv.modelos.Modelo;
+
 /**
  * Created by admin on 07/08/15.
  */
-public class ValorVivienda implements Modelo{
+public class ValorVivienda implements Modelo {
     private int cve_ent;
     private long economica;
     private long popular;

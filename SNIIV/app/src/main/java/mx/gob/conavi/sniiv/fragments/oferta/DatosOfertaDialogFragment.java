@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.fragments;
+package mx.gob.conavi.sniiv.fragments.oferta;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

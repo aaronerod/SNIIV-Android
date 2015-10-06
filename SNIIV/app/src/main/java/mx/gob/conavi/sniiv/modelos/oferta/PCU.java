@@ -1,6 +1,8 @@
-package mx.gob.conavi.sniiv.modelos;
+package mx.gob.conavi.sniiv.modelos.oferta;
 
 import java.util.ArrayList;
+
+import mx.gob.conavi.sniiv.modelos.Modelo;
 
 /**
  * Created by admin on 06/08/15.

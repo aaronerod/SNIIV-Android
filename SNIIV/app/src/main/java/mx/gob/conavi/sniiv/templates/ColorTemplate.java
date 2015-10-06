@@ -57,6 +57,12 @@ public class ColorTemplate {
             Color.rgb(60,179,113)
     };
 
+    public static final int[] EVOLUCION_COLORS = {
+            Color.rgb(142,144,144),
+            Color.rgb(155,27,47),
+            Color.rgb(0,128,59)
+    };
+
     /**
      * Returns the Android ICS holo blue light color.
      *

@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.modelos;
+package mx.gob.conavi.sniiv.modelos.demanda;
 
 /**
  * Created by admin on 10/08/15.

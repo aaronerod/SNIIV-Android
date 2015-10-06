@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.fragments;
+package mx.gob.conavi.sniiv.fragments.oferta;
 
 
 import android.app.ProgressDialog;
@@ -13,22 +13,23 @@ import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
 import mx.gob.conavi.sniiv.datos.Datos;
-import mx.gob.conavi.sniiv.datos.DatosPCU;
+import mx.gob.conavi.sniiv.datos.DatosTipoVivienda;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
-import mx.gob.conavi.sniiv.modelos.PCU;
-import mx.gob.conavi.sniiv.parsing.ParsePCU;
-import mx.gob.conavi.sniiv.sqlite.PCURepository;
+import mx.gob.conavi.sniiv.modelos.oferta.TipoVivienda;
+import mx.gob.conavi.sniiv.parsing.ParseTipoVivienda;
+import mx.gob.conavi.sniiv.sqlite.TipoViviendaRepository;
 
-
-public class PCUFragment extends OfertaBaseFragment<PCU> {
-    public static final String TAG = "PCUFragment";
-
+/**
+ * Created by admin on 04/08/15.
+ */
+public class TipoViviendaFragment extends OfertaBaseFragment<TipoVivienda> {
+    public static final String TAG = "TipoViviendaFragment";
     private boolean errorRetrievingData = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository = new PCURepository(getActivity());
+        repository = new TipoViviendaRepository(getActivity());
     }
 
     //region Implementaciones BaseFragment
@@ -39,7 +40,7 @@ public class PCUFragment extends OfertaBaseFragment<PCU> {
 
     @Override
     protected String getKey() {
-        return PCU.TABLE;
+        return TipoVivienda.TABLE;
     }
 
     @Override
@@ -58,12 +59,12 @@ public class PCUFragment extends OfertaBaseFragment<PCU> {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                ParsePCU parse = new ParsePCU();
-                PCU[] datosParse = parse.getDatos();
+                ParseTipoVivienda parse = new ParseTipoVivienda();
+                TipoVivienda[] datosParse = parse.getDatos();
                 repository.deleteAll();
                 repository.saveAll(datosParse);
 
-                datos = new DatosPCU(getActivity(), datosParse);
+                datos = new DatosTipoVivienda(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
 
                 saveTimeLastUpdated(getFechaActualizacion().getTime());
@@ -94,7 +95,7 @@ public class PCUFragment extends OfertaBaseFragment<PCU> {
     protected void inicializaDatosChart() {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
-        String pCenterText = "PCU";
+        String pCenterText = "Tipo de Vivienda";
         int pEstado = entidad.getCve_ent();
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 pEstado, getString(R.string.etiqueta_conavi));
@@ -103,32 +104,29 @@ public class PCUFragment extends OfertaBaseFragment<PCU> {
     }
 
     protected void inicializaDatos() {
-        valores =  new String[]{Utils.toString(entidad.getU1()),
-                Utils.toString(entidad.getU2()),
-                Utils.toString(entidad.getU3()),
-                Utils.toString(entidad.getNd()),
+        valores =  new String[]{Utils.toString(entidad.getHorizontal()),
+                Utils.toString(entidad.getVertical()),
                 Utils.toString(entidad.getTotal())};
 
         if (fechas != null) {
-            String pcu = String.format("%s (%s)", getString(R.string.title_pcu),
+            String tipo = String.format("%s (%s)", getString(R.string.title_tipo_vivienda),
                     Utils.formatoMes(fechas.getFecha_vv()));
-            titulo =  pcu;
+            titulo =  tipo;
         } else {
-            titulo = getString(R.string.title_pcu);
+            titulo = getString(R.string.title_avance_obra);
         }
     }
 
     @Override
     protected String[] getEtiquetas() {
         return new String[]{
-                getString(R.string.title_u1), getString(R.string.title_u2),
-                getString(R.string.title_u3), getString(R.string.title_nd),
+                getString(R.string.title_horizontal), getString(R.string.title_vertical),
                 getString(R.string.title_total)};
     }
 
     @Override
-    protected Datos<PCU> getDatos(PCU[] datos) {
-        return new DatosPCU(getActivity(), datos);
+    protected Datos<TipoVivienda> getDatos(TipoVivienda[] datos) {
+        return new DatosTipoVivienda(getActivity(), datos);
     }
     //endregion
 }

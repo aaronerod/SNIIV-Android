@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.fragments;
+package mx.gob.conavi.sniiv.fragments.oferta;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +19,7 @@ import java.util.EnumSet;
 
 import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.fragments.BaseFragment;
 import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 
 /**
@@ -61,7 +62,7 @@ public abstract class OfertaBaseFragment<T> extends BaseFragment<T> {
         etiquetas = getEtiquetas();
 
         if (mChart != null) {
-            mChart.setNoDataText("Datos no disponibles");
+            mChart.setNoDataText(getString(R.string.mensaje_datos_no_disponibles));
         }
 
         return view;

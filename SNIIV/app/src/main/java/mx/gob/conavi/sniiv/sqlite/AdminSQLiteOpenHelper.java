@@ -8,15 +8,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import mx.gob.conavi.sniiv.modelos.AvanceObra;
-import mx.gob.conavi.sniiv.modelos.PCU;
+import mx.gob.conavi.sniiv.modelos.oferta.AvanceObra;
+import mx.gob.conavi.sniiv.modelos.oferta.PCU;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
-import mx.gob.conavi.sniiv.modelos.TipoVivienda;
-import mx.gob.conavi.sniiv.modelos.ValorVivienda;
+import mx.gob.conavi.sniiv.modelos.oferta.TipoVivienda;
+import mx.gob.conavi.sniiv.modelos.oferta.ValorVivienda;
 
 class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 6;
+    /**
+     * Indica la versión de la base de datos, se debe aumentar en 1
+     * cada que cambia su estructura.
+     */
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "sniiv.db";
 
     public AdminSQLiteOpenHelper(Context context ) {

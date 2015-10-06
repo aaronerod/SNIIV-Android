@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.fragments;
+package mx.gob.conavi.sniiv.fragments.demanda;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +18,7 @@ import java.util.EnumSet;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.fragments.BaseFragment;
 import mx.gob.conavi.sniiv.modelos.EstadoMenu;
 import mx.gob.conavi.sniiv.sqlite.Repository;
 import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
@@ -25,7 +26,6 @@ import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
 /**
  * Created by octavio.munguia on 21/09/2015.
  */
-// TODO: refactorizar FinanciamientoFragment
 public abstract class DemandaBaseFragment extends BaseFragment {
     protected Repository repository;
     protected EnumSet<EstadoMenu> estado = EnumSet.of(EstadoMenu.NINGUNO);

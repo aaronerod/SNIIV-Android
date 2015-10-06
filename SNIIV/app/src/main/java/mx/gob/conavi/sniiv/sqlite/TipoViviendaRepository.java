@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import mx.gob.conavi.sniiv.modelos.TipoVivienda;
+import mx.gob.conavi.sniiv.modelos.oferta.TipoVivienda;
 
 /**
  * Created by admin on 06/08/15.

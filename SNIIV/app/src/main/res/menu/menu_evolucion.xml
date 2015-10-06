@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="mx.gob.conavi.sniiv.activities.OfertaActivity">
+    <item android:id="@+id/action_toggle" android:title="@string/etiqueta_monto"
+        android:orderInCategory="100" app:showAsAction="always" android:visible="false"/>
+    <item android:id="@+id/action_guardar" android:title="@string/title_guardar"
+        android:orderInCategory="101" app:showAsAction="always" android:visible="false"/>
+</menu>

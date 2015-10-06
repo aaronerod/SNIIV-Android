@@ -50,6 +50,7 @@
     <string name="unidades_acciones">Acciones (miles):</string>
     <string name="unidades_monto">Monto (mdp):</string>
 
+    <string name="title_evolucion_financiamiento">Evolución Mensual</string>
 
     <string name="title_grafica">Gráfica</string>
     <string name="mensaje_imagen_guardada">Imagen Guardada en Galería</string>
@@ -60,4 +61,12 @@
     <string name="etiqueta_porcentaje">Porcentaje</string>
     <string name="title_datos">Datos</string>
     <string name="selected_configuration">standard</string>
+    <string name="etiqueta_monto">Montos</string>
+    <string name="mensaje_datos_no_disponibles">Datos no disponibles</string>
+    <string name="title_registro_vivienda">Registro de Vivienda</string>
+    <string name="etiqueta_tipo">tipo</string>
+    <string name="title_menu_montos">MONTOS</string>
+    <string name="title_menu_acciones">ACCIONES</string>
+    <string name="title_inventario_oferta">Inventario de Oferta de Vivienda Vigente</string>
+    <string name="title_otorgados">%1$s Otorgados %2$s</string>
 </resources>

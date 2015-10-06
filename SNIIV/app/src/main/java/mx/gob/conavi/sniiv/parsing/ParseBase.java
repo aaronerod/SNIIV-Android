@@ -14,12 +14,17 @@ import javax.xml.parsers.DocumentBuilderFactory;
 abstract class ParseBase<T> {
     private final String namespace;
     private final String urlString;
-    private final String soapAction;
+    private String soapAction;
 
     ParseBase(String action) {
         namespace= "http://www.conavi.gob.mx:8080/WS_App_SNIIV";
         urlString = "http://www.conavi.gob.mx:8080/WS_App_SNIIV.asmx?WSDL";
         soapAction = action;
+    }
+
+    ParseBase() {
+        namespace= "http://www.conavi.gob.mx:8080/WS_App_SNIIV";
+        urlString = "http://www.conavi.gob.mx:8080/WS_App_SNIIV.asmx?WSDL";
     }
 
     private String getXml() {
@@ -45,4 +50,12 @@ abstract class ParseBase<T> {
     }
 
     public abstract T getDatos();
+
+    public String getSoapAction() {
+        return soapAction;
+    }
+
+    public void setSoapAction(String soapAction) {
+        this.soapAction = soapAction;
+    }
 }

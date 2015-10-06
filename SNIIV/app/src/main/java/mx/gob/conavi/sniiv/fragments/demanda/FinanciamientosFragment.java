@@ -1,5 +1,4 @@
-package mx.gob.conavi.sniiv.fragments;
-
+package mx.gob.conavi.sniiv.fragments.demanda;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -16,39 +15,39 @@ import java.util.EnumSet;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.charts.PieChartBuilder;
-import mx.gob.conavi.sniiv.datos.DatosSubsidio;
-import mx.gob.conavi.sniiv.listeners.OnChartValueSelected;
+import mx.gob.conavi.sniiv.datos.DatosFinanciamiento;
 import mx.gob.conavi.sniiv.listeners.OnChartValueSelectedMillones;
-import mx.gob.conavi.sniiv.modelos.ConsultaSubsidio;
+import mx.gob.conavi.sniiv.modelos.demanda.ConsultaFinanciamiento;
 import mx.gob.conavi.sniiv.modelos.EstadoMenu;
-import mx.gob.conavi.sniiv.modelos.Subsidio;
-import mx.gob.conavi.sniiv.parsing.ParseSubsidio;
-import mx.gob.conavi.sniiv.sqlite.SubsidioRepository;
+import mx.gob.conavi.sniiv.modelos.demanda.Financiamiento;
+import mx.gob.conavi.sniiv.parsing.ParseFinanciamiento;
+import mx.gob.conavi.sniiv.sqlite.FinanciamientoRepository;
 
-public class SubsidiosFragment extends DemandaBaseFragment {
-    public static final String TAG = "SubsidiosFragment";
 
-    private DatosSubsidio datos;
-    private ConsultaSubsidio entidad;
-    private SubsidioRepository repository;
+public class FinanciamientosFragment extends DemandaBaseFragment {
+    public static final String TAG = "EvolucionFragment";
+
+    private DatosFinanciamiento datos;
+    private ConsultaFinanciamiento entidad;
+    private FinanciamientoRepository repository;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        repository = new SubsidioRepository(getActivity());
+        repository = new FinanciamientoRepository(getActivity());
         valueChangeListener = configuraValueChangeListener();
     }
 
     protected void loadFromStorage() {
-        Subsidio[] datosStorage = repository.loadFromStorage();
+        Financiamiento[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
-            datos = new DatosSubsidio(getActivity(), datosStorage);
+            datos = new DatosFinanciamiento(getActivity(), datosStorage);
             entidad = datos.consultaNacional();
             pickerEstados.setEnabled(true);
-        } /*else {
+        } else {
             Utils.alertDialogShow(getActivity(), getString(R.string.no_conectado));
-        } */
+        }
 
         loadFechasStorage();
 
@@ -72,13 +71,13 @@ public class SubsidiosFragment extends DemandaBaseFragment {
     }
 
     protected void createFragment() {
-        DatosSubsidiosDialogFragment dialog = (DatosSubsidiosDialogFragment) getChildFragmentManager()
+        DatosFinanciamientosDialogFragment dialog = (DatosFinanciamientosDialogFragment) getChildFragmentManager()
                 .findFragmentById(R.id.datos);
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
         if (dialog == null) {
-            dialog = DatosSubsidiosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+            dialog = DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
                     entidad.getMontos());
 
             transaction.add(R.id.datos, dialog);
@@ -116,6 +115,8 @@ public class SubsidiosFragment extends DemandaBaseFragment {
                     entidad = datos.consultaEntidad(newVal);
                 }
 
+                idEntidad = newVal;
+
                 mostrarDatos();
             }
         };
@@ -128,12 +129,12 @@ public class SubsidiosFragment extends DemandaBaseFragment {
 
     @Override
     protected String getKey() {
-        return Subsidio.TABLE;
+        return Financiamiento.TABLE;
     }
 
     @Override
     protected String getFechaAsString() {
-        return fechas != null ? fechas.getFecha_subs() : null;
+        return fechas != null ? fechas.getFecha_finan() : null;
     }
 
     protected class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
@@ -146,13 +147,14 @@ public class SubsidiosFragment extends DemandaBaseFragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                ParseSubsidio parse = new ParseSubsidio();
-                Subsidio[] datosParse = parse.getDatos();
+                ParseFinanciamiento parse = new ParseFinanciamiento();
+                Financiamiento[] datosParse = parse.getDatos();
                 repository.deleteAll();
                 repository.saveAll(datosParse);
 
-                datos = new DatosSubsidio(getActivity(), datosParse);
+                datos = new DatosFinanciamiento(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
+                Log.v(TAG, "entidad" + entidad.toString());
 
                 saveTimeLastUpdated(getFechaActualizacion().getTime());
 
@@ -167,12 +169,13 @@ public class SubsidiosFragment extends DemandaBaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
+            Log.v(TAG, "onPostExecute: errorRetrievingData " + errorRetrievingData );
             if (!errorRetrievingData) {
                 habilitaPantalla();
                 intentaInicializarGrafica();
                 getActivity().invalidateOptionsMenu();
             } else {
-                // Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
+                Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
                 progressDialog.dismiss();
             }
         }
@@ -181,28 +184,28 @@ public class SubsidiosFragment extends DemandaBaseFragment {
     protected void inicializaDatosChart() {
         ArrayList<String> pParties =  entidad.getParties();
         long[] pValues = entidad.getValues();
-        String pCenterText = "Subsidios";
+        String pCenterText = "Financiamientos";
         PieChartBuilder.buildPieChart(mChart, pParties, pValues, pCenterText,
                 idEntidad, getString(R.string.etiqueta_conavi));
-        OnChartValueSelected listener = new OnChartValueSelectedMillones(mChart, getKey(), idEntidad, pParties);
+        OnChartValueSelectedMillones listener = new OnChartValueSelectedMillones(mChart, getKey(), idEntidad, pParties);
         mChart.setOnChartValueSelectedListener(listener);
     }
 
     protected void inicializaDatos() {
         if (fechas != null) {
-            String subsidio = String.format("%s (%s)", getString(R.string.title_subsidios),
-                    Utils.formatoDiaMes(fechas.getFecha_subs()));
-            titulo =  subsidio;
+            String financiamiento = String.format("%s (%s)", getString(R.string.title_financiamiento),
+                    Utils.formatoDiaMes(fechas.getFecha_finan()));
+            titulo =  financiamiento;
         } else {
-            titulo = getString(R.string.title_subsidios);
+            titulo = getString(R.string.title_financiamiento);
         }
     }
 
     protected void muestraDialogo() {
-        DatosSubsidiosDialogFragment dialog =
-                DatosSubsidiosDialogFragment.newInstance(titulo, entidad.getAcciones(),
+        DatosFinanciamientosDialogFragment dialog =
+                DatosFinanciamientosDialogFragment.newInstance(titulo, entidad.getAcciones(),
                         entidad.getMontos());
         dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.MyDialogTheme );
-        dialog.show(getFragmentManager(), "DatosSubsidiosDialog");
+        dialog.show(getFragmentManager(), "DatosOfertaDialog");
     }
 }

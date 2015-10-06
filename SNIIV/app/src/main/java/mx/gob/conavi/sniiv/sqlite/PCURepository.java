@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import mx.gob.conavi.sniiv.modelos.PCU;
+import mx.gob.conavi.sniiv.modelos.oferta.PCU;
 
 /**
  * Created by admin on 06/08/15.

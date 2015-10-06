@@ -1,4 +1,6 @@
-package mx.gob.conavi.sniiv.modelos;
+package mx.gob.conavi.sniiv.modelos.demanda;
+
+import mx.gob.conavi.sniiv.modelos.Consulta;
 
 /**
  * Created by admin on 10/08/15.

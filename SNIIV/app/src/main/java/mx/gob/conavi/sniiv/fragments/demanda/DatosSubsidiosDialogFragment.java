@@ -1,4 +1,4 @@
-package mx.gob.conavi.sniiv.fragments;
+package mx.gob.conavi.sniiv.fragments.demanda;
 
 import android.app.Dialog;
 import android.os.Bundle;

@@ -8,10 +8,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.Locale;
 
 import mx.gob.conavi.sniiv.R;
-import mx.gob.conavi.sniiv.fragments.AvanceObraFragment;
-import mx.gob.conavi.sniiv.fragments.PCUFragment;
-import mx.gob.conavi.sniiv.fragments.TipoViviendaFragment;
-import mx.gob.conavi.sniiv.fragments.ValorViviendaFragment;
+import mx.gob.conavi.sniiv.fragments.oferta.AvanceObraFragment;
+import mx.gob.conavi.sniiv.fragments.oferta.PCUFragment;
+import mx.gob.conavi.sniiv.fragments.oferta.TipoViviendaFragment;
+import mx.gob.conavi.sniiv.fragments.oferta.ValorViviendaFragment;
 
 /**
  * Created by admin on 04/08/15.
