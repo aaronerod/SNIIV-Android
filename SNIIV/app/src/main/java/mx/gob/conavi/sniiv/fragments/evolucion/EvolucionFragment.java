@@ -83,8 +83,13 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
         inflater.inflate(R.menu.menu_evolucion, menu);
         this.menu = menu;
 
-        if (tipo == EvolucionTipo.REGISTRO_VIVIENDA) {
-            menu.findItem(R.id.action_toggle).setVisible(false);
+        if (entidad == null) {
+            return;
+        }
+
+        menu.findItem(R.id.action_guardar).setVisible(true);
+        if (tipo != EvolucionTipo.REGISTRO_VIVIENDA) {
+            menu.findItem(R.id.action_toggle).setVisible(true);
         }
 
         super.onCreateOptionsMenu(menu, inflater);
@@ -190,7 +195,7 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
         @Override
         protected void onPostExecute(Void s) {
             if (!errorRetrievingData) {
-                habilitaPantalla();;
+                habilitaPantalla();
                 getActivity().invalidateOptionsMenu();
             } else {
                 Utils.alertDialogShow(getActivity(), getString(R.string.mensaje_error_datos));
@@ -261,11 +266,20 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
             // Los dos casos realizan la misma acción
             case FINANCIAMIENTOS:
             case SUBSIDIOS:
-                return String.format(res.getString(R.string.title_otorgados), getKey());
+                return String.format(res.getString(R.string.title_otorgados), getKey(), getNombreEntidad());
             case REGISTRO_VIVIENDA:
                 return getString(R.string.title_inventario_oferta);
             default:
                 throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
+        }
+    }
+
+    private String getNombreEntidad() {
+        int numEntidad = pickerEstados.getValue();
+        if (configuracion.equals("sw600dp")) {
+           return Utils.listEdo[numEntidad];
+        } else {
+            return Utils.ENTIDAD_ABR[numEntidad];
         }
     }
 }
