@@ -24,7 +24,6 @@ public class EvolucionRepository implements Repository<Evolucion> {
     public static final String[] FILE_NAMES = {"evolucionFinanciamiento", "evolucionSubsidios",
             "evolucionRegistroVivienda"};
     private Context context;
-    private EvolucionTipo tipo;
     private int index = 0;
 
     public EvolucionRepository(Context context, EvolucionTipo tipo) {
@@ -67,7 +66,6 @@ public class EvolucionRepository implements Repository<Evolucion> {
     }
 
     public Evolucion[] loadFromStorage() {
-        Log.v(TAG, "loadFromStorage " + FILE_NAMES[index]);
         try {
             BufferedReader input;
             input = new BufferedReader(new InputStreamReader(
