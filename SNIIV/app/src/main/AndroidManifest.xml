@@ -53,8 +53,8 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.EvolucionFinanciamientoActivity"
-            android:label="@string/title_evolucion_financiamiento"
+            android:name=".activities.EvolucionActivity"
+            android:label="@string/title_evolucion"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait">
             <meta-data

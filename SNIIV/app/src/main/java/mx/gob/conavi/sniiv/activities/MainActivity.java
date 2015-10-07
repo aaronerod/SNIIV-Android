@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (position == 2) {
             intent = new Intent(this, DemandaActivity.class);
         } else if (position == 3) {
-            intent = new Intent(this, EvolucionFinanciamientoActivity.class);
+            intent = new Intent(this, EvolucionActivity.class);
         }
 
         startActivity(intent);
