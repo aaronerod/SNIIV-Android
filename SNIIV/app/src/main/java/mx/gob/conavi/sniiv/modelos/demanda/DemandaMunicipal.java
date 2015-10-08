@@ -1,54 +1,53 @@
 package mx.gob.conavi.sniiv.modelos.demanda;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import mx.gob.conavi.sniiv.modelos.Consulta;
+import mx.gob.conavi.sniiv.modelos.DemandaMunicipalResultado;
 import mx.gob.conavi.sniiv.modelos.DemandaMunicipalTipo;
 
 /**
  * Created by octavio.munguia on 07/10/2015.
  */
 public class DemandaMunicipal {
-    String municipio;
-    Map<String, Consulta> consultas;
-
-    private String[] nombreCamposFinan = {"vn_cs", "vn_ci", "vu_cs", "vu_ci", "mj_cs", "mj_ci",
-                                "ot_cs", "ot_ci"};
-    private String[] nombreCamposSub = {"nueva", "usada", "autoproduccion", "mejoramiento", "lotes",
-                                "otros"};
+   private ArrayList<DemandaMunicipalResultado> municipios;
 
     public DemandaMunicipal(JSONObject object, DemandaMunicipalTipo tipo) throws JSONException {
-        this.municipio = object.getString("Municipio");
-        switch (tipo) {
-            case FINANCIAMIENTOS:
-                this.consultas = consultaFinanciamientos(object, nombreCamposFinan);
-                break;
-            case SUBSIDIOS:
-                this.consultas = consultaFinanciamientos(object, nombreCamposSub);
-                break;
-            default:
-                throw new IllegalArgumentException("tipo");
-        }
-    }
+        ArrayList<DemandaMunicipalResultado> datos = new ArrayList<>();
+        Iterator<?> keys = object.keys();
 
-    public Map<String, Consulta> consultaFinanciamientos(JSONObject object, String[] nombres) throws JSONException {
-        Map<String, Consulta> consultaMap = new LinkedHashMap<>();
-        for (String campo : nombres) {
-            long acciones = object.getLong(String.format("acc_%s", campo));
-            double monto = object.getDouble(String.format("mto_%s", campo));
-            Consulta consulta = new Consulta(acciones, monto);
-            consultaMap.put(campo, consulta);
+        Set<String> setKeys = new TreeSet<>();
+        while( keys.hasNext() ) {
+            setKeys.add((String)keys.next());
         }
 
-        long accionesTotal = object.getLong("acciones");
-        double montoTotal = object.getDouble("monto");
-        Consulta consultaTotal = new Consulta(accionesTotal, montoTotal);
-        consultaMap.put("total", consultaTotal);
+        for(String key : setKeys) {
+            JSONObject o = (JSONObject) object.get(key);
+            DemandaMunicipalResultado dmr = new DemandaMunicipalResultado(o, tipo);
+            datos.add(dmr);
+        }
 
-        return consultaMap;
+        this.municipios = datos;
     }
+
+    public ArrayList<String> getParties() {
+        ArrayList<String> parties = new ArrayList<>();
+
+        for (DemandaMunicipalResultado r : municipios) {
+            parties.add(r.getMunicipio());
+        }
+
+        return parties;
+    }
+
+
 }
