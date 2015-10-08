@@ -7,7 +7,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import mx.gob.conavi.sniiv.activities.SniivApplication;
 import mx.gob.conavi.sniiv.modelos.oferta.AvanceObra;
 import mx.gob.conavi.sniiv.modelos.oferta.PCU;
 import mx.gob.conavi.sniiv.modelos.ReporteGeneral;
@@ -20,11 +22,13 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
      * Indica la versión de la base de datos, se debe aumentar en 1
      * cada que cambia su estructura.
      */
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "sniiv.db";
+    private Context context;
 
-    public AdminSQLiteOpenHelper(Context context ) {
+    public AdminSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     public AdminSQLiteOpenHelper(Context context, String nombre, CursorFactory factory, int version) {
@@ -169,6 +173,16 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS Agrupacion");
         db.execSQL("DROP TABLE IF EXISTS Financiamiento");
         init(db);
+
+        clearFilesAndPrefs();
+    }
+
+    private void clearFilesAndPrefs() {
+        for (String file : context.fileList()) {
+            context.deleteFile(file);
+        }
+
+        SniivApplication.getInstance().clearAllPreferences();
     }
 
     private void insertTipoEntidadEjecutora(SQLiteDatabase db) {
