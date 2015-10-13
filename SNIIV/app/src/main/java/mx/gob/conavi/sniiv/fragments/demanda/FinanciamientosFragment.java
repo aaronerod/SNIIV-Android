@@ -154,7 +154,6 @@ public class FinanciamientosFragment extends DemandaBaseFragment {
 
                 datos = new DatosFinanciamiento(getActivity(), datosParse);
                 entidad = datos.consultaNacional();
-                Log.v(TAG, "entidad" + entidad.toString());
 
                 saveTimeLastUpdated(getFechaActualizacion().getTime());
 
@@ -194,7 +193,7 @@ public class FinanciamientosFragment extends DemandaBaseFragment {
     protected void inicializaDatos() {
         if (fechas != null) {
             String financiamiento = String.format("%s (%s)", getString(R.string.title_financiamiento),
-                    Utils.formatoDiaMes(fechas.getFecha_finan()));
+                    fechas.getFecha_finan_ui());
             titulo =  financiamiento;
         } else {
             titulo = getString(R.string.title_financiamiento);

@@ -110,7 +110,7 @@ public class TipoViviendaFragment extends OfertaBaseFragment<TipoVivienda> {
 
         if (fechas != null) {
             String tipo = String.format("%s (%s)", getString(R.string.title_tipo_vivienda),
-                    Utils.formatoMes(fechas.getFecha_vv()));
+                    fechas.getFecha_vv_ui());
             titulo =  tipo;
         } else {
             titulo = getString(R.string.title_avance_obra);

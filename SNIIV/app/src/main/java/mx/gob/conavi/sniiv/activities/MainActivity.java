@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.modelos.Fechas;
+import mx.gob.conavi.sniiv.parsing.ParseFechas;
 import mx.gob.conavi.sniiv.parsing.ParseFechasWeb;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 
@@ -56,7 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
     protected void cargarDatosFechas() {
         ParseFechasWeb parseFechasWeb = new ParseFechasWeb();
+        ParseFechas parseFechas = new ParseFechas();
         Fechas[] fechas = parseFechasWeb.getDatos();
+        Fechas[] fechasUI = parseFechas.getDatos();
+        for (int i = 0; i < fechas.length; i++) {
+            fechas[i].setFecha_finan_ui(fechasUI[i].getFecha_finan());
+            fechas[i].setFecha_subs_ui(fechasUI[i].getFecha_subs());
+            fechas[i].setFecha_vv_ui(fechasUI[i].getFecha_vv());
+        }
 
         fechasRepository.deleteAll();
         fechasRepository.saveAll(fechas);

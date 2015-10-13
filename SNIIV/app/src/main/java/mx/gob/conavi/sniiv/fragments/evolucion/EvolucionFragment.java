@@ -218,8 +218,7 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
 
     protected void inicializaDatos() {
         if (fechas != null) {
-            String finan = String.format("%s\n(%s)", getTitle(),
-                    Utils.formatoDiaMes(getFecha()));
+            String finan = String.format("%s\n(%s)", getTitle(), getFechaUI());
             titulo =  finan;
         } else {
             titulo = getTitle();
@@ -255,6 +254,19 @@ public class EvolucionFragment extends BaseFragment<Evolucion> {
                 return fechas.getFecha_subs();
             case REGISTRO_VIVIENDA:
                 return fechas.getFecha_vv();
+            default:
+                throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
+        }
+    }
+
+    private String getFechaUI() {
+        switch (tipo) {
+            case FINANCIAMIENTOS:
+                return fechas.getFecha_finan_ui();
+            case SUBSIDIOS:
+                return fechas.getFecha_subs_ui();
+            case REGISTRO_VIVIENDA:
+                return fechas.getFecha_vv_ui();
             default:
                 throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
         }

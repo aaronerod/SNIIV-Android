@@ -111,7 +111,7 @@ public class ValorViviendaFragment extends OfertaBaseFragment<ValorVivienda> {
 
         if (fechas != null) {
             String valor = String.format("%s (%s)", getString(R.string.title_valor_vivienda),
-                    Utils.formatoMes(fechas.getFecha_vv()));
+                    fechas.getFecha_vv_ui());
             titulo =  valor;
         } else {
             titulo = getString(R.string.title_avance_obra);

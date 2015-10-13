@@ -22,7 +22,7 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
      * Indica la versión de la base de datos, se debe aumentar en 1
      * cada que cambia su estructura.
      */
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "sniiv.db";
     private Context context;
 
@@ -51,6 +51,9 @@ class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
                         "fecha_finan TEXT" +
                         ",fecha_subs TEXT" +
                         ",fecha_vv TEXT" +
+                        ",fecha_finan_ui TEXT" +
+                        ",fecha_subs_ui TEXT" +
+                        ",fecha_vv_ui TEXT" +
                         ")");
         db.execSQL(
                 "CREATE TABLE AvanceObra(" +
