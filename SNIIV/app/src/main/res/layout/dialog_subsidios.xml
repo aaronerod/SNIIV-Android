@@ -10,7 +10,8 @@
         android:text="@string/title_subsidios"
         android:id="@+id/txtTitleSubsidios"
         android:layout_marginTop="20dp"
-        style="@style/Title"/>
+        style="@style/Title"
+        android:textSize="15sp"/>
 
     <TableLayout
         android:layout_width="match_parent"

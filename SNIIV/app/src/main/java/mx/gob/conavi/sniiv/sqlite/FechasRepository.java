@@ -28,6 +28,9 @@ public class FechasRepository implements Repository<Fechas> {
             values.put("fecha_finan", elemento.getFecha_finan());
             values.put("fecha_subs", elemento.getFecha_subs());
             values.put("fecha_vv", elemento.getFecha_vv());
+            values.put("fecha_finan_ui", elemento.getFecha_finan_ui());
+            values.put("fecha_subs_ui", elemento.getFecha_subs_ui());
+            values.put("fecha_vv_ui", elemento.getFecha_vv_ui());
 
             db.insert(Fechas.TABLE, null, values);
         }
@@ -55,6 +58,9 @@ public class FechasRepository implements Repository<Fechas> {
                 fechas.setFecha_finan(cursor.getString(cursor.getColumnIndex("fecha_finan")));
                 fechas.setFecha_subs(cursor.getString(cursor.getColumnIndex("fecha_subs")));
                 fechas.setFecha_vv(cursor.getString((cursor.getColumnIndex("fecha_vv"))));
+                fechas.setFecha_finan_ui(cursor.getString(cursor.getColumnIndex("fecha_finan_ui")));
+                fechas.setFecha_subs_ui(cursor.getString(cursor.getColumnIndex("fecha_subs_ui")));
+                fechas.setFecha_vv_ui(cursor.getString((cursor.getColumnIndex("fecha_vv_ui"))));
 
                 datos.add(fechas);
             } while (cursor.moveToNext());

@@ -111,7 +111,7 @@ public class PCUFragment extends OfertaBaseFragment<PCU> {
 
         if (fechas != null) {
             String pcu = String.format("%s (%s)", getString(R.string.title_pcu),
-                    Utils.formatoMes(fechas.getFecha_vv()));
+                    fechas.getFecha_vv_ui());
             titulo =  pcu;
         } else {
             titulo = getString(R.string.title_pcu);

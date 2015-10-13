@@ -11,6 +11,9 @@ public class Fechas {
     private String fecha_finan;
     private String fecha_subs;
     private String fecha_vv;
+    private String fecha_finan_ui;
+    private String fecha_subs_ui;
+    private String fecha_vv_ui;
 
     public Fechas(String fecha_finan, String fecha_subs, String fecha_vv) {
         this.fecha_finan = fecha_finan;
@@ -72,6 +75,30 @@ public class Fechas {
 
     public void setFecha_vv(String fecha_vv) {
         this.fecha_vv = fecha_vv;
+    }
+
+    public String getFecha_finan_ui() {
+        return fecha_finan_ui;
+    }
+
+    public void setFecha_finan_ui(String fecha_finan_ui) {
+        this.fecha_finan_ui = fecha_finan_ui;
+    }
+
+    public String getFecha_subs_ui() {
+        return fecha_subs_ui;
+    }
+
+    public void setFecha_subs_ui(String fecha_subs_ui) {
+        this.fecha_subs_ui = fecha_subs_ui;
+    }
+
+    public String getFecha_vv_ui() {
+        return fecha_vv_ui;
+    }
+
+    public void setFecha_vv_ui(String fecha_vv_ui) {
+        this.fecha_vv_ui = fecha_vv_ui;
     }
 
     @Override

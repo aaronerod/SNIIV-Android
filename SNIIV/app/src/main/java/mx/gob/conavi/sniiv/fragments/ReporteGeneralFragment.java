@@ -67,11 +67,11 @@ public class ReporteGeneralFragment extends BaseFragment<ReporteGeneral> {
 
         if(fechas != null) {
             String financiamientos = String.format("%s (%s)", getString(R.string.title_financiamiento),
-                   Utils.formatoDiaMes(fechas.getFecha_finan()));
+                   fechas.getFecha_finan_ui());
             String subsidios = String.format("%s (%s)", getString(R.string.title_subsidios),
-                    Utils.formatoDiaMes(fechas.getFecha_subs()));
+                    fechas.getFecha_subs_ui());
             String oferta = String.format("%s (%s)", getString(R.string.title_oferta_vivienda),
-                    Utils.formatoMes(fechas.getFecha_vv()));
+                    fechas.getFecha_vv_ui());
             txtTitleFinanciamientos.setText(financiamientos);
             txtTitleSubsidios.setText(subsidios);
             txtTitleOferta.setText(oferta);

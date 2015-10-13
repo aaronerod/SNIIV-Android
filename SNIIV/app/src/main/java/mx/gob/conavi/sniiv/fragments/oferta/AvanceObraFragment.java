@@ -108,7 +108,7 @@ public class AvanceObraFragment extends OfertaBaseFragment<AvanceObra> {
 
         if (fechas != null) {
             String avance = String.format("%s (%s)", getString(R.string.title_avance_obra),
-                    Utils.formatoMes(fechas.getFecha_vv()));
+                    fechas.getFecha_vv_ui());
             titulo =  avance;
         } else {
             titulo = getString(R.string.title_avance_obra);
