@@ -26,6 +26,10 @@ public class MyValueFormatter implements ValueFormatter {
 
     @Override
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+        if ((int)value == 0) {
+            return "";
+        }
+
         return Utils.toStringDivide(Math.ceil(value), amountToDivide);
     }
 }

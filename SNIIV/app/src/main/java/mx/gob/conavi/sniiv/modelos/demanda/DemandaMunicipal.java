@@ -75,6 +75,4 @@ public class DemandaMunicipal {
     public ArrayList<String> getXValuesMontos() {
         return municipios.get(0).getCamposMontos();
     }
-
-    // TODO: revisar la gráfica valores X, Y
 }

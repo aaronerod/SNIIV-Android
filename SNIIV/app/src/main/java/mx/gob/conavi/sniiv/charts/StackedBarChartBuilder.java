@@ -10,6 +10,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 
@@ -54,6 +57,7 @@ public class StackedBarChartBuilder {
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(8);
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines();
@@ -96,7 +100,12 @@ public class StackedBarChartBuilder {
         max = (float)(max * 1.1); // max + 10%
         mChart.getAxisLeft().setAxisMaxValue(max);
         BarData data = new BarData(parties, dataSets);
-        data.setValueFormatter(new MyValueFormatter());
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                return "";
+            }
+        });
         mChart.setData(data);
         mChart.invalidate();
         mChart.notifyDataSetChanged();
