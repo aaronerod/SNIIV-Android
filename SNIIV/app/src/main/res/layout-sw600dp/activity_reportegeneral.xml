@@ -12,7 +12,6 @@
         android:id="@+id/txtTitleFinanciamientos"
         style="@style/Title"
         android:layout_marginTop="24dp"
-        android:textSize="18sp"
         />
 
     <TableLayout
@@ -70,8 +69,7 @@
         android:layout_height="wrap_content"
         android:text="@string/title_subsidios"
         android:id="@+id/txtTitleSubsidios"
-        style="@style/Title"
-        android:textSize="18sp"/>
+        style="@style/Title" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -129,8 +127,7 @@
         android:layout_height="wrap_content"
         android:text="@string/title_oferta_vivienda"
         android:id="@+id/txtTitleOfertaVivienda"
-        style="@style/Title"
-        android:textSize="18sp"/>
+        style="@style/Title" />
 
     <TableLayout
         android:layout_width="match_parent"
