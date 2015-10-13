@@ -12,13 +12,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.charts.BarChartConfig;
+import mx.gob.conavi.sniiv.charts.StackedBarChartBuilder;
 import mx.gob.conavi.sniiv.datos.Datos;
 import mx.gob.conavi.sniiv.datos.DatosDemandaMunicipal;
 import mx.gob.conavi.sniiv.fragments.BaseFragment;
@@ -33,9 +39,7 @@ import mx.gob.conavi.sniiv.sqlite.DemandaMunicipalRepository;
  */
 public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
     private static final String TAG = DemandaMunicipalFragment.class.getSimpleName();
-    @Nullable
-    @Bind(R.id.chart)
-    LineChart mChart;
+    @Nullable @Bind(R.id.chart) BarChart mChart;
 
     protected String titulo;
     private boolean errorRetrievingData = false;
@@ -62,6 +66,12 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        pickerEstados.setValue(1);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         errorShowed = false;
@@ -77,6 +87,27 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
 
         return view;
     }
+
+    protected NumberPicker.OnValueChangeListener configuraValueChangeListener() {
+        return new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (newVal == 0) {
+                    entidad = datos.consultaNacional();
+                } else {
+                    entidad = datos.consultaEntidad(newVal - 1);
+                }
+
+                mostrarDatos();
+            }
+        };
+    }
+
+    /*protected void configuraPickerView() {
+        pickerEstados.setMaxValue(Utils.listEdo.length - 1);
+        pickerEstados.setMinValue(1);
+        pickerEstados.setDisplayedValues(Utils.listEdoNoNacional);
+    }*/
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_evolucion, menu);
@@ -144,9 +175,9 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
     protected String getKey() {
         switch (tipo) {
             case FINANCIAMIENTOS:
-                return Evolucion.FINANCIAMIENTO;
+                return DemandaMunicipal.FINANCIAMIENTO;
             case SUBSIDIOS:
-                return Evolucion.SUBSIDIO;
+                return DemandaMunicipal.SUBSIDIO;
             default:
                 throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
         }
@@ -170,12 +201,12 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
                 ParseDemandaMunicipal parse = new ParseDemandaMunicipal(tipo);
                 DemandaMunicipal[] datosParse = parse.getDatos();
                 repository.deleteAll();
-                ((DemandaMunicipalRepository)repository).saveAll(parse.getJsonObject());
+                // ((DemandaMunicipalRepository)repository).saveAll(parse.getJsonObject());
 
                 datos = new DatosDemandaMunicipal(datosParse);
-                entidad = datos.consultaNacional();
+                entidad = datos.consultaEntidad(0);
 
-                saveTimeLastUpdated(getFechaActualizacion().getTime());
+                //saveTimeLastUpdated(getFechaActualizacion().getTime());
 
                 loadFechasStorage();
             } catch (Exception e) {
@@ -198,9 +229,15 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
         }
     }
 
-    // inicializaDatosChart
     protected void inicializaDatosChart() {
-        throw new UnsupportedOperationException("Not implemented");
+            BarChartConfig config = new BarChartConfig();
+            config.setParties(entidad.getParties());
+            config.setyValues(getYValues());
+            config.setDescription(titulo);
+            config.setxValues(getXValues());
+            config.setShowAcciones(showAcciones);
+            config.setConfiguracion(configuracion);
+            StackedBarChartBuilder.buildLineChart(getActivity(), mChart, config);
     }
 
     protected void inicializaDatos() {
@@ -215,6 +252,22 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
 
     protected Datos<DemandaMunicipal> getDatos(DemandaMunicipal[] datos) {
         return new DatosDemandaMunicipal(datos);
+    }
+
+    private ArrayList<float[]> getYValues() {
+        if (showAcciones) {
+            return entidad.getYValuesAcciones();
+        } else {
+            return entidad.getYValuesMontos();
+        }
+    }
+
+    private ArrayList<String> getXValues() {
+        if (showAcciones) {
+            return entidad.getXValuesAcciones();
+        } else {
+            return entidad.getXValuesMontos();
+        }
     }
 
     private void setOptionTitle() {
@@ -256,5 +309,10 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
         } else {
             return Utils.ENTIDAD_ABR[numEntidad];
         }
+    }
+
+    @Override
+    protected DemandaMunicipal consulta(Datos<DemandaMunicipal> datos) {
+        return datos.consultaEntidad(1);
     }
 }

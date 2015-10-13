@@ -43,7 +43,10 @@ public class ColorTemplate {
     };
     public static final int[] VORDIPLOM_COLORS = {
             Color.rgb(192, 255, 140), Color.rgb(255, 247, 140), Color.rgb(255, 208, 140),
-            Color.rgb(140, 234, 255), Color.rgb(255, 140, 157)
+            Color.rgb(140, 234, 255), Color.rgb(255, 140, 157),
+
+            Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
+            Color.rgb(191, 134, 134), Color.rgb(179, 48, 80)
     };
 
     public static final int[] CONAVI_COLORS = {

@@ -19,19 +19,18 @@ import mx.gob.conavi.sniiv.modelos.DemandaMunicipalTipo;
  * Created by octavio.munguia on 07/10/2015.
  */
 public class DemandaMunicipal {
-   private ArrayList<DemandaMunicipalResultado> municipios;
+    private static final String TAG = DemandaMunicipal.class.getSimpleName();
+    public static final String FINANCIAMIENTO = TAG + "Financiamientos";
+    public static final String SUBSIDIO = TAG + "Subsidios";
 
-    public DemandaMunicipal(JSONObject object, DemandaMunicipalTipo tipo) throws JSONException {
+    private ArrayList<DemandaMunicipalResultado> municipios;
+
+
+    public DemandaMunicipal(JSONArray array, DemandaMunicipalTipo tipo) throws JSONException {
         ArrayList<DemandaMunicipalResultado> datos = new ArrayList<>();
-        Iterator<?> keys = object.keys();
 
-        Set<String> setKeys = new TreeSet<>();
-        while( keys.hasNext() ) {
-            setKeys.add((String)keys.next());
-        }
-
-        for(String key : setKeys) {
-            JSONObject o = (JSONObject) object.get(key);
+        for (int i = 0, size = array.length(); i < size; i++) {
+            JSONObject o = array.getJSONObject(i);
             DemandaMunicipalResultado dmr = new DemandaMunicipalResultado(o, tipo);
             datos.add(dmr);
         }
@@ -49,5 +48,33 @@ public class DemandaMunicipal {
         return parties;
     }
 
+    public ArrayList<float[]> getYValuesAcciones() {
+        ArrayList<float[]> yValues = new ArrayList<>();
 
+        for (DemandaMunicipalResultado r : municipios) {
+            yValues.add(r.getValuesAcciones());
+        }
+
+        return yValues;
+    }
+
+    public ArrayList<String> getXValuesAcciones() {
+        return municipios.get(0).getCamposAcciones();
+    }
+
+    public ArrayList<float[]> getYValuesMontos() {
+        ArrayList<float[]> yValues = new ArrayList<>();
+
+        for (DemandaMunicipalResultado r : municipios) {
+            yValues.add(r.getValuesMontos());
+        }
+
+        return yValues;
+    }
+
+    public ArrayList<String> getXValuesMontos() {
+        return municipios.get(0).getCamposMontos();
+    }
+
+    // TODO: revisar la gráfica valores X, Y
 }

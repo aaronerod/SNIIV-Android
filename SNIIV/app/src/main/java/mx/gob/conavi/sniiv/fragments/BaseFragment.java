@@ -94,7 +94,7 @@ public abstract class BaseFragment<T> extends Fragment {
         T[] datosStorage = repository.loadFromStorage();
         if(datosStorage.length > 0) {
             datos = getDatos(datosStorage);
-            entidad = datos.consultaNacional();
+            entidad = consulta(datos);
             pickerEstados.setEnabled(true);
         } else {
             if (!errorShowed) {
@@ -153,6 +153,10 @@ public abstract class BaseFragment<T> extends Fragment {
         }
 
         return new Date(0);
+    }
+
+    protected T consulta(Datos<T> datos) {
+        return datos.consultaNacional();
     }
 
     protected abstract void mostrarDatos();

@@ -63,7 +63,7 @@ public class StackedBarChartBuilder {
 
         mChart.getAxisRight().setEnabled(false);
 
-        mChart.animateY(2500, Easing.EasingOption.EaseInSine);
+        mChart.animateY(1500, Easing.EasingOption.EaseInSine);
 
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.BELOW_CHART_RIGHT);
@@ -74,28 +74,51 @@ public class StackedBarChartBuilder {
 
     private static void setData(BarChart mChart, ArrayList<String> xValues, ArrayList<float[]> yValues,
                                 ArrayList<String> parties) {
-        ArrayList<String> xVals = new ArrayList<>();
-        for (int i = 0; i < xValues.size(); i++) {
-            xVals.add(xValues.get(i));
-        }
-
         ArrayList<BarEntry> yVals1 = new ArrayList<>();
-        double maxValue = 0;
+
+        float max = 0;
         for (int i = 0; i < yValues.size(); i++) {
-            yVals1.add(new BarEntry(yValues.get(i), i));
+            float[] arr = yValues.get(i);
+            float currentArrayMax = maxValue(arr);
+            if (currentArrayMax > max) {
+                max = currentArrayMax;
+            }
+
+            yVals1.add(new BarEntry(arr, i));
         }
 
         BarDataSet set1 = new BarDataSet(yVals1, "");
-        set1.setColors(ColorTemplate.EVOLUCION_COLORS);
-        set1.setStackLabels(parties.toArray(new String[0]));
+        set1.setColors(getColors(xValues.size()));
+        set1.setStackLabels(xValues.toArray(new String[0]));
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
-        mChart.getAxisLeft().setAxisMaxValue((float) maxValue);
-
-        BarData data = new BarData(xVals, dataSets);
+        max = (float)(max * 1.1); // max + 10%
+        mChart.getAxisLeft().setAxisMaxValue(max);
+        BarData data = new BarData(parties, dataSets);
+        data.setValueFormatter(new MyValueFormatter());
         mChart.setData(data);
         mChart.invalidate();
         mChart.notifyDataSetChanged();
+    }
+
+    private static float maxValue(float[] arr) {
+        float maxValue = 0;
+        for (float f : arr) {
+            maxValue += f;
+        }
+
+        return maxValue;
+    }
+
+    private static int[] getColors(int size) {
+        int stacksize = size;
+        int[] colors = new int[stacksize];
+
+        for (int i = 0; i < stacksize; i++) {
+            colors[i] = ColorTemplate.VORDIPLOM_COLORS[i];
+        }
+
+        return colors;
     }
 }

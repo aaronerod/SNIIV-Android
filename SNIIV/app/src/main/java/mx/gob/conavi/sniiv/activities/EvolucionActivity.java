@@ -25,14 +25,14 @@ public class EvolucionActivity extends AppCompatActivity implements ActionBar.Ta
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.title_demanda_municipal);
+        actionBar.setTitle(R.string.title_evolucion);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        DemandaMunicipalPageAdapter mEvolucionPagerAdapter =
-                new DemandaMunicipalPageAdapter(this, getSupportFragmentManager());
+        EvolucionPageAdapter mEvolucionPagerAdapter =
+                new EvolucionPageAdapter(this, getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

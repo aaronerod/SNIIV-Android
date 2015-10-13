@@ -29,14 +29,17 @@ public class Utils {
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();
     public static final String[] listEdo = new String[33];
+    public static final String[] listEdoNoNacional = new String[33];
 
     static {
         listMenu.add("Reporte General");
         listMenu.add("Oferta");
         listMenu.add("Demanda");
         listMenu.add("Evolución Mensual");
+        listMenu.add("Demanda Municipal");
         populateEstados();
         populateEdos();
+        populateEdosNoNacional();
     }
 
     public static String toString(long numero) {
@@ -166,6 +169,41 @@ public class Utils {
         listEdo[30]="Veracruz";
         listEdo[31]="Yucatán";
         listEdo[32]="Zacatecas";
+    }
+
+    private static void populateEdosNoNacional(){
+        listEdoNoNacional[1]="Aguascalientes";
+        listEdoNoNacional[2]="Baja California";
+        listEdoNoNacional[3]="Baja California Sur";
+        listEdoNoNacional[4]="Campeche";
+        listEdoNoNacional[5]="Coahuila";
+        listEdoNoNacional[6]="Colima";
+        listEdoNoNacional[7]="Chiapas";
+        listEdoNoNacional[8]="Chihuahua";
+        listEdoNoNacional[9]="Distrito Federal";
+        listEdoNoNacional[10]="Durango";
+        listEdoNoNacional[11]="Guanajuato";
+        listEdoNoNacional[12]="Guerrero";
+        listEdoNoNacional[13]="Hidalgo";
+        listEdoNoNacional[14]="Jalisco";
+        listEdoNoNacional[15]="México";
+        listEdoNoNacional[16]="Michoacán";
+        listEdoNoNacional[17]="Morelos";
+        listEdoNoNacional[18]="Nayarit";
+        listEdoNoNacional[19]="Nuevo León";
+        listEdoNoNacional[20]="Oaxaca";
+        listEdoNoNacional[21]="Puebla";
+        listEdoNoNacional[22]="Querétaro";
+        listEdoNoNacional[23]="Quintana Roo";
+        listEdoNoNacional[24]="San Luis Potosí";
+        listEdoNoNacional[25]="Sinaloa";
+        listEdoNoNacional[26]="Sonora";
+        listEdoNoNacional[27]="Tabasco";
+        listEdoNoNacional[28]="Tamaulipas";
+        listEdoNoNacional[29]="Tlaxcala";
+        listEdoNoNacional[30]="Veracruz";
+        listEdoNoNacional[31]="Yucatán";
+        listEdoNoNacional[32]="Zacatecas";
     }
 
     private static void populateEstados(){

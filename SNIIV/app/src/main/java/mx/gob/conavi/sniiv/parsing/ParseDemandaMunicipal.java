@@ -64,7 +64,7 @@ public class ParseDemandaMunicipal extends ParseBase<DemandaMunicipal[]> {
                     object = new JSONObject(jsonString.trim());
                     return createModel(object, tipo);
                 } catch (JSONException jse) {
-                    Log.v(TAG, "Error parseando json Evolucion");
+                    Log.v(TAG, "Error parseando json DemandaMunicipal");
                 }
             }
         }
@@ -83,8 +83,7 @@ public class ParseDemandaMunicipal extends ParseBase<DemandaMunicipal[]> {
 
         for(String key : setKeys) {
             JSONArray array = (JSONArray) object.get(key);
-            JSONObject o = (JSONObject) array.get(0);
-            DemandaMunicipal dm = new DemandaMunicipal(o, tipo);
+            DemandaMunicipal dm = new DemandaMunicipal(array, tipo);
             datos.add(dm);
         }
 

@@ -8,7 +8,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.Locale;
 
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.fragments.ReporteGeneralFragment;
+import mx.gob.conavi.sniiv.fragments.demanda.DemandaMunicipalFragment;
 import mx.gob.conavi.sniiv.fragments.evolucion.EvolucionFragment;
+import mx.gob.conavi.sniiv.modelos.DemandaMunicipalTipo;
 import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
 
 /**
@@ -25,8 +28,8 @@ public class DemandaMunicipalPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: return EvolucionFragment.newInstance(EvolucionTipo.FINANCIAMIENTOS);
-            case 1: return EvolucionFragment.newInstance(EvolucionTipo.SUBSIDIOS);
+            case 0: return DemandaMunicipalFragment.newInstance(DemandaMunicipalTipo.FINANCIAMIENTOS);
+            case 1: return DemandaMunicipalFragment.newInstance(DemandaMunicipalTipo.SUBSIDIOS);
         }
 
         return null;

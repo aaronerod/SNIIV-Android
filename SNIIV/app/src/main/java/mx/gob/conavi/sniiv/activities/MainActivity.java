@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
 import mx.gob.conavi.sniiv.modelos.Fechas;
+import mx.gob.conavi.sniiv.modelos.demanda.DemandaMunicipal;
 import mx.gob.conavi.sniiv.parsing.ParseFechasWeb;
 import mx.gob.conavi.sniiv.sqlite.FechasRepository;
 
@@ -65,14 +66,24 @@ public class MainActivity extends AppCompatActivity {
     public void changeActivity(int position) {
         Intent intent = null;
 
-        if (position == 0) {
-            intent = new Intent(this, ReporteGeneralActivity.class);
-        } else if (position == 1) {
-            intent = new Intent(this, OfertaActivity.class);
-        } else if (position == 2) {
-            intent = new Intent(this, DemandaActivity.class);
-        } else if (position == 3) {
-            intent = new Intent(this, EvolucionActivity.class);
+        switch (position) {
+            case 0:
+                intent = new Intent(this, ReporteGeneralActivity.class);
+                break;
+            case 1:
+                intent = new Intent(this, OfertaActivity.class);
+                break;
+            case 2:
+                intent = new Intent(this, DemandaActivity.class);
+                break;
+            case 3:
+                intent = new Intent(this, EvolucionActivity.class);
+                break;
+            case 4:
+                intent = new Intent(this, DemandaMunicipalActivity.class);
+                break;
+            default:
+                throw new IllegalArgumentException("position");
         }
 
         startActivity(intent);

@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import mx.gob.conavi.sniiv.R;
+import mx.gob.conavi.sniiv.adapters.DemandaMunicipalPageAdapter;
 import mx.gob.conavi.sniiv.adapters.EvolucionPageAdapter;
 
 /**
@@ -24,18 +25,18 @@ public class DemandaMunicipalActivity extends AppCompatActivity implements Actio
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.title_evolucion);
+        actionBar.setTitle(R.string.title_demanda_municipal);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        EvolucionPageAdapter mEvolucionPagerAdapter =
-                new EvolucionPageAdapter(this, getSupportFragmentManager());
+        DemandaMunicipalPageAdapter mPagerAdapter =
+                new DemandaMunicipalPageAdapter(this, getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mEvolucionPagerAdapter);
+        mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
 
         // When swiping between different sections, select the corresponding
@@ -49,10 +50,10 @@ public class DemandaMunicipalActivity extends AppCompatActivity implements Actio
         });
 
         // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mEvolucionPagerAdapter.getCount(); i++) {
+        for (int i = 0; i < mPagerAdapter.getCount(); i++) {
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(mEvolucionPagerAdapter.getPageTitle(i))
+                            .setText(mPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
     }
