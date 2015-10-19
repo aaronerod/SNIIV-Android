@@ -29,7 +29,7 @@ public class Utils {
     public static final ArrayList<String> listMenu = new ArrayList<>();
     public static final ArrayList<String> listEstados = new ArrayList<>();
     public static final String[] listEdo = new String[33];
-    public static final String[] listEdoNoNacional = new String[33];
+    public static final String[] listEdoNoNacional = new String[32];
 
     static {
         listMenu.add("Reporte General");
@@ -172,38 +172,39 @@ public class Utils {
     }
 
     private static void populateEdosNoNacional(){
-        listEdoNoNacional[1]="Aguascalientes";
-        listEdoNoNacional[2]="Baja California";
-        listEdoNoNacional[3]="Baja California Sur";
-        listEdoNoNacional[4]="Campeche";
-        listEdoNoNacional[5]="Coahuila";
-        listEdoNoNacional[6]="Colima";
-        listEdoNoNacional[7]="Chiapas";
-        listEdoNoNacional[8]="Chihuahua";
-        listEdoNoNacional[9]="Distrito Federal";
-        listEdoNoNacional[10]="Durango";
-        listEdoNoNacional[11]="Guanajuato";
-        listEdoNoNacional[12]="Guerrero";
-        listEdoNoNacional[13]="Hidalgo";
-        listEdoNoNacional[14]="Jalisco";
-        listEdoNoNacional[15]="México";
-        listEdoNoNacional[16]="Michoacán";
-        listEdoNoNacional[17]="Morelos";
-        listEdoNoNacional[18]="Nayarit";
-        listEdoNoNacional[19]="Nuevo León";
-        listEdoNoNacional[20]="Oaxaca";
-        listEdoNoNacional[21]="Puebla";
-        listEdoNoNacional[22]="Querétaro";
-        listEdoNoNacional[23]="Quintana Roo";
-        listEdoNoNacional[24]="San Luis Potosí";
-        listEdoNoNacional[25]="Sinaloa";
-        listEdoNoNacional[26]="Sonora";
-        listEdoNoNacional[27]="Tabasco";
-        listEdoNoNacional[28]="Tamaulipas";
-        listEdoNoNacional[29]="Tlaxcala";
-        listEdoNoNacional[30]="Veracruz";
-        listEdoNoNacional[31]="Yucatán";
-        listEdoNoNacional[32]="Zacatecas";
+        //listEdoNoNacional[0]="--------------";
+        listEdoNoNacional[0]="Aguascalientes";
+        listEdoNoNacional[1]="Baja California";
+        listEdoNoNacional[2]="Baja California Sur";
+        listEdoNoNacional[3]="Campeche";
+        listEdoNoNacional[4]="Coahuila";
+        listEdoNoNacional[5]="Colima";
+        listEdoNoNacional[6]="Chiapas";
+        listEdoNoNacional[7]="Chihuahua";
+        listEdoNoNacional[8]="Distrito Federal";
+        listEdoNoNacional[9]="Durango";
+        listEdoNoNacional[10]="Guanajuato";
+        listEdoNoNacional[11]="Guerrero";
+        listEdoNoNacional[12]="Hidalgo";
+        listEdoNoNacional[13]="Jalisco";
+        listEdoNoNacional[14]="México";
+        listEdoNoNacional[15]="Michoacán";
+        listEdoNoNacional[16]="Morelos";
+        listEdoNoNacional[17]="Nayarit";
+        listEdoNoNacional[18]="Nuevo León";
+        listEdoNoNacional[19]="Oaxaca";
+        listEdoNoNacional[20]="Puebla";
+        listEdoNoNacional[21]="Querétaro";
+        listEdoNoNacional[22]="Quintana Roo";
+        listEdoNoNacional[23]="San Luis Potosí";
+        listEdoNoNacional[24]="Sinaloa";
+        listEdoNoNacional[25]="Sonora";
+        listEdoNoNacional[26]="Tabasco";
+        listEdoNoNacional[27]="Tamaulipas";
+        listEdoNoNacional[28]="Tlaxcala";
+        listEdoNoNacional[29]="Veracruz";
+        listEdoNoNacional[30]="Yucatán";
+        listEdoNoNacional[31]="Zacatecas";
     }
 
     private static void populateEstados(){
