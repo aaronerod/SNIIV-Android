@@ -50,7 +50,8 @@
     <string name="unidades_acciones">Acciones (miles):</string>
     <string name="unidades_monto">Monto (mdp):</string>
 
-    <string name="title_evolucion_financiamiento">Evolución Mensual</string>
+    <string name="title_evolucion">Evolución Mensual</string>
+    <string name="title_demanda_municipal">Reporte Municipal</string>
 
     <string name="title_grafica">Gráfica</string>
     <string name="mensaje_imagen_guardada">Imagen Guardada en Galería</string>

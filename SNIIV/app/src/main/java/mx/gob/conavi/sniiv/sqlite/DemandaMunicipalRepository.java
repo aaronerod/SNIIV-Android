@@ -12,22 +12,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import mx.gob.conavi.sniiv.modelos.Evolucion;
-import mx.gob.conavi.sniiv.modelos.EvolucionTipo;
-import mx.gob.conavi.sniiv.parsing.ParseEvolucion;
+import mx.gob.conavi.sniiv.modelos.DemandaMunicipalTipo;
+import mx.gob.conavi.sniiv.modelos.demanda.DemandaMunicipal;
+import mx.gob.conavi.sniiv.parsing.ParseDemandaMunicipal;
 
 /**
- * Created by octavio.munguia on 25/09/2015.
+ * Created by octavio.munguia on 07/10/2015.
  */
-public class EvolucionRepository implements Repository<Evolucion> {
-    private static final String TAG = EvolucionRepository.class.getSimpleName();
-    public static final String[] FILE_NAMES = {"evolucionFinanciamiento", "evolucionSubsidios",
-            "evolucionRegistroVivienda"};
+public class DemandaMunicipalRepository implements Repository<DemandaMunicipal>{
+    private static final String TAG = DemandaMunicipalRepository.class.getSimpleName();
+    public static final String[] FILE_NAMES = { "demandaMunicipalFinan", "demandaMunicipalSub" };
     private Context context;
+    private DemandaMunicipalTipo tipo;
     private int index = 0;
 
-    public EvolucionRepository(Context context, EvolucionTipo tipo) {
+    public DemandaMunicipalRepository(Context context, DemandaMunicipalTipo tipo) {
         this.context = context;
+        this.tipo = tipo;
         switch (tipo) {
             case FINANCIAMIENTOS:
                 index = 0;
@@ -35,14 +36,11 @@ public class EvolucionRepository implements Repository<Evolucion> {
             case SUBSIDIOS:
                 index = 1;
                 break;
-            case REGISTRO_VIVIENDA:
-                index = 2;
-                break;
         }
     }
 
     @Override
-    public void saveAll(Evolucion[] elementos) {
+    public void saveAll(DemandaMunicipal[] elementos) {
         throw new NotImplementedException("saveAll");
     }
 
@@ -65,7 +63,8 @@ public class EvolucionRepository implements Repository<Evolucion> {
         context.deleteFile(FILE_NAMES[index]);
     }
 
-    public Evolucion[] loadFromStorage() {
+    @Override
+    public DemandaMunicipal[] loadFromStorage() {
         try {
             BufferedReader input;
             input = new BufferedReader(new InputStreamReader(
@@ -78,13 +77,13 @@ public class EvolucionRepository implements Repository<Evolucion> {
             }
 
             JSONObject object = new JSONObject(content.toString());
-            return ParseEvolucion.createModel(object);
+            return ParseDemandaMunicipal.createModel(object, tipo);
         } catch (JSONException jse) {
             Log.v(TAG, "Error parseando json " + FILE_NAMES[index]);
         } catch (IOException e) {
             Log.v(TAG, "Error leyendo del archivo");
         }
 
-        return new Evolucion[0];
+        return new DemandaMunicipal[0];
     }
 }

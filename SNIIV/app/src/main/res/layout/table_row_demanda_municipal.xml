@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dip" >
+
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:text="Nueva:"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Etiqueta"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/txtMunicipio1"
+        android:text="-"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="right"
+        style="@style/EtiquetaCantidad"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/txtMunicipio2"
+        android:text="-"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="right"
+        style="@style/EtiquetaCantidad"
+        android:textSize="13sp" />
+    <TextView
+        android:id="@+id/txtMunicipio3"
+        android:text="-"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="right"
+        style="@style/EtiquetaCantidad"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/txtMunicipioOtros"
+        android:text="-"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="right"
+        style="@style/EtiquetaCantidad"
+        android:textSize="13sp" />
+</TableRow>

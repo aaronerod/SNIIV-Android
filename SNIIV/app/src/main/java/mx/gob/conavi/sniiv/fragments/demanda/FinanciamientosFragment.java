@@ -168,7 +168,6 @@ public class FinanciamientosFragment extends DemandaBaseFragment {
 
         @Override
         protected void onPostExecute(Void s) {
-            Log.v(TAG, "onPostExecute: errorRetrievingData " + errorRetrievingData );
             if (!errorRetrievingData) {
                 habilitaPantalla();
                 intentaInicializarGrafica();

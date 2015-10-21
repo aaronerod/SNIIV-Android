@@ -60,7 +60,6 @@ public class DatosFinanciamientosDialogFragment extends DialogFragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.v(TAG, "onCreateView");
         View root = inflater.inflate(R.layout.dialog_financiamientos, container, false);
         ButterKnife.bind(this, root);
         titulo = getArguments().getString("titulo");
