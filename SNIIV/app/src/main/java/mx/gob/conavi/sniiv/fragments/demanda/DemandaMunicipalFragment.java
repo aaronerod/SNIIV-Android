@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -68,7 +69,6 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
     @Override
     public void onResume() {
         super.onResume();
-        pickerEstados.setValue(1);
     }
 
     @Override
@@ -92,10 +92,8 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
         return new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if (newVal == 0) {
-                    entidad = datos.consultaNacional();
-                } else {
-                    entidad = datos.consultaEntidad(newVal - 1);
+                if (newVal >= 0) {
+                    entidad = datos.consultaEntidad(newVal);
                 }
 
                 mostrarDatos();
@@ -103,20 +101,24 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
         };
     }
 
-    /*protected void configuraPickerView() {
-        pickerEstados.setMaxValue(Utils.listEdo.length - 1);
-        pickerEstados.setMinValue(1);
+    protected void configuraPickerView() {
+        pickerEstados.setMaxValue(Utils.listEdoNoNacional.length - 1);
+        pickerEstados.setMinValue(0);
         pickerEstados.setDisplayedValues(Utils.listEdoNoNacional);
-    }*/
+        pickerEstados.setEnabled(false);
+        pickerEstados.setOnValueChangedListener(valueChangeListener);
+    }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_evolucion, menu);
+        inflater.inflate(R.menu.menu_demanda_municipal, menu);
         this.menu = menu;
 
         if (entidad == null) {
             return;
         }
 
+        menu.findItem(R.id.action_datos).setVisible(true);
+        menu.findItem(R.id.action_toggle).setVisible(true);
         menu.findItem(R.id.action_guardar).setVisible(true);
 
         super.onCreateOptionsMenu(menu, inflater);
@@ -127,6 +129,9 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.action_datos:
+                muestraDialogo();
+                break;
             case R.id.action_toggle:
                 showAcciones = !showAcciones;
                 setOptionTitle();
@@ -201,12 +206,12 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
                 ParseDemandaMunicipal parse = new ParseDemandaMunicipal(tipo);
                 DemandaMunicipal[] datosParse = parse.getDatos();
                 repository.deleteAll();
-                // ((DemandaMunicipalRepository)repository).saveAll(parse.getJsonObject());
+                ((DemandaMunicipalRepository)repository).saveAll(parse.getJsonObject());
 
                 datos = new DatosDemandaMunicipal(datosParse);
                 entidad = datos.consultaEntidad(0);
 
-                //saveTimeLastUpdated(getFechaActualizacion().getTime());
+                saveTimeLastUpdated(getFechaActualizacion().getTime());
 
                 loadFechasStorage();
             } catch (Exception e) {
@@ -296,7 +301,8 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
             // Los dos casos realizan la misma acción
             case FINANCIAMIENTOS:
             case SUBSIDIOS:
-                return String.format(res.getString(R.string.title_otorgados), getKey(), getNombreEntidad());
+                String key = getKey().substring(16); // Financiamientos, Subsidios
+                return String.format(res.getString(R.string.title_otorgados), key, getNombreEntidad());
             default:
                 throw new IllegalArgumentException(getString(R.string.etiqueta_tipo));
         }
@@ -305,14 +311,38 @@ public class DemandaMunicipalFragment extends BaseFragment<DemandaMunicipal> {
     private String getNombreEntidad() {
         int numEntidad = pickerEstados.getValue();
         if (configuracion.equals("sw600dp")) {
-            return Utils.listEdo[numEntidad];
+            return Utils.listEdoNoNacional[numEntidad];
         } else {
-            return Utils.ENTIDAD_ABR[numEntidad];
+            return Utils.ENTIDAD_ABR[numEntidad + 1];
         }
     }
 
     @Override
     protected DemandaMunicipal consulta(Datos<DemandaMunicipal> datos) {
-        return datos.consultaEntidad(1);
+        return datos.consultaEntidad(0);
+    }
+
+    private String[] getEtiquetas() {
+        switch (tipo) {
+            case FINANCIAMIENTOS:
+                return new String[]{
+                        "Nuevas CS", "Nuevas CI", "Usadas CS", "Usadas CI",
+                        "Mejoramiento CS", "Mejoramiento CI", "Otros CS", "Otros CI"/*,
+                "Total CS", "Total CI"*/};
+            case SUBSIDIOS:
+                return new String[]{
+                        "Nueva", "Usada", "Autoproducción",
+                        "Mejoramiento", "Lotes", "Otros"};
+            default:
+                throw new IllegalArgumentException("tipo");
+        }
+    }
+
+    protected void muestraDialogo() {
+        String key = getKey().substring(16);
+        DatosDemandaMunicipalDialogFragment dialog =
+                DatosDemandaMunicipalDialogFragment.newInstance(key, entidad.getParties(), getYValues(), getEtiquetas());
+        dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.MyDialogTheme );
+        dialog.show(getFragmentManager(), "DatosDemandaMunicipalDialog");
     }
 }
