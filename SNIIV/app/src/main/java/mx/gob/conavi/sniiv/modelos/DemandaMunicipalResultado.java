@@ -52,7 +52,6 @@ public class DemandaMunicipalResultado {
                 Consulta consulta = new Consulta(acciones, monto);
                 consultaMap.put(etiqueta, consulta);
             } catch (JSONException ex) {
-                Log.v("Cannot convert: ", campo);
                 Consulta consulta = new Consulta(0, 0);
                 consultaMap.put(etiqueta, consulta);
             }
