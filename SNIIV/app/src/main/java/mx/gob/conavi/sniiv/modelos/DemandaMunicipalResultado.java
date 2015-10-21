@@ -19,42 +19,44 @@ public class DemandaMunicipalResultado {
 
     private String[] nombreCamposFinan = {"vn_cs", "vn_ci", "vu_cs", "vu_ci", "mj_cs", "mj_ci",
             "ot_cs", "ot_ci"};
+    private String[] nombreEtiqutasFinan = {"V. Nueva CS", "V. Nueva CI", "V. Usada CS", "V. Usada CI",
+            "Mejoramiento CS", "Mejoramiento CI", "Otros CS", "Otros CI"};
     private String[] nombreCamposSub = {"nueva", "usada", "autoproduccion", "mejoramiento", "lotes",
             "otros"};
+    private String[] nombreEtiquetasSub = {"Nueva", "Usada", "Autoproducción", "Mejoramiento", "Lotes",
+            "Otros"};
 
     public DemandaMunicipalResultado(JSONObject object, DemandaMunicipalTipo tipo) throws JSONException {
         this.municipio = object.getString("Municipio");
         switch (tipo) {
             case FINANCIAMIENTOS:
-                this.consultas = consultaFinanciamientos(object, nombreCamposFinan);
+                this.consultas = consultaFinanciamientos(object, nombreCamposFinan, nombreEtiqutasFinan);
                 break;
             case SUBSIDIOS:
-                this.consultas = consultaFinanciamientos(object, nombreCamposSub);
+                this.consultas = consultaFinanciamientos(object, nombreCamposSub, nombreEtiquetasSub);
                 break;
             default:
                 throw new IllegalArgumentException("tipo");
         }
     }
 
-    public Map<String, Consulta> consultaFinanciamientos(JSONObject object, String[] nombres) throws JSONException {
+    public Map<String, Consulta> consultaFinanciamientos(JSONObject object, String[] nombres, String[] nombresEtiquetas) throws JSONException {
         Map<String, Consulta> consultaMap = new LinkedHashMap<>();
+        int i = 0;
         for (String campo : nombres) {
+            String etiqueta = nombresEtiquetas[i];
+            i++;
             try {
                 long acciones = object.getLong(String.format("acc_%s", campo));
                 double monto = object.getDouble(String.format("mto_%s", campo));
                 Consulta consulta = new Consulta(acciones, monto);
-                consultaMap.put(campo, consulta);
+                consultaMap.put(etiqueta, consulta);
             } catch (JSONException ex) {
                 Log.v("Cannot convert: ", campo);
                 Consulta consulta = new Consulta(0, 0);
-                consultaMap.put(campo, consulta);
+                consultaMap.put(etiqueta, consulta);
             }
         }
-
-        /*long accionesTotal = object.getLong("acciones");
-        double montoTotal = object.getDouble("monto");
-        Consulta consultaTotal = new Consulta(accionesTotal, montoTotal);
-        consultaMap.put("total", consultaTotal);*/
 
         return consultaMap;
     }
@@ -105,17 +107,5 @@ public class DemandaMunicipalResultado {
 
     public String getMunicipio() {
         return municipio;
-    }
-
-    public void setMunicipio(String municipio) {
-        this.municipio = municipio;
-    }
-
-    public Map<String, Consulta> getConsultas() {
-        return consultas;
-    }
-
-    public void setConsultas(Map<String, Consulta> consultas) {
-        this.consultas = consultas;
     }
 }
