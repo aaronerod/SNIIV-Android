@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import mx.gob.conavi.sniiv.R;
 import mx.gob.conavi.sniiv.Utils.Utils;
+import mx.gob.conavi.sniiv.adapters.CustomListAdapter;
 import mx.gob.conavi.sniiv.modelos.Fechas;
 import mx.gob.conavi.sniiv.parsing.ParseFechas;
 
@@ -27,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> listMenu;
     protected FechasRepository fechasRepository;
 
+    Integer[] imgid={
+            R.drawable.ic_reporte,
+            R.drawable.ic_oferta,
+            R.drawable.ic_demanda,
+            R.drawable.ic_grafica,
+            R.drawable.ic_grafica2
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         lvwMenu = (ListView) findViewById(R.id.lvwMenu);
         listMenu= Utils.listMenu;
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,listMenu);
+        arrayAdapter = new CustomListAdapter(this, Utils.listMenu.toArray(new String[Utils.listMenu.size()]), imgid);
         lvwMenu.setAdapter(arrayAdapter);
         lvwMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
