@@ -1,6 +1,10 @@
 package mx.gob.conavi.sniiv.charts;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -46,8 +50,15 @@ public class StackedBarChartBuilder {
     }
 
     private static void initChart(Context context, BarChart mChart, String description, boolean showAcciones) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+
         mChart.setDescription(description);
         mChart.setDescriptionTextSize(descriptionTextSize);
+        mChart.setDescriptionPosition(width * 0.95f, 40);
         mChart.setPinchZoom(false);
         mChart.setDrawGridBackground(false);
         mChart.setDrawBarShadow(false);
@@ -74,6 +85,7 @@ public class StackedBarChartBuilder {
         l.setFormSize(8f);
         l.setFormToTextSpace(4f);
         l.setXEntrySpace(6f);
+        l.setWordWrapEnabled(true);
     }
 
     private static void setData(BarChart mChart, ArrayList<String> xValues, ArrayList<float[]> yValues,
